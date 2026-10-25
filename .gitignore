@@ -1,0 +1,47 @@
+.gradle/
+.gradle-user-home/
+.intellijPlatform/
+build/
+.idea/
+*.iml
+local.properties
+*.hprof
+hs_err_pid*
+.coursemate/
+
+# Local credentials. An example is allowed only after confirming it contains no secrets.
+.env
+.env.*
+!.env.example
+
+# Additional IDEA output and legacy per-user project files.
+/out/
+*.ipr
+*.iws
+
+# Logs, editor backups, temporary files, and OS metadata.
+*.log
+*.tmp
+*.temp
+*.bak
+*~
+*.swp
+*.swo
+*.orig
+*.rej
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Original course material: sharing permission has not been confirmed.
+# Ignore the whole folder, including PDFs, slides, archives, videos, and extracted files.
+/course_files/
+
+# Original assignment documents also present at the project root.
+/AY202627S1-CST3492-Assignment-A.pdf
+/AY202627S1-CST3492-Assignment-A-Schedule.pdf
+/AY202627S1-CST3492-Programming-Exam.pdf
+
+# Do not add blanket *.jar, *.zip, or *.pdf rules:
+# Gradle Wrapper, approved test fixtures, and authored reports may need version control.
+# Keep source, tests, plugin.xml, Gradle config, shared .run configs, and documentation.

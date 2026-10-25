@@ -1,0 +1,3 @@
+# Copy to local.properties, then replace this path with your IDEA 2026.2.3 folder.
+# Use forward slashes. This is the IDE folder, not its bin or jbr subfolder.
+ideaLocalPath=C:/Path/To/IntelliJ IDEA 2026.2.3

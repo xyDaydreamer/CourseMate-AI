@@ -1,0 +1,27 @@
+<idea-plugin>
+    <id>edu.t07.coursemate.ai</id>
+    <name>CourseMate AI</name>
+    <vendor>T07</vendor>
+    <description><![CDATA[
+        A Java course assistant for CST3492 Assignment A, Group A, using the
+        official DeepSeek API. Requires the DEEPSEEK_API_KEY environment variable.
+        Retrieves local lecture PDF passages and displays verified filenames and
+        PDF page numbers. Clearly labels general-knowledge answers. Ask about
+        selected Java code from the editor context menu without modifying code.
+    ]]></description>
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="CourseMate AI"
+                    anchor="right"
+                    factoryClass="edu.t07.coursemate.ui.CourseMateToolWindowFactory"/>
+    </extensions>
+    <actions>
+        <action id="edu.t07.coursemate.AskSelectedCode"
+                class="edu.t07.coursemate.actions.AskCourseMateAction"
+                text="Ask CourseMate AI"
+                description="Prepare a question about selected Java code; click Send in CourseMate AI to submit">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
