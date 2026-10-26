@@ -13,10 +13,15 @@ import edu.t07.coursemate.rag.RagAnswerService;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.UIManager;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -25,7 +30,9 @@ import java.util.concurrent.ExecutionException;
 
 /** Chat UI. All HTTP work runs outside the EDT; completion updates run on the EDT. */
 public final class CourseMateChatPanel extends JPanel implements Disposable {
-    private final JBTextArea conversation = new JBTextArea();
+    private final JEditorPane conversation = new JEditorPane();
+    private final StringBuilder transcript = new StringBuilder();
+    private final JScrollPane conversationScroll;
     private final JBTextArea questionInput = new JBTextArea(3, 20);
     private final JButton sendButton = new JButton("Send");
     private final JBLabel status = new JBLabel("就绪 · DeepSeek / " + DeepSeekClient.MODEL);
@@ -55,18 +62,20 @@ public final class CourseMateChatPanel extends JPanel implements Disposable {
         status.setToolTipText("课件目录：" + knowledge.directory());
         add(header, BorderLayout.NORTH);
 
+        conversation.setContentType("text/html");
         conversation.setEditable(false);
-        conversation.setLineWrap(true);
-        conversation.setWrapStyleWord(true);
-        conversation.setText("CourseMate AI\n"
+        conversation.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+        if (UIManager.getFont("TextArea.font") != null) conversation.setFont(UIManager.getFont("TextArea.font"));
+        conversation.getAccessibleContext().setAccessibleName("Chat history and answers");
+        conversationScroll = new JBScrollPane(conversation);
+        add(conversationScroll, BorderLayout.CENTER);
+        appendTranscript("CourseMate AI\n"
                 + "请输入 Java 课程问题。问题和最多 4 个相关课件片段将交给 DeepSeek。\n"
                 + "优先依据 Lec-0 至 Lec-5；作业要求、展示安排和考试说明不入库。\n"
                 + "来源文件名与 PDF 页码由本地程序核对显示；无相关资料时明确说明。\n"
                 + "课件目录：" + knowledge.directory() + "\n"
                 + "支持 Java 编辑器选区右键 Ask CourseMate AI；确认问题后点击 Send 才会发送代码。\n"
                 + "本版本每次只发送当前问题及显式附加的代码，不携带之前的对话。\n\n");
-        conversation.getAccessibleContext().setAccessibleName("Chat history and answers");
-        add(new JBScrollPane(conversation), BorderLayout.CENTER);
 
         questionInput.setLineWrap(true);
         questionInput.setWrapStyleWord(true);
@@ -114,9 +123,9 @@ public final class CourseMateChatPanel extends JPanel implements Disposable {
             return;
         }
 
-        conversation.append("You:\n" + question + "\n\n");
+        appendTranscript("You:\n" + question + "\n\n");
         String codeForRequest = selectedCode;
-        if (!codeForRequest.isEmpty()) conversation.append("[本次附加选中代码：" + codeForRequest.length() + " 字符]\n\n");
+        if (!codeForRequest.isEmpty()) appendTranscript("[本次附加选中代码：" + codeForRequest.length() + " 字符]\n\n");
         answering = true;
         setBusy(true);
         scrollToEnd();
@@ -131,19 +140,19 @@ public final class CourseMateChatPanel extends JPanel implements Disposable {
                 if (disposed) return;
                 try {
                     String answer = get();
-                    conversation.append("CourseMate AI [DeepSeek]:\n"
+                    appendTranscript("CourseMate AI [DeepSeek]:\n"
                             + answer + "\n\n");
                     questionInput.setText("");
                     clearCodeContext();
                 } catch (CancellationException exception) {
-                    conversation.append("[提示] 请求已取消。\n\n");
+                    appendTranscript("[提示] 请求已取消。\n\n");
                 } catch (InterruptedException exception) {
                     Thread.currentThread().interrupt();
-                    conversation.append("[提示] 请求已中断，请重试。\n\n");
+                    appendTranscript("[提示] 请求已中断，请重试。\n\n");
                 } catch (ExecutionException exception) {
                     String safeMessage = exception.getCause() instanceof DeepSeekException error
                             ? error.getMessage() : "请求未能完成，请重试。";
-                    conversation.append("[错误] " + safeMessage + "\n\n");
+                    appendTranscript("[错误] " + safeMessage + "\n\n");
                 } finally {
                     worker = null;
                     answering = false;
@@ -200,14 +209,14 @@ public final class CourseMateChatPanel extends JPanel implements Disposable {
             protected void done() {
                 if (disposed) return;
                 try {
-                    conversation.append(get().summary() + "\n");
+                    appendTranscript(get().summary() + "\n");
                 } catch (CancellationException ignored) {
-                    conversation.append("[知识库提示] 索引已取消。\n");
+                    appendTranscript("[知识库提示] 索引已取消。\n");
                 } catch (InterruptedException ignored) {
                     Thread.currentThread().interrupt();
-                    conversation.append("[知识库提示] 索引已中断。\n");
+                    appendTranscript("[知识库提示] 索引已中断。\n");
                 } catch (ExecutionException ignored) {
-                    conversation.append("[知识库提示] 索引失败，请检查课程目录并点击重建索引。\n");
+                    appendTranscript("[知识库提示] 索引失败，请检查课程目录并点击重建索引。\n");
                 } finally {
                     worker = null;
                     setBusy(false);
@@ -218,8 +227,43 @@ public final class CourseMateChatPanel extends JPanel implements Disposable {
         worker.execute();
     }
 
+    private void appendTranscript(String text) {
+        transcript.append(ChatMarkdown.toHtml(text));
+        Color foreground = UIManager.getColor("TextArea.foreground");
+        Color background = UIManager.getColor("TextArea.background");
+        if (foreground == null) foreground = conversation.getForeground() != null ? conversation.getForeground() : Color.BLACK;
+        if (background == null) background = conversation.getBackground() != null ? conversation.getBackground() : Color.WHITE;
+        conversation.setText("<html><head><style>"
+                + "body { color: " + css(foreground) + "; background: " + css(background) + "; margin: 4px; }"
+                + "pre, code { font-family: monospace; }"
+                + "pre { background: " + css(codeBackground(background)) + "; padding: 6px; white-space: pre-wrap; }"
+                + "h1 { font-size: 16px; } h2 { font-size: 15px; } h3, h4, h5, h6 { font-size: 14px; }"
+                + "h1, h2, h3, h4, h5, h6 { margin: 8px 0 4px 0; }"
+                + "p { margin: 4px 0; }"
+                + "</style></head><body>" + transcript + "</body></html>");
+        conversation.setCaretPosition(conversation.getDocument().getLength());
+    }
+
+    private static String css(Color color) {
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    private static Color codeBackground(Color background) {
+        int delta = background.getRed() + background.getGreen() + background.getBlue() < 384 ? 28 : -18;
+        return new Color(clamp(background.getRed() + delta), clamp(background.getGreen() + delta),
+                clamp(background.getBlue() + delta));
+    }
+
+    private static int clamp(int value) {
+        return Math.max(0, Math.min(255, value));
+    }
+
     private void scrollToEnd() {
         conversation.setCaretPosition(conversation.getDocument().getLength());
+        SwingUtilities.invokeLater(() -> {
+            var bar = conversationScroll.getVerticalScrollBar();
+            bar.setValue(bar.getMaximum());
+        });
     }
 
     @Override
