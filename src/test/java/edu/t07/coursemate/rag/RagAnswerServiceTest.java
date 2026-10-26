@@ -1,6 +1,7 @@
 package edu.t07.coursemate.rag;
 
 import com.google.gson.JsonParser;
+import edu.t07.coursemate.ReplyLanguage;
 import edu.t07.coursemate.ai.DeepSeekException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -71,7 +72,7 @@ class RagAnswerServiceTest {
             return "量子纠缠描述联合量子态；偏振测量的统计相关性由该联合态决定。";
         });
         String result = service.answer("请解释量子纠缠实验中的光子偏振测量。");
-        assertTrue(result.contains(RagAnswerService.GENERAL_NOTICE));
+        assertTrue(result.contains(RagAnswerService.ZH_NOTICE));
         assertTrue(result.contains(RagAnswerService.GENERAL_LABEL));
         assertTrue(result.contains("量子纠缠描述联合量子态"));
         assertFalse(result.contains("[错误]"));
@@ -97,7 +98,7 @@ class RagAnswerServiceTest {
                 + "\"general_answer\":\"A valid general explanation.\",\"source_ids\":[]}",
                 List.of(new CourseChunk("Lec-1-Test.pdf", 14, "Some retrieved candidate.")));
         assertTrue(answer.contains(RagAnswerService.GENERAL_LABEL));
-        assertTrue(answer.contains(RagAnswerService.GENERAL_NOTICE));
+        assertTrue(answer.contains(RagAnswerService.ZH_NOTICE));
         assertTrue(answer.contains("A valid general explanation."));
         assertFalse(answer.contains("模型未能"));
         assertFalse(answer.contains("课程资料回答"));
@@ -181,8 +182,40 @@ class RagAnswerServiceTest {
     void unavailableKnowledgeBaseIsNotReportedAsSuccessfulRetrieval() throws Exception {
         var kb = new CourseKnowledgeBase(temporary.resolve("missing"), temporary.resolve("index.json"), new PdfCourseReader());
         String result = new RagAnswerService(kb, (question, sources) -> "General answer.").answer("generics");
-        assertTrue(result.contains(RagAnswerService.GENERAL_NOTICE));
+        assertTrue(result.contains(RagAnswerService.ZH_NOTICE));
         assertTrue(result.contains("无法读取课程目录"));
+    }
+
+    @Test
+    void followUpUsesPriorQuestionWhenTheNewWordingHasNoCourseTerms() throws Exception {
+        TestPdfs.write(temporary.resolve("Lec-2-Test.pdf"), "Inheritance derives subclasses from superclasses.");
+        var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
+        String result = new RagAnswerService(kb, (modelQuestion, sources) -> {
+            assertFalse(sources.isEmpty());
+            var context = JsonParser.parseString(modelQuestion).getAsJsonObject();
+            assertEquals("再举一个例子", context.get("question").getAsString());
+            assertEquals("请根据课件解释继承", context.get("prior_question").getAsString());
+            assertEquals("子类可以复用父类的字段和方法。", context.get("prior_answer").getAsString());
+            assertFalse(modelQuestion.contains(".pdf"));
+            return "{\"course_answer\":\"例如 Child 继承 Parent。\",\"general_answer\":\"\",\"source_ids\":[\"S1\"]}";
+        }).answer("再举一个例子", "", "请根据课件解释继承",
+                "子类可以复用父类的字段和方法。\n[S1] Lec-2-Test.pdf — PDF 第 1 页");
+        assertTrue(result.contains("Lec-2-Test.pdf — PDF 第 1 页"));
+    }
+
+    @Test
+    void englishReplyUsesEnglishFramesAndMarksTheModelRequest() throws Exception {
+        TestPdfs.write(temporary.resolve("Lec-2-Test.pdf"), "Inheritance derives subclasses from superclasses.");
+        var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
+        String result = new RagAnswerService(kb, (modelQuestion, sources) -> {
+            var context = JsonParser.parseString(modelQuestion).getAsJsonObject();
+            assertEquals("en", context.get("answer_language").getAsString());
+            assertEquals("Explain inheritance.", context.get("question").getAsString());
+            return "{\"course_answer\":\"A subclass reuses its superclass.\",\"general_answer\":\"\",\"source_ids\":[\"S1\"]}";
+        }).answer("Explain inheritance.", "", "", "", ReplyLanguage.EN);
+        assertTrue(result.contains("[From the course materials]"));
+        assertTrue(result.contains("Lec-2-Test.pdf — PDF page 1"));
+        assertFalse(result.contains("PDF 第"));
     }
 
     @Test
