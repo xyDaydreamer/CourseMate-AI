@@ -36,6 +36,29 @@ class DeepSeekClientTest {
     private static final String SUCCESS = "{\"choices\":[{\"message\":{\"content\":\"你好，Java！\\n第二行\"},"
             + "\"finish_reason\":\"stop\"}]}";
 
+    @Test void repairFollowUpReachesHttpWithTheOriginalCodeAndActualConversation() throws Exception {
+        var session=new edu.t07.coursemate.chat.ChatSession();
+        String code="Map<String, Integer> counts = new HashMap";
+        var initial=session.prepare("解释这段代码。",edu.t07.coursemate.chat.ChatSession.Code.of(code),true,edu.t07.coursemate.ReplyLanguage.ZH);
+        session.commit(initial,"选区可能只是一段声明；如果这就是完整语句，应补全构造调用。");
+        var follow=session.prepare("修改后应该是什么样？",null,true,edu.t07.coursemate.ReplyLanguage.ZH);
+        var client=new DeepSeekClient(()->FAKE_KEY,request->{
+            try{
+                var payload=JsonParser.parseString(readBody(request)).getAsJsonObject();
+                var context=JsonParser.parseString(payload.getAsJsonArray("messages").get(1).getAsJsonObject().get("content").getAsString()).getAsJsonObject();
+                assertEquals(code,context.get("selected_code").getAsString());assertTrue(context.get("historical_code").getAsBoolean());
+                assertEquals("修改后应该是什么样？",context.get("question").getAsString());
+                assertEquals("解释这段代码。",context.get("resolved_question").getAsString());
+                assertEquals("解释这段代码。",context.get("topic").getAsString());
+                assertEquals("CODE_REVISION",context.get("task").getAsString());assertEquals("CONTINUATION",context.get("context_relation").getAsString());
+                assertTrue(context.getAsJsonArray("history_for_reference_only").get(0).getAsJsonObject().get("answer").getAsString().contains("如果这就是完整语句"));
+            }catch(Exception e){throw new AssertionError(e);}
+            return new DeepSeekClient.Response(200,SUCCESS);
+        });
+        var kb=new CourseKnowledgeBase(temporary,temporary.resolve("index.json"),new PdfCourseReader());
+        RagAnswerService.structured(kb,client::askResponse).ask(follow);
+    }
+
     @Test
     void selectedCodeTravelsThroughRagIntoActualHttpRequestBodyWithoutOutsideText() throws Exception {
         String selected = "int count = 1;\ncount++; // 中文";
@@ -149,11 +172,17 @@ class DeepSeekClientTest {
                 + "\"reasoning_content\":\"not displayed\",\"content\":\"final answer\"}}],\"usage\":{}}"));
     }
 
+    @Test void nullableOptionalMetadataDoesNotDiscardAValidAnswer() throws Exception {
+        ModelResponse response=DeepSeekClient.parseResponse(SUCCESS.substring(0,SUCCESS.length()-1)+",\"id\":null,\"usage\":null}");
+        assertEquals("你好，Java！\n第二行",response.content());assertEquals("",response.requestId());
+        assertTrue(DeepSeekClient.parseResponse("{\"choices\":[{\"message\":{\"content\":null},\"finish_reason\":\"length\"}]}").truncated());
+    }
     @Test
-    void warnsWhenResponseIsTruncated() throws Exception {
+    void retainsTruncationMetadataWithoutPollutingContent() throws Exception {
         String answer = DeepSeekClient.parseAnswer(SUCCESS.replace("stop", "length"));
         assertTrue(answer.startsWith("你好，Java！"));
-        assertTrue(answer.contains("可能不完整"));
+        assertEquals("你好，Java！\n第二行", answer);
+        assertTrue(DeepSeekClient.parseResponse(SUCCESS.replace("stop", "length")).truncated());
     }
 
     @ParameterizedTest

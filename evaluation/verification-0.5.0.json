@@ -1,0 +1,98 @@
+{
+  "version": "0.5.0",
+  "date": "2026-10-27",
+  "unitTests": {
+    "tests": 119,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "realPdfIntegration": {
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "original28": {
+    "hitAt3Count": 18,
+    "positiveQuestions": 18,
+    "correctlyEmptyCount": 5,
+    "negativeQuestions": 5,
+    "contractCases": 5,
+    "contractPasses": 5,
+    "chunks": 201
+  },
+  "final24Before": {
+    "positives": 14,
+    "hitAt3Count": 1,
+    "negativeQuestions": 4,
+    "correctlyEmpty": 4,
+    "MRR": 0.03571428571428571,
+    "labelledPrecisionAt3LowerBound": 0.023809523809523808,
+    "medianOfflineMs": 1.24005
+  },
+  "final24After": {
+    "positives": 14,
+    "hitAt3Count": 13,
+    "negativeQuestions": 4,
+    "correctlyEmpty": 4,
+    "MRR": 0.8928571428571429,
+    "labelledPrecisionAt3LowerBound": 0.3571428571428571,
+    "medianOfflineMs": 2.1967
+  },
+  "final24Contracts": {
+    "passed": 6,
+    "cases": 6
+  },
+  "knownRemainingCases": [
+    "B12"
+  ],
+  "realApiCalls": 0,
+  "liveValidation": "DEFERRED_BY_USER",
+  "pluginSha256": "41c4973acbe10de508564846561e0e331423b8ea74f4e1bd63a6eaad9084a285",
+  "finalQuestionsSha256": "f84ecae5b3c40f93303ffa03a7a21e273a8c46bb0f185c181e9bdef18658dc07",
+  "modifiedThisTurn": [
+    "src/main/java/edu/t07/coursemate/actions/AskCourseMateAction.java",
+    "src/main/java/edu/t07/coursemate/ai/DeepSeekClient.java",
+    "src/main/java/edu/t07/coursemate/ai/DeepSeekException.java",
+    "src/main/java/edu/t07/coursemate/rag/CodeRetrievalQuery.java",
+    "src/main/java/edu/t07/coursemate/rag/CourseChunk.java",
+    "src/main/java/edu/t07/coursemate/rag/CourseKnowledgeBase.java",
+    "src/main/java/edu/t07/coursemate/rag/KeywordIndex.java",
+    "src/main/java/edu/t07/coursemate/rag/PdfCourseReader.java",
+    "src/main/java/edu/t07/coursemate/rag/RagAnswerService.java",
+    "src/main/java/edu/t07/coursemate/ui/CourseMateChatPanel.java",
+    "src/main/resources/META-INF/plugin.xml",
+    "src/test/java/edu/t07/coursemate/ai/DeepSeekClientTest.java",
+    "src/test/java/edu/t07/coursemate/rag/CourseKnowledgeBaseTest.java",
+    "src/test/java/edu/t07/coursemate/rag/RagAnswerServiceTest.java",
+    "build.gradle.kts",
+    "README.md",
+    "README_CN.md"
+  ],
+  "newFilesThisTurn": [
+    "src/main/java/edu/t07/coursemate/actions/JavaSelectionContext.java",
+    "src/main/java/edu/t07/coursemate/ai/ModelResponse.java",
+    "src/main/java/edu/t07/coursemate/chat/AnswerResult.java",
+    "src/main/java/edu/t07/coursemate/chat/AnswerTranslation.java",
+    "src/main/java/edu/t07/coursemate/chat/ChatSession.java",
+    "src/main/java/edu/t07/coursemate/rag/QueryPlan.java",
+    "src/main/java/edu/t07/coursemate/rag/RetrievalResult.java",
+    "src/main/java/edu/t07/coursemate/ui/TurnCard.java",
+    "src/main/java/edu/t07/coursemate/ui/UiText.java",
+    "src/test/java/edu/t07/coursemate/actions/JavaSelectionContextTest.java",
+    "src/test/java/edu/t07/coursemate/chat/AnswerTranslationTest.java",
+    "src/test/java/edu/t07/coursemate/rag/F0ReliabilityTest.java",
+    "src/test/java/edu/t07/coursemate/ui/CourseMateChatPanelTest.java",
+    "evaluation/holdout-20261027.json",
+    "evaluation/holdout-final-20261027.json",
+    "evaluation/IndependentEvaluation.java",
+    "evaluation/LegacyHoldoutSnapshot.java",
+    "evaluation/LiveAcceptance.java",
+    "evaluation/regression-defects-20261027.json",
+    "evaluation/run-live-acceptance.ps1",
+    "evaluation/verification-0.5.0.json"
+  ],
+  "answerCorrectness": "NOT_RUN",
+  "claimEvidenceConsistency": "NOT_RUN"
+}

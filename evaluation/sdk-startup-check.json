@@ -1,0 +1,12 @@
+{
+  "Date": "2026-10-26",
+  "Sandbox": "[local isolated sandbox; absolute path omitted]",
+  "Project": "isolated sdk-reload-demo copy",
+  "FirstStart": "SDK registered and saved, 57 actual class roots",
+  "SettingsReload": "SDK remains in jdk.table.xml after global entities reload",
+  "SecondStart": "Persisted SDK loaded, no missing-SDK auto-download lookup",
+  "SdkStartupErrors": 0,
+  "PaidApiCalls": 0,
+  "VisibleUserWindow": "NOT_INSPECTED",
+  "CheckShutdown": "Only isolated check process terminated after each startup"
+}

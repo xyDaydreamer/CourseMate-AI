@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "edu.t07.coursemate"
-version = "0.4.0"
+version = "0.5.2"
 
 repositories {
     mavenCentral()
@@ -33,6 +33,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
     intellijPlatform {
+        bundledPlugin("com.intellij.java")
         if (localIdeaPath.get().isNotBlank()) {
             local(localIdeaPath.get())
         } else {
@@ -55,18 +56,41 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.test {
     useJUnitPlatform()
+    exclude("**/RealCourseRetrievalTest*")
     // Only this plugin and its required platform modules belong in the headless test application.
-    systemProperty("idea.load.plugins.id", "edu.t07.coursemate.ai")
+    systemProperty("idea.load.plugins.id", "edu.t07.coursemate.ai,com.intellij.java")
     // Unit tests must never receive a real developer credential.
     environment.remove("DEEPSEEK_API_KEY")
     systemProperty("coursemate.testCourseDir", layout.projectDirectory.dir("course_files").asFile.absolutePath)
 }
 
+val integrationTest by intellijPlatformTesting.testIde.registering {
+    task {
+        useJUnitPlatform()
+        include("**/RealCourseRetrievalTest*")
+        systemProperty("idea.load.plugins.id", "edu.t07.coursemate.ai,com.intellij.java")
+        environment.remove("DEEPSEEK_API_KEY")
+        systemProperty("coursemate.testCourseDir", layout.projectDirectory.dir("course_files").asFile.absolutePath)
+    }
+}
+
 tasks.named<JavaExec>("runIde") {
     systemProperty("coursemate.courseDir", layout.projectDirectory.dir("course_files").asFile.absolutePath)
+    providers.gradleProperty("coursemateProjectPath").orNull?.let {
+        args(file(it).absolutePath)
+        systemProperty("coursemate.openToolWindowOnStart", "true")
+        if (file(it).canonicalFile == file("demo").canonicalFile) {
+            systemProperty("coursemate.demoProjectPath", file("demo").absolutePath)
+            systemProperty("coursemate.demoJdkHome", providers.environmentVariable("JAVA_HOME").getOrElse(System.getProperty("java.home")))
+        }
+    }
 }
 
 intellijPlatform {
+    // Optional short sandbox path supplied by the portable launcher (Windows socket path limit).
+    providers.gradleProperty("coursemateSandboxRoot").orNull?.let {
+        sandboxContainer.set(file(it))
+    }
     pluginConfiguration {
         ideaVersion {
             sinceBuild.set("262.10968.63")

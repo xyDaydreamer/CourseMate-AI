@@ -6,6 +6,7 @@ build/
 *.iml
 local.properties
 *.hprof
+*.class
 hs_err_pid*
 .coursemate/
 
@@ -41,6 +42,10 @@ Desktop.ini
 /AY202627S1-CST3492-Assignment-A.pdf
 /AY202627S1-CST3492-Assignment-A-Schedule.pdf
 /AY202627S1-CST3492-Programming-Exam.pdf
+
+# Local live acceptance answers may contain selected code and course excerpts.
+# The runner defaults to .coursemate/acceptance/ (already ignored above).
+/evaluation/live-acceptance*.json
 
 # Do not add blanket *.jar, *.zip, or *.pdf rules:
 # Gradle Wrapper, approved test fixtures, and authored reports may need version control.

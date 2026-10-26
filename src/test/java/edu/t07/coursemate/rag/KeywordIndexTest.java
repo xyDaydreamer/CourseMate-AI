@@ -8,6 +8,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class KeywordIndexTest {
     @Test
+    void longEnglishAndChineseQuestionsRetainTheSameGenericConcept() {
+        var index = new KeywordIndex(List.of(new CourseChunk("Lec-3.2-Test.pdf", 4,
+                "Generics enable stronger type checks and elimination of casting.")));
+        for (String question : List.of("Java generics", "Explain how generics improve type safety and eliminate casts.",
+                "请详细说明泛型为什么能够提高类型安全并减少强制类型转换。")) {
+            assertEquals(4, index.search(question).getFirst().page());
+        }
+    }
+
+    @Test
+    void chineseIterationAndUnknownTopicsDoNotLoseTheirMeaning() {
+        var index = new KeywordIndex(List.of(new CourseChunk("Lec-3.2-Test.pdf", 16,
+                "Use entrySet to traverse Map keys and values. Use Iterator.remove during iteration.")));
+        assertEquals(16, index.search("怎么遍历 Map 并删除元素？").getFirst().page());
+        assertTrue(index.search("Map 量子纠缠光子偏振测量实验").isEmpty());
+    }
+    @Test
     void teachingPagesRemainWhileScheduleAndReadingListAreExcluded() {
         var index = new KeywordIndex(List.of(
                 new CourseChunk("Lec-0-Introduction.pdf", 3, "Programs Week Date Program Inheritance Generics"),

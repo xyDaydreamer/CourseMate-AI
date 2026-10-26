@@ -1,294 +1,113 @@
-# CourseMate AI
+# CourseMate AI 0.5.2
 
-[English](README.md) · [内部开发交接](HANDOVER_CN.md)
+IntelliJ IDEA 内的 Java 课程助教。使用本地课程 PDF 检索和 DeepSeek；保留选区预览、课程来源白名单和离线测试。
 
-版本 **0.4.0** · CST3492 Java Enterprise Application Development · **T07** 小组 · **Group A**
+版本快照分支：**hzy_0.5.2**，日期 2026-10-27。最终本地验证：**137 项基础测试、10 项真实 PDF 集成测试通过，打包成功**；原有 28 案例回归通过，冻结题集 Hit@3 为 13/14，B12 仍待改善。真实模型正确性和结论 / 引用一致性仍待人工验收，本次验证没有付费调用。详见 [验证汇总](evaluation/verification-0.5.2.json)。
 
-## 1. 项目简介
+从 main（`7696251`）到当前版本的累计修改、验证证据、已知限制和提交范围，见 [README_CHANGES.md](README_CHANGES.md)。评测方法与归档结果见 [evaluation/README.md](evaluation/README.md)。
 
-CourseMate AI 是 IntelliJ IDEA 插件，通过老师提供的 PDF 讲义和 DeepSeek AI 帮助学生理解 Java。它结合本地检索增强生成（RAG）、来源文件名和 PDF 页码，以及用户明确选中的 Java 代码提问。
+## 0.5.2 追问与交互修复
 
-这是学生项目的 MVP。下列功能已在代码中实现，但自动化检查不能代替实际 IDEA 操作和真实模型回答的验收。本次文档更新没有修改应用代码或依赖。
+- 修复“修改后应该是什么样”“那这里的泛型怎么改”和英文修正类追问。承接判断同时考虑当前主题和明确选区中的概念；原始选区、近期历史和当前追问均进入实际请求，模型建议不会自动替换选区。
+- 追问检索同时考虑稳定主题和当前问题；新知识点不会因只检索原始主题而直接被丢弃。明确新话题不沿用旧代码；勾选沿用但当前为新问题时，输入区明确提示。
+- 蓝色卡片操作项加入悬停、按下、选中、禁用与键盘焦点反馈，保持主题配色；交互状态不改变布局高度。
+- 解释不完整选区时强调可见范围及条件判断，避免把选区边界或原始泛型类型本身当作整个项目的编译错误。
+- 任务和会话关系分开记录；换题 / 新选区不再把旧主题历史带回后续追问。明确纠正会更新解析后的问题并排除旧回答；历史仍有界，不增加摘要调用或长期记忆。
 
-## 2. 已实现功能与边界
+## 0.5.1 实测反馈修复
 
-| 功能 | 当前行为 |
-| --- | --- |
-| IDE 聊天 | 右侧 **CourseMate AI** 工具窗口、多行输入、Send、Ctrl+Enter、只读聊天显示；忽略空白问题。 |
-| DeepSeek | HTTPS POST 到 `https://api.deepseek.com/chat/completions`，配置模型 `deepseek-flash`，JSON、`stream=false`、关闭思考模式、`max_tokens=2048`。这些是当前配置，不保证模型今后始终可用。 |
-| PDF 知识库 | 从本地目录读取白名单讲义，按 PDF 页提取文字、分块，建立本地可搜索索引；不调用付费 embedding 服务。 |
-| 有限上下文 | 最多选取不同 PDF 页的 4 个文本块，每块最多 1,000 个 Java 字符串字符；也可能少于 4 个或没有。 |
-| 课程引用 | Java 按真实检索片段校验模型选择的来源 ID，再显示原始文件名和从 1 开始的 PDF 页码。 |
-| 通用知识 | 调用前排除相关性不足的候选。无课程依据时允许回答通用问题，包括非 Java 问题，不生成课程引用。 |
-| 代码提问 | 只有活动项目、编辑器和扩展名为 `.java` 的文件中存在非空白选区时，右键 **Ask CourseMate AI** 才启用。 |
-| 代码附件 | 只读代码预览、可编辑问题、显式发送及 **取消代码上下文**；仅打开窗口不会发送代码。 |
-| 请求生命周期 | 使用后台 `SwingWorker`、等待提示、防重复发送；失败后保留输入和附件，供手动重试，成功后清除。 |
-| 错误处理 | 中文提示覆盖 Key 缺失/格式错误、超时、连接失败、HTTP 401/402/429 等 API 错误，以及回答格式或引用错误；不会自动重试 API。 |
+该阶段先 fetch 并核对远端 main：仍为 7696251，没有新提交；当时的本地成果完整保留，现纳入 hzy_0.5.2 版本快照。
 
-聊天记录只保留在当前窗口中，**不会**随请求发送历史轮次，也不会持久化为聊天历史。插件不执行或修改代码，不读取 ZIP 项目，不索引源码仓库，不提供流式输出，也不做 OCR。
+- 长回答按实际宽度计算高度，修复窄窗口/大字体下按钮覆盖正文；减少重复课程标签，辅助提示与证据编号采用较小的弱化样式。
+- 删除“显示本语言回答”按钮；顶部语言切换会直接显示已有缓存译文，缺少译文时仍由用户按需翻译，不自动调用 API。
+- “会话记录”下拉框保留当前插件窗口内最近 10 个会话，可切换回看并继续；每会话最多 30 张卡片。关闭项目/插件面板销毁后不保存，旧版已被清除的记录无法恢复。
+- 补充“再举一个例子，并说明实际调用哪个方法”这类复合追问，以及明确的解析主题/近期历史提示。
+- 兼容精确 JSON 代码围栏及可空的非必需响应元数据；格式错误分阶段提示，保持来源白名单、不自动重试。此修复不等同于已经验证用户之前那一次真实响应的原始报文。
 
-## 3. 系统要求
+## 0.5.0 基础更新
 
-| 组件 | 已确认配置 |
-| --- | --- |
-| 目标 IDE | IntelliJ IDEA **2026.2.3**，SDK build **262.10968.63** |
-| 声明的兼容范围 | `since-build=262.10968.63`、`until-build=262.*`；范围内其他版本仍需实际验证 |
-| Java | 工具链和编译目标均为 **JDK 25**；Java 17 不足以构建 |
-| 构建 | Gradle Wrapper **9.1.0**、IntelliJ Platform Gradle Plugin **2.19.0** |
-| 业务库 | Gson **2.13.2**、Apache PDFBox **3.0.8** |
-| 测试 | JUnit BOM **5.13.4** 下的 Jupiter/Vintage、JUnit **4.13.2**、对应 SDK 的 IntelliJ Platform 测试框架 |
-| 其他 | 克隆时需要 Git；首次下载依赖及真实 DeepSeek 调用需要网络；真实问答需要个人 API Key |
+- 在检索前形成任务与会话主题；连续追问保持解析后的主题，每轮重新检索。
+- IDEA Java PSI 只解析已选文本，不能从未提供的方法名猜测方法实现；不完整片段使用受限词法降级。
+- BM25 保留，加入课程概念查询、标题/主题重排、Java/C++ 区分、独立证据准入和最多 3 页/4 块/5000 字符的证据预算。
+- 模型正文、结束原因、usage 分开保存。截断、格式错误、非法引用、网络失败和取消分别处理，无自动重试。
+- 缓存 v3：稳定块 ID、文件 SHA-256、物理页码、规范化页内偏移、标题、块类型和邻接 ID。重叠原文只在内容一致时合并。
+- Swing 每轮独立卡片，底部固定课程来源区域；展开选区/原文、逐条复制、按需翻译并缓存。
+- 新对话、停止请求、迟到响应隔离；沿用历史代码时在发送前明确预览，可移除，新选区优先。
+- 界面语言立即切换；问题/选区/课程原文保持原文，历史回答只在用户点击翻译时调用 API。
 
-下列命令面向 Windows PowerShell；其他操作系统未在此验证。使用仓库内 Wrapper，不需要额外安装 Gradle 或 Maven。
+尚未采用 embedding、外部数据库、Web UI、自动事实验证、长期记忆或历史自动翻译。来源 ID 合法不代表结论已被事实验证。
 
-## 4. Windows 配置、测试、构建与启动
+## 环境和构建
 
-### 4.1 获取项目
+JDK 25、IDEA 2026.2.3、项目 Gradle Wrapper。支持的 IDE build 为 262.10968.63 至 262.*。Java 插件是 IDEA 自带依赖，无新增第三方库。
 
-当前工作目录**没有 Git 仓库元数据，也没有可核实的远程地址**。请向小组索取真实 GitHub 地址，替换占位内容后执行：
+```powershell
+$env:JAVA_HOME = '自己的 JDK 25 路径'
+$env:COURSEMATE_COURSE_FILES = '自己的 course_files 完整路径'
+.\gradlew.bat test --console=plain --no-daemon
+.\gradlew.bat integrationTest --console=plain --no-daemon
+.\gradlew.bat buildPlugin --console=plain --no-daemon
+```
 
-~~~powershell
-$repositoryUrl = 'https://github.com/REPLACE_OWNER/REPLACE_REPOSITORY.git'
-git clone $repositoryUrl CourseMate-AI
-Set-Location -LiteralPath '.\CourseMate-AI'
-~~~
+`test` 不需要教师 PDF 或真实 Key。`integrationTest` 单独执行原有真实课件的 10 个案例，要求指定版本的 9 份讲义；测试进程均移除真实 Key。需要时使用 `-PideaLocalPath='自己的 IDEA 根目录'`。完整测试和构建不做模型调用。
 
-如果已有项目，跳过克隆，直接在含有 `gradlew.bat` 和 `build.gradle.kts` 的项目根目录打开 PowerShell。不要克隆覆盖现有工作目录。
+普通构建安装包为 `build/distributions/coursemate-ai-0.5.2.zip`，测试 HTML 位于构建目录的 `reports/tests/test` 与 `reports/tests/integrationTest`。0.5.2 本机验证使用隔离目录 `build/feedback-052`；该目录和安装包均为本地产物，不随源码提交。验证汇总见 [evaluation/verification-0.5.2.json](evaluation/verification-0.5.2.json)。
 
-### 4.2 选择自己的 IDEA 和 Java 安装路径
+## 配置与启动
 
-把示例路径替换为**你自己**安装的 IntelliJ IDEA 2026.2.3 根目录：
+### Windows 双击快捷启动（推荐）
 
-~~~powershell
-$ideaHome = 'C:\Path\To\IntelliJ IDEA 2026.2.3'
-$env:JAVA_HOME = Join-Path $ideaHome 'jbr'
-$env:Path = "$env:JAVA_HOME\bin;$env:Path"
-$env:GRADLE_USER_HOME = Join-Path (Get-Location).Path '.gradle-user-home'
-java -version
-javac -version
-~~~
+1. 安装 IntelliJ IDEA **2026.2.3**，准备完整的 **JDK 25**。启动器会优先使用 `JAVA_HOME`，也可使用所选 IDEA 自带、含 `javac.exe` 的 JBR 25。
+2. 在资源管理器打开本仓库，双击根目录的 **[start-coursemate.cmd](start-coursemate.cmd)**。不要双击构建产物 ZIP 来启动。
+3. 未配置 IDEA 路径时，按终端提示输入 IDEA 安装根目录（包含 `product-info.json` 的目录，不是 `bin`）。也可以提前将 `local.properties.example` 复制为 `local.properties`，填写自己的 `ideaLocalPath`；该本地文件不会提交。
+4. 没有进程 API Key 时，启动器会显示隐藏输入提示。输入自己的 DeepSeek Key；直接回车也能打开界面，但不能请求真实模型。Key 不写入源码、快捷方式或配置文件，不会因本次输入而永久保存。
+5. 启动器自动构建并打开安装了当前插件的 IDEA 测试实例，默认进入仓库的 **`demo/` 演示 Java 项目**，并展开 CourseMate AI 工具窗口。可以直接提问，或选中代码后右键 **Ask CourseMate AI**，确认预览再发送。
 
-两个版本都应为 25。如果本机 IDEA 运行时没有 `javac`，将 `JAVA_HOME` 改为另行安装的 **JDK 25**。`$ideaHome` 仍指向 IDEA 根目录，不能指向 `bin` 或 `jbr`。
+首次启动可能需要联网下载 Gradle / 依赖。课程问答还需要把讲义放入仓库 `course_files/`，或通过 `COURSEMATE_COURSE_FILES` / `-CourseDir` 指定目录；教师 PDF 不随仓库提供。使用新版前先关闭旧的 CourseMate 测试实例，已运行的实例不会自动加载新代码或新环境。
 
-#### 配置本地 IntelliJ IDEA 路径
+**桌面快捷方式：**右键 `start-coursemate.cmd` → 发送到 → 桌面快捷方式。之后双击桌面图标即可，无须每次手动打开 PowerShell 输入 Gradle 命令。
 
-每位开发者都应在自己的电脑上将共享示例复制为个人配置。已有 `local.properties` 时，应先检查内容，不要直接覆盖：
+**打开自己的 Java 项目：**修改该快捷方式的“目标”，在启动器路径后追加 `-ProjectDir`。下面路径只是示例，请替换为自己的实际路径，含空格的路径保留双引号：
 
-~~~powershell
-if (-not (Test-Path -LiteralPath '.\local.properties')) {
-    Copy-Item -LiteralPath '.\local.properties.example' -Destination '.\local.properties'
-}
-notepad .\local.properties
-~~~
+```text
+"C:\Projects\CourseMate-AI\start-coursemate.cmd" -ProjectDir "C:\Projects\MyJavaApp"
+```
 
-在复制得到的文件中填写该电脑真实的 IDEA 安装根目录，并使用正斜杠。该目录应包含 `product-info.json`，不能指向它的 `bin` 或 `jbr` 子目录：
+也可追加 `-CourseDir "C:\CourseFiles"` 指定讲义目录。启动器会打开已有项目，不会替普通项目改写 SDK；默认演示项目才有专用的 SDK 自动配置。这里启动的是带插件的 IDEA 实例；需要开发插件源码时，在自己的 IDEA 中打开仓库根目录并导入 Gradle 项目。
 
-~~~properties
-ideaLocalPath=C:/Path/To/IntelliJ IDEA 2026.2.3
-~~~
+### 手动启动与安装 ZIP
 
-`local.properties` 已被 `.gitignore` 忽略，不得提交到 Git。上面的路径有意使用通用占位符，不能把某位组员的安装路径当作全组默认路径。
+启动器调用 `scripts/start-coursemate.ps1`；Key 从 `DEEPSEEK_API_KEY` 进程环境读取，不加载 `.env`，也不写入 Git。
 
-Gradle 首先检查 `ideaLocalPath` Gradle 属性，例如 `-PideaLocalPath="$ideaHome"`；没有该属性时，本项目才从根目录 `local.properties` 读取 `ideaLocalPath`。非空路径会让 IntelliJ Platform Gradle Plugin 使用该位置已安装的 IDEA；两处都没有提供路径时，Gradle 会从已配置的软件仓库解析 IntelliJ IDEA 2026.2.3。后面的命令仍显式传入 `-PideaLocalPath`，因此该命令行值优先于 `local.properties`。
+手动配置时单独运行以下命令，在隐藏提示处输入自己的 Key，不能将 Key 粘贴到聊天或源码：
 
-如果既没有显式 Gradle 属性，也没有非空的本地路径属性，构建会下载 IDEA 2026.2.3，体积可能较大；仍需使用 Java 25。
-
-### 4.3 准备课程 PDF
-
-从获准渠道单独获取讲义，直接放入 `course_files`，详见第 6 节。插件 ZIP 不包含讲义。完整测试中有真实课件集成测试，需要表中指定的讲义集合。
-
-### 4.4 运行测试和构建
-
-这一步不需要 API Key：
-
-~~~powershell
-.\gradlew.bat test "-PideaLocalPath=$ideaHome" --console=plain --no-daemon
-.\gradlew.bat buildPlugin "-PideaLocalPath=$ideaHome" --console=plain --no-daemon
-~~~
-
-已验证的合并命令形式为：
-
-~~~powershell
-.\gradlew.bat test buildPlugin "-PideaLocalPath=$ideaHome" --console=plain --no-daemon
-~~~
-
-依赖缓存齐全后可以加入 `--offline`；离线模式不能下载缺失依赖。输出位置：
-
-- 安装包：`build/distributions/coursemate-ai-0.4.0.zip`
-- HTML 测试报告：`build/reports/tests/test/index.html`
-- XML 测试记录：`build/test-results/test/TEST-*.xml`
-- 讲义元数据报告：`build/reports/rag-validation.txt`
-
-### 4.5 安全配置自己的 API Key
-
-生产客户端读取 `System.getenv("DEEPSEEK_API_KEY")`。**项目没有 .env 加载器**，也没有插件内 Key 设置界面；新建 `.env` 并不能完成配置。
-
-每位组员应独立申请和配置自己的 Key。不得把真实 Key 写入 Java、Gradle、README、`.env.example`、Git 提交、截图或聊天；不要发送给其他组员，也不要上传到 GitHub。
-
-先**单独执行**这一行：
-
-~~~powershell
-$secret = Read-Host 'Enter your DeepSeek API Key (hidden input)' -AsSecureString
-~~~
-
-仅在 PowerShell 的隐藏输入提示处粘贴 Key 并回车，然后执行：
-
-~~~powershell
+```powershell
+$secret = Read-Host 'DeepSeek API Key (hidden)' -AsSecureString
 $env:DEEPSEEK_API_KEY = [System.Net.NetworkCredential]::new('', $secret).Password
 Remove-Variable secret
-if ([string]::IsNullOrWhiteSpace($env:DEEPSEEK_API_KEY)) {
-    'Key is missing'
-} else {
-    'Key is configured; its value is not displayed'
-}
-~~~
+.\gradlew.bat runIde --no-daemon
+```
 
-这只设置当前终端及随后启动的子进程环境，不把 Key 写入项目，也不修改系统级环境变量。运行时环境中仍然需要明文字符串；隐藏输入不等于加密运行时存储。不要打印该变量，也不要导出整个进程环境。
+关闭旧沙盒，从这个终端启动新的 IDEA 后才会继承环境。安装 ZIP 则使用 Settings → Plugins → Install Plugin from Disk 并重启兼容 IDEA。窗口顶部显示 Key 是否存在，不代表已通过服务认证。模型仍为 `deepseek-flash`，接口仍为官方 DeepSeek endpoint。
 
-### 4.6 启动沙盒
+## 资料与来源
 
-先关闭旧沙盒，再在**同一个** PowerShell 窗口执行：
+仅索引指定目录直接文件中符合 `(?i)^Lec-[0-5](?:[.-].*)?\.pdf$` 的讲义，排除作业/考试材料，不进行 OCR。目录优先级为环境变量 `COURSEMATE_COURSE_FILES`、JVM 属性 `coursemate.courseDir`、项目 `course_files`。缓存位于相邻 `.coursemate/index-<路径标识>.json`，旧 v2 会重建。缓存包含课程正文，不应提交。
 
-~~~powershell
-.\gradlew.bat runIde "-PideaLocalPath=$ideaHome" --console=plain --no-daemon
-~~~
+窗口顶部可查看目录名称（悬浮查看完整路径）和索引状态，点击重建更新资料。来源的块范围属于保留换行后的规范化页文本；页码是从 1 开始的物理 PDF 页码。每轮使用来源保存当时的元数据和原文快照，重建不会改写旧卡片。打开来源前核对 PDF 指纹；文件已变化时提示重新提问。PDF 的 `#page=` 跳转是否被采用取决于本机默认浏览器/阅读器。
 
-在新 IDEA 中打开或创建项目，然后选择 **View → Tool Windows → CourseMate AI**。只有欢迎页面时没有项目工具窗口。等待本地知识库摘要，输入问题，点击 Send 或 Ctrl+Enter。
+检索状态与回答依据分开：未命中、候选不足、部分覆盖、知识库不可用；以及课程回答、混合回答、通用知识或候选未采用。只有模型实际选择且通过本轮白名单检查的来源会作为引用展示，候选不冒充引用。
 
-保持终端开启；关闭沙盒后 `runIde` 才结束。已存在的 IDEA 进程不会自动继承新设置的环境变量。关闭沙盒后，可以清除当前终端中的 Key：
+## 上下文与限制
 
-~~~powershell
-Remove-Item Env:\DEEPSEEK_API_KEY -ErrorAction SilentlyContinue
-~~~
+每个项目面板可切换最近 10 个独立会话，每个会话提供最近 3 个完整问答轮次给模型；问题上限 6000、代码上限 16000、总上下文上限 28000 字符。超限输入明确拒绝，不静默截断；较早历史或完整证据因预算省略时显示提示。最多显示 30 张卡片，移除更早卡片时提示。上下文保存在当前面板内，不持久化。
 
-关闭该终端也会丢弃其环境。更换 Key 后需要重新启动沙盒。
+追问可沿用上一轮明确选中的代码快照。取消勾选或点击移除代码可停止沿用；新选区优先。插件不会自动读取其他未选中源码。当前本地词法与概念检索仍可能漏检/误排，复杂混合领域问题和未收录中文概念需要人工核对，不宣称语义理解完整。
 
-### 4.7 打开源码或安装 ZIP
+原始异常/受限服务端响应仅留在进程内诊断字段，界面使用本地化安全提示，不将原始诊断写入磁盘日志。
 
-开发时在 IDEA 打开项目根目录，按 Gradle 导入，将 **Project SDK** 和 **Gradle JVM** 都设为 JDK 25，并使用项目 Wrapper。从旧 IDEA 的 Gradle 面板启动任务，可能拿不到新终端中的 Key；PowerShell 启动更容易复现。
+## 评测
 
-安装到日常使用的兼容 IDEA：**Settings → Plugins → 齿轮 → Install Plugin from Disk**，选择 0.4.0 ZIP，按提示重启。该 IDEA 进程也需要 Key 环境和正确课件路径。只修改源码不会更新已经安装的 ZIP。
+`evaluation/questions.json` 的原有 28 案例保留。`holdout-20261027.json` 首次评估后暴露问题，后续已作为开发回归，不能再称独立盲测。`holdout-final-20261027.json` 是最终冻结的 24 案例，不按其结果调参；也不等同于独立人员标注的外部盲测。
 
-## 5. 选中 Java 代码提问
-
-1. 打开 `.java` 文件，只选中你确实希望发送的代码。
-2. 右键 **Ask CourseMate AI**，现有工具窗口会显示只读预览。
-3. 输入框为空时填入 `Explain this code.`；已有问题保留。可以改为：
-   - `Find potential bugs.`
-   - `Explain how inheritance is used here.`
-   - `Suggest improvements without modifying the code.`
-4. 核对快照，点击 Send/Ctrl+Enter。选区是在 Action 执行时捕获的；之后修改编辑器内容，不会悄悄替换预览。
-5. 发送前要取消附件，点击 **取消代码上下文**。不会发送请求，问题文字仍可编辑。
-6. 成功后问题和附件清除；失败后保留供显式重试。正在回答时附加新代码会被拒绝，并提示等待。
-
-只附加选中的文字，不自动读取未选中代码和其他文件。代码被视为分析数据，不执行其中的指令。RAG 检索依据是**用户的问题**，不是选区里的变量名或注释；希望结合课件时，请在问题中写明 `inheritance`、`generics` 等课程概念。
-
-预览在成功、取消或面板销毁时清除。聊天显示只注明附件字符数，不自动复制整段选区；回答本身仍可能引用代码，因为这属于解释内容。
-
-## 6. 课程资料、路径与来源
-
-已检查的本地资料共 **12 份 PDF**，其中 **9 份讲义 / 199 个 PDF 页面 / 200 个文本块**纳入索引。2026-10-25 已核对元数据报告，以及与当前原始 PDF 相符的缓存指纹；这些不是其他组员任意资料集的固定计数。
-
-| 纳入的讲义 | 页数 | 文本块 |
-| --- | ---: | ---: |
-| `Lec-0-Introduction.pdf` | 4 | 5 |
-| `Lec-1-Java-Fundamentals.pdf` | 34 | 34 |
-| `Lec-2-OOP-with-Java.pdf` | 32 | 32 |
-| `Lec-3.1-Exceptions.pdf` | 11 | 11 |
-| `Lec-3.2-Generics-and-Collections.pdf` | 17 | 17 |
-| `Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf` | 16 | 16 |
-| `Lec-3.4-JUnit.pdf` | 7 | 7 |
-| `Lec-4-AI-Assisted-Java-Development.pdf` | 34 | 34 |
-| `Lec-5-Building-AI-Powered-Java-Applications.pdf` | 44 | 44 |
-
-排除 `AY202627S1-CST3492-Assignment-A.pdf`、`AY202627S1-CST3492-Assignment-A-Schedule.pdf`、`AY202627S1-CST3492-Programming-Exam.pdf`。根目录的作业 PDF 不参与检索。
-
-白名单为 `(?i)^Lec-[0-5](?:[.-].*)?\.pdf$`。只扫描指定目录的直接文件，不扫描子目录。其他讲义需要明确修改白名单，不是任意文件名都会入库。
-
-课件路径优先级：
-
-1. 环境变量 `COURSEMATE_COURSE_FILES`。
-2. JVM 属性 `coursemate.courseDir`；`runIde` 会将它设为当前检出目录中的 `course_files`。
-3. 当前打开项目的 `course_files`；没有项目基础路径时回退到工作目录相对路径。
-
-独立安装插件时，可在启动 IDEA **之前**配置路径，替换占位内容：
-
-~~~powershell
-$env:COURSEMATE_COURSE_FILES = 'C:\Path\To\CourseMate-AI\course_files'
-~~~
-
-实际路径会显示在欢迎文字中。缓存位于课件目录同级的 `.coursemate/index.json`，包含提取后的正文和元数据，而非只有统计数字，不能公开发布。程序通过文件名、大小和修改时间避免重复解析；新建/修改的文件重新解析，已删除文件移出索引，**重建课件索引**按钮可强制更新。如果内容改变但大小、时间均完全相同，请手动重建。损坏、受限或无文字 PDF 会警告并排除，部分空白页跳过；不进行 OCR。
-
-检索采用 BM25（最低 **0.25**）、主题加权覆盖率（最低 **50%**）、中文术语映射和 RAG 缩写分组，并过滤可识别的封面、课程日程和纯参考文献页。它仍是启发式关键词检索，改写问题可能导致漏检或低相关匹配。
-
-有依据的回答显示课程正文及 Java 生成的引用；页码指从 1 开始的实际 PDF 页序。通用补充单独标记。没有足够依据时不发送课程片段，界面显示：
-
-> Response is based on general knowledge; no relevant course material was found.  
-> [通用知识补充；未找到相关课程资料]
-
-成功的通用回答不显示课程引用或未使用候选页。API 失败仍是错误，而不是“无匹配”。文件名和来源 ID 校验**不能**证明模型的每句话都有事实依据。
-
-### 课件集冒烟检查
-
-对于当前讲义集，现有检索回归的预期是：
-
-- `Java inheritance`：OOP 讲义第 19 页排在首位，其他相关页可能只支持某些具体比较。
-- `Java generics`：相关候选来自 `Lec-3.2-Generics-and-Collections.pdf` 第 3、4、8 页。
-- `RAG retrieval augmented generation`：命中 Lec-5 讲义。
-- `Explain quantum entanglement and photon polarization measurements in simple terms.`：没有 Java 讲义依据；真实回答若成功，应显示通用知识标记，不显示课程引用。
-
-这些是回归/人工检查预期，不是新观察到的真实模型回答。应打开实际引用的 PDF 页核对内容，并通过重建按钮检查索引，无需修改原始资料。
-
-资料缺失时请自行取得原件。当前 `.gitignore` 已忽略根目录下整个 `course_files/`，以及根目录中三个被明确点名的作业/考试 PDF。**这只是 Git 安全规则；如果要主动将课程 PDF 放入任何仓库，或将其片段发送给外部模型，仍须先确认老师允许相应分享和使用。** 私有仓库本身不代表获得了再分发许可；对于已经被 Git 跟踪的文件，新增忽略规则也不会自动将其移出版本控制。
-
-## 7. 测试、构建记录及验证边界
-
-现有 XML 记录共 **87 项测试：87 通过、0 失败、0 错误、0 跳过**。各套件开始时间为 **2026-10-25 12:53:39.793–12:53:41.106 UTC**，即 **UTC+8 的 20:53:39.793–20:53:41.106**；报告约在 **UTC+8 的 20:53:46** 写入。
-
-本次文档检查日 **2026-10-25** 执行下列现有命令，得到 **BUILD SUCCESSFUL**，且 `test`、`buildPlugin` 均为 **UP-TO-DATE**，表明 Gradle 认为原记录和安装包仍适用于当前输入。**这不是本次重新执行了全部 87 项测试**：
-
-~~~powershell
-.\gradlew.bat test buildPlugin --offline --console=plain --no-daemon
-~~~
-
-| 测试套件 | 用例数 |
-| --- | ---: |
-| `AskCourseMateActionTest` | 5 |
-| `DeepSeekClientTest` | 43 |
-| `CourseKnowledgeBaseTest` | 4 |
-| `KeywordIndexTest` | 7 |
-| `PdfCourseReaderTest` | 4 |
-| `RagAnswerServiceTest` | 14 |
-| `RealCourseRetrievalTest` | 10 |
-
-覆盖真实 IntelliJ 编辑器/Action 模型、模拟 HTTP 请求与错误、PDF 解析和分块元数据、缓存和重建、真实讲义检索、无匹配状态及代码上下文传递。测试环境会移除 `DEEPSEEK_API_KEY` 并使用假凭据，**不会调用真实或付费 DeepSeek**。
-
-团队先前报告过 0.3.x 的真实插件启动、继承/泛型引用和合理的通用物理解释，同时发现了误匹配和文案问题。这些是用户报告的运行观察，不是新一次 0.4.0 端到端验收。真实 API 回答、菜单展开、窗口聚焦、取消和失败重试仍需分别记录人工结果，详见 [HANDOVER_CN.md](HANDOVER_CN.md)。
-
-## 8. 故障排查
-
-| 现象 | 检查方法 |
-| --- | --- |
-| Java/版本报错 | 确认 `java -version`、`javac -version` 均为 25；还要设置 Gradle JVM，不只是 Project SDK。 |
-| 本地 IDE 路径失效 | 路径应指向包含 `product-info.json` 的 IDEA 根目录；显式 `-PideaLocalPath` 可覆盖个人设置。 |
-| Key 未读取 | 在启动终端中配置，再从同一终端重启沙盒；不会读取 `.env`。 |
-| HTTP 401 | 核实自己的 DeepSeek 开放平台 Key，重新配置并重启，不分享或打印 Key。 |
-| HTTP 402 | 检查 API 账户余额；能使用网页聊天不代表 API 余额充足。 |
-| HTTP 429 / 5xx | 等待后手动重试，插件不进行后台自动重试。 |
-| 超时/连接失败 | 连接最长 15 秒、请求最长 120 秒。检查网络、DNS、代理、防火墙和服务状态；IDEA 代理不一定适用于 Java HttpClient。不要关闭 TLS 验证。 |
-| HTTP 400/422/404 | 缩短问题，按服务官方文档核对配置的模型和接口。 |
-| PDF 失败/无文字 | 检查权限、白名单、损坏/加密情况和文字可提取性；使用获准的可复制文字 PDF，扫描件需另行 OCR，然后重建。 |
-| 知识库为空 | 看工具窗口实际路径并检查第 6 节；仍可进行带警告的通用问答。 |
-| 没有相关资料 | 可尝试明确的课程术语。无匹配是正常的通用知识状态，不是 API 错误。 |
-| 工具窗口不出现 | 在新启动或已更新的 IDEA 中打开项目，再使用 View → Tool Windows。 |
-| 右键菜单不出现/不可用 | 确认已加载 0.4.0、扩展名为 `.java`、当前选区非空白；初始化完成后重试。 |
-| 回答/来源格式不合法 | 保护逻辑拒绝了错误 JSON 或未经验证的引用，可缩小任务重试。该规则较保守，即使部分内容有用，也可能拒绝模型正文。 |
-| Gradle 无法连接 daemon | 检查本机进程通信限制或安全软件，区别于 DeepSeek 认证问题。 |
-| 首次依赖下载失败 | 检查仓库网络访问；离线模式需要 SDK 和测试依赖已经缓存。 |
-| 新克隆目录完整测试失败 | `RealCourseRetrievalTest` 需要指定的 9 份讲义，并断言已知资料集特征，不是与资料集无关的通用冒烟测试。 |
-
-## 9. 项目维护与后续工作
-
-当前 `.gitignore` 已忽略 `.env` 和 `.env.*`，同时明确允许经过检查且不含凭据的 `.env.example`；插件本身不会读取 `.env` 文件。它还忽略个人 `local.properties`、`.gradle/`、`.gradle-user-home/`、`build/`、`.intellijPlatform/`、`.coursemate/`、`.idea/`、`*.iml`、旧式 IDEA 个人文件、根目录下整个 `course_files/`，以及根目录中三个被明确点名的作业/考试 PDF。规则有意不使用笼统的 `*.pdf`、`*.jar` 或 `*.zip`，以便保留必须提交的 Gradle Wrapper 文件和经批准的项目产物。共享前应检查所有暂存文件，确认其中没有凭据、个人路径、未经许可的课程资料、生成缓存或个人 IDE 状态。新增忽略规则**不会**自动取消对已经加入或提交文件的跟踪。
-
-UI 优化、语义/混合检索、ZIP/源码索引、多轮对话、流式输出和更强的回答质量检查均为可选后续工作，不是已经交付的功能。内部风险、架构、协作和最终验收清单见 [HANDOVER_CN.md](HANDOVER_CN.md)；两份交接文档都不能替代课程最终英文报告和展示材料。
+离线 fake 只验证检索、格式和状态，不证明真实回答正确。真实 API 人工验收使用 `evaluation/run-live-acceptance.ps1`，本机隐藏输入 Key，最多 6 次调用、失败不自动重试；输出真实回答供逐条人工核对。缺少 Key 时保持 NOT_RUN，不能拿 fake 代替。

@@ -16,6 +16,68 @@ class RagAnswerServiceTest {
     @TempDir Path temporary;
 
     @Test
+    void defaultCodeQuestionRetrievesMapApiRatherThanRawCommentsOrVariableNames() throws Exception {
+        TestPdfs.write(temporary.resolve("Lec-3.2-Test.pdf"),
+                "Map stores key-value pairs. HashMap counts.merge uses generic types.",
+                "Inheritance derives subclasses from superclasses.");
+        var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
+        new RagAnswerService(kb, (question, sources) -> {
+            assertFalse(sources.isEmpty());
+            assertEquals(1, sources.getFirst().page());
+            assertTrue(sources.stream().noneMatch(c -> c.page() == 2));
+            return "{\"course_answer\":\"Map counts values.\",\"general_answer\":\"\",\"source_ids\":[\"S1\"]}";
+        }).answer("Explain this code.", "// inheritance\nMap<String, Integer> counts = new HashMap<>(); counts.merge(\"inheritance\", 1, Integer::sum);");
+    }
+
+    @Test
+    void unrelatedTaskCannotGainCourseEvidenceFromSelectedJavaCode() throws Exception {
+        TestPdfs.write(temporary.resolve("Lec-3.2-Test.pdf"), "Map HashMap generics merge key value.");
+        var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
+        new RagAnswerService(kb, (question, sources) -> {
+            assertTrue(sources.isEmpty()); return "General physics.";
+        }).answer("Explain quantum entanglement and photon polarization.", "Map<String, Integer> counts = new HashMap<>();");
+    }
+
+    @Test
+    void ordinaryPdfFilenamesAreDataInBothGeneralAndGroundedAnswers() throws Exception {
+        var sources = List.of(new CourseChunk("Lec-1-Test.pdf", 2, "Use files."));
+        String json = "{\"course_answer\":\"Use new File(\\\"notes.pdf\\\").\",\"general_answer\":\"Open notes.pdf locally.\",\"source_ids\":[\"S1\"]}";
+        assertTrue(RagAnswerService.renderGrounded(json, sources).contains("new File(\"notes.pdf\")"));
+        var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
+        assertTrue(new RagAnswerService(kb, (q, s) -> "Use new File(\"notes.pdf\").").answer("local files").contains("notes.pdf"));
+    }
+
+    @Test
+    void eachClaimKeepsItsOwnSuppliedSourceAndOriginalMultilineExcerpt() throws Exception {
+        var sources = List.of(new CourseChunk("Lec-3.2-Test.pdf", 15, "Map example:\n  counts.merge(\"java\", 1, Integer::sum);"),
+                new CourseChunk("Lec-3.2-Test.pdf", 4, "Generics enforce type safety."));
+        String json = "{\"course_answer\":[{\"text\":\"Count using merge.\",\"source_ids\":[\"S1\"]},{\"text\":\"Type checks.\",\"source_ids\":[\"S2\"]}],\"general_answer\":\"Extra advice.\",\"source_ids\":[\"S1\",\"S2\"]}";
+        String result = RagAnswerService.renderGrounded(json, sources);
+        assertTrue(result.contains("Count using merge.\n[本段来源：S1]"));
+        assertTrue(result.contains("Type checks.\n[本段来源：S2]"));
+        assertTrue(result.contains(sources.getFirst().text()));
+        assertTrue(result.contains("结论未经自动事实验证"));
+        assertTrue(result.contains("不由课件证明"));
+    }
+
+    @Test
+    void rejectsUnprovidedClaimIdsMismatchedUnionAndExtraFields() {
+        var sources = List.of(new CourseChunk("Lec-1-Test.pdf", 2, "Actual material."));
+        for (String json : List.of(
+                "{\"course_answer\":[{\"text\":\"A\",\"source_ids\":[\"S2\"]}],\"general_answer\":\"\",\"source_ids\":[\"S1\"]}",
+                "{\"course_answer\":[{\"text\":\"A\",\"source_ids\":[\"S1\"]}],\"general_answer\":\"\",\"source_ids\":[]}",
+                "{\"course_answer\":\"A\",\"general_answer\":\"\",\"source_ids\":[\"S1\"],\"extra\":true}")) {
+            assertThrows(DeepSeekException.class, () -> RagAnswerService.renderGrounded(json, sources));
+        }
+    }
+
+    @Test
+    void codeFencesContainingSourceLikeStringsAreNotAttributions() throws Exception {
+        String json = "{\"course_answer\":\"```java\\nString label = \\\"[S9]\\\";\\n```\",\"general_answer\":\"\",\"source_ids\":[\"S1\"]}";
+        assertTrue(RagAnswerService.renderGrounded(json, List.of(new CourseChunk("Lec-1-Test.pdf", 2, "String literals."))).contains("String label"));
+    }
+
+    @Test
     void selectedCodeAndEditableTaskReachTheSameGeneratorAndKeepRealCourseSources() throws Exception {
         TestPdfs.write(temporary.resolve("Lec-2-Test.pdf"), "Inheritance derives subclasses from superclasses.");
         var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
@@ -97,8 +159,8 @@ class RagAnswerServiceTest {
         String answer = RagAnswerService.renderGrounded("{\"course_answer\":\"\","
                 + "\"general_answer\":\"A valid general explanation.\",\"source_ids\":[]}",
                 List.of(new CourseChunk("Lec-1-Test.pdf", 14, "Some retrieved candidate.")));
-        assertTrue(answer.contains(RagAnswerService.GENERAL_LABEL));
-        assertTrue(answer.contains(RagAnswerService.ZH_NOTICE));
+        assertTrue(answer.contains("候选课件未被回答采用"));
+        assertFalse(answer.contains(RagAnswerService.ZH_NOTICE));
         assertTrue(answer.contains("A valid general explanation."));
         assertFalse(answer.contains("模型未能"));
         assertFalse(answer.contains("课程资料回答"));
@@ -216,6 +278,62 @@ class RagAnswerServiceTest {
         assertTrue(result.contains("[From the course materials]"));
         assertTrue(result.contains("Lec-2-Test.pdf — PDF page 1"));
         assertFalse(result.contains("PDF 第"));
+    }
+
+    @Test
+    void changingTopicOrSelectingNewCodeDoesNotBorrowThePreviousCourseEvidence() throws Exception {
+        TestPdfs.write(temporary.resolve("Lec-3.2-Test.pdf"), "Generics type safety parameterized types.");
+        var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
+        var service = new RagAnswerService(kb, (request, sources) -> {
+            assertTrue(sources.isEmpty(), "An unrelated question must not inherit the prior course sources");
+            assertEquals("Java generics", JsonParser.parseString(request).getAsJsonObject().get("prior_question").getAsString());
+            return "General answer.";
+        });
+        for (String question : List.of("今晚吃什么？", "Please give me an example dinner recipe.",
+                "Explain quantum entanglement and photon polarization.")) {
+            service.answer(question, "", "Java generics", "Earlier answer.");
+        }
+        service.answer("Explain this code.", "int x = 1;", "Java generics", "Earlier answer.");
+    }
+
+    @Test
+    void englishFollowUpUsesOnlyThePriorQuestionForRetrievalAndDropsBothSourceAppendices() throws Exception {
+        TestPdfs.write(temporary.resolve("Lec-2-Test.pdf"), "Inheritance derives subclasses from superclasses.");
+        var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
+        var sources = List.of(new CourseChunk("Lec-2-Test.pdf", 1, "EXCERPT_SENTINEL inheritance details"));
+        for (ReplyLanguage language : ReplyLanguage.values()) {
+            String prior = RagAnswerService.renderGrounded("{\"course_answer\":[{\"text\":\"A child reuses its parent.\",\"source_ids\":[\"S1\"]}],\"general_answer\":\"Extra guidance.\",\"source_ids\":[\"S1\"]}", sources, language);
+            new RagAnswerService(kb, (request, retrieved) -> {
+                assertFalse(retrieved.isEmpty());
+                var context = JsonParser.parseString(request).getAsJsonObject();
+                String remembered = context.get("prior_answer").getAsString();
+                assertTrue(remembered.contains("A child reuses its parent."));
+                assertTrue(remembered.contains("Extra guidance."));
+                assertFalse(remembered.contains("EXCERPT_SENTINEL"));
+                assertFalse(remembered.contains(".pdf"));
+                assertFalse(remembered.contains("S1"));
+                return "{\"course_answer\":\"Child extends Parent.\",\"general_answer\":\"\",\"source_ids\":[\"S1\"]}";
+            }).answer("Please give me another example.", "", "Java inheritance", prior, ReplyLanguage.EN);
+        }
+    }
+
+    @Test
+    void englishCodeRetrievalAndPerParagraphCitationsSurviveTheMerge() throws Exception {
+        TestPdfs.write(temporary.resolve("Lec-3.2-Test.pdf"), "Map HashMap merge generics type safety.");
+        var kb = new CourseKnowledgeBase(temporary, temporary.resolve("index.json"), new PdfCourseReader());
+        String code = "Map<String, Integer> values = new HashMap<>(); values.merge(\"notes.pdf\", 1, Integer::sum);";
+        String answer = new RagAnswerService(kb, (request, sources) -> {
+            assertFalse(sources.isEmpty());
+            var context = JsonParser.parseString(request).getAsJsonObject();
+            assertEquals("en", context.get("answer_language").getAsString());
+            assertEquals(code, context.get("selected_code").getAsString());
+            return "{\"course_answer\":[{\"text\":\"Map merges counts.\",\"source_ids\":[\"S1\"]}],\"general_answer\":\"new File(\\\"notes.pdf\\\") is ordinary code.\",\"source_ids\":[\"S1\"]}";
+        }).answer("Explain this code.", code, "", "", ReplyLanguage.EN);
+        assertTrue(answer.contains("[Sources for this paragraph: S1]"));
+        assertTrue(answer.contains("Lec-3.2-Test.pdf — PDF page 1"));
+        assertTrue(answer.contains("claims are not automatically fact-checked"));
+        assertTrue(answer.contains("notes.pdf"));
+        assertFalse(answer.contains("PDF 第"));
     }
 
     @Test

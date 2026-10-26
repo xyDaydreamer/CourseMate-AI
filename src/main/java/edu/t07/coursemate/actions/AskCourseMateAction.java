@@ -30,11 +30,12 @@ public final class AskCourseMateAction extends DumbAwareAction {
             Messages.showInfoMessage(project, "CourseMate AI 工具窗口尚不可用，请稍后重试。", "CourseMate AI");
             return;
         }
+        var snapshot = JavaSelectionContext.capture(event, code);
         window.activate(() -> {
             if (project.isDisposed()) return;
             for (var content : window.getContentManager().getContents()) {
                 if (content.getComponent() instanceof CourseMateChatPanel panel) {
-                    if (!panel.prepareCodeQuestion(code)) {
+                    if (!panel.prepareCodeQuestion(snapshot)) {
                         Messages.showInfoMessage(project, "当前请求尚未结束，请等待后再次选择代码提问。", "CourseMate AI");
                     }
                     return;

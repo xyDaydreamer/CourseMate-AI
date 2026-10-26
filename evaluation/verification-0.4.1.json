@@ -1,0 +1,214 @@
+{
+  "version": "0.4.1",
+  "baseCommit": "76962510a9599f40eea92ee63fd7a51d546ec513",
+  "state": "LOCAL_UNCOMMITTED_CHANGES; NOT_PUSHED",
+  "tests": 113,
+  "originalTests": 87,
+  "addedTests": 26,
+  "failures": 0,
+  "errors": 0,
+  "skippedTests": 0,
+  "suites": [
+    {
+      "name": "edu.t07.coursemate.actions.AskCourseMateActionTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:33.771Z",
+      "time": "3.779"
+    },
+    {
+      "name": "edu.t07.coursemate.ai.DeepSeekClientTest",
+      "tests": "43",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:32.923Z",
+      "time": "0.236"
+    },
+    {
+      "name": "edu.t07.coursemate.rag.CodeRetrievalQueryTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:33.16Z",
+      "time": "0.001"
+    },
+    {
+      "name": "edu.t07.coursemate.rag.CourseKnowledgeBaseTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:33.162Z",
+      "time": "0.121"
+    },
+    {
+      "name": "edu.t07.coursemate.rag.KeywordIndexTest",
+      "tests": "9",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:33.283Z",
+      "time": "0.008"
+    },
+    {
+      "name": "edu.t07.coursemate.rag.PdfCourseReaderTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:33.292Z",
+      "time": "0.04"
+    },
+    {
+      "name": "edu.t07.coursemate.rag.RagAnswerServiceTest",
+      "tests": "25",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:32.32Z",
+      "time": "0.601"
+    },
+    {
+      "name": "edu.t07.coursemate.rag.RealCourseRetrievalTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:33.736Z",
+      "time": "0.015"
+    },
+    {
+      "name": "edu.t07.coursemate.ui.ChatMarkdownTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:33.757Z",
+      "time": "0.003"
+    },
+    {
+      "name": "edu.t07.coursemate.ui.DemoProjectSdkTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-26T15:44:37.551Z",
+      "time": "2.366"
+    }
+  ],
+  "buildPlugin": "SUCCESS",
+  "verifyPluginProjectConfiguration": "SUCCESS_WITH_EXISTING_UNTIL_BUILD_WARNING",
+  "compatibilityWarning": "until-build deliberately remains 262.*; future IDEs have not been verified",
+  "mainSourcesAndBuildSha256": "71b2753903721df1546422147b780cfe6725bf397e276966bc552dc816d21b20",
+  "pluginZipSha256": "ac91f224bec7fcc0e4577473f731b0990a8c94d6b0a021542988fc5986682f2d",
+  "paidApiCalls": 0,
+  "realApiAnswerQuality": "NOT_RUN",
+  "newUiVisualAcceptance": "USER_CONFIRMED SDK banner/red errors gone before remote merge; merged Markdown/language/header UI visual acceptance NOT_RUN",
+  "launcherCheck": "Windows PowerShell 5.1/CMD regression 6/6; bundled demo and explicit project with Unicode/spaces verified",
+  "launcherRealGradleDryRun": "BUILD SUCCESSFUL; selected :runIde with intact flags; no IDE restart or API call",
+  "launcherRegressionCommand": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/test-launcher.ps1",
+  "launcherDryRunCommand": "start-coursemate.cmd -Mode Run -DryRun",
+  "launcherRealStartup": {
+    "project": "demo",
+    "toolWindowShown": true,
+    "evidence": "IDE log: Opening existing project with .idea; CourseMate startup tool window shown",
+    "localTime": "2026-10-26 19:53:25 +08:00",
+    "realApiCalls": 0
+  },
+  "demoProjectSdkVerification": {
+    "actualIdeConfigured": true,
+    "classRoots": 70,
+    "timestamp": "2026-10-26 22:18:41 +08:00",
+    "realSdkIntegrationTest": "PASS; java.base verified; EDT left free during asynchronous SDK configuration",
+    "scope": "Only bundled demo with missing/broken SDK; reuse registered local SDK; preserve every valid project SDK and all other projects"
+  },
+  "brokenSdkRegression": {
+    "missingHome": "PASS",
+    "validHomeEmptyRoots": "PASS",
+    "editorStringMapHashMapErrorHighlighting": "PASS; no errors",
+    "validUserSdkPreserved": "PASS",
+    "otherProjectUntouched": "PASS",
+    "stableDemoSdkName": "CourseMate Demo JDK 25",
+    "runningSandboxConfigReload": "CONFIRMED in IDE log",
+    "userVisualConfirmation": "CONFIRMED by user screenshot: no missing SDK banner or red errors before remote merge",
+    "registeredValidSdkReused": "PASS; no rename or duplicate",
+    "sdkSettingsPersistence": "PASS; saved and present after real IDEA settings reload and second startup",
+    "writeSafeModality": "PASS; explicit non-modal write, no TransactionGuard error in actual startup"
+  },
+  "sdkStartupCheck": {
+    "Date": "2026-10-26",
+    "Sandbox": "D:/CMateSandbox",
+    "Project": "isolated sdk-reload-demo copy",
+    "FirstStart": "SDK registered and saved, 57 actual class roots",
+    "SettingsReload": "SDK remains in jdk.table.xml after global entities reload",
+    "SecondStart": "Persisted SDK loaded, no missing-SDK auto-download lookup",
+    "SdkStartupErrors": 0,
+    "PaidApiCalls": 0,
+    "VisibleUserWindow": "NOT_INSPECTED",
+    "CheckShutdown": "Only isolated check process terminated after each startup"
+  },
+  "remoteTests": 92,
+  "localTestsBeforeMerge": 104,
+  "mergeIntegrationTests": 4,
+  "mergeVerification": {
+    "remoteBase": "76962510a9599f40eea92ee63fd7a51d546ec513",
+    "previousBase": "13efb154287221d6b1aaf2ae11e38b091783cb92",
+    "remoteCommitsMerged": [
+      "92e5704",
+      "7696251"
+    ],
+    "retainedRemoteFeatures": [
+      "Markdown",
+      "English/Chinese replies",
+      "one previous question/answer"
+    ],
+    "retainedLocalFixes": [
+      "code retrieval features",
+      "BM25 normalization",
+      "citation contracts and excerpts",
+      "PDF structure and cache v2",
+      "launcher and SDK repair",
+      "configuration status and answer copy"
+    ],
+    "conflictsResolved": [
+      "RagAnswerService.java",
+      "CourseMateChatPanel.java"
+    ],
+    "firstIntegrationRun": {
+      "tests": 109,
+      "failures": 1,
+      "reason": "follow-up wording diluted topic coverage"
+    },
+    "finalIntegrationRun": {
+      "tests": 113,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "userApprovedFix": "Restrict previous-topic retrieval to explicit follow-ups and strip prior citation/source appendices",
+    "fixedCases": [
+      "Chinese follow-up",
+      "English follow-up",
+      "unrelated dinner/physics questions",
+      "new code does not inherit prior evidence",
+      "Chinese and English old-source appendices stripped",
+      "English code RAG with per-paragraph IDs",
+      "literal PDF indentation and nested fences in Markdown"
+    ],
+    "backupDirectory": "../tmp/coursemate-grade-review/pre-merge-20261026-233722",
+    "retainedStash": "6446c5347e631c2c9fcb3b6a6336082701a486a0",
+    "workingChanges": "UNCOMMITTED; UNSTAGED",
+    "remotePush": "NOT_PERFORMED",
+    "paidApiCalls": 0,
+    "limitations": [
+      "follow-up cues are conservative heuristics",
+      "only one previous Q/A is remembered; no history persistence",
+      "no real API quality score",
+      "merged UI layout not visually accepted"
+    ]
+  }
+}

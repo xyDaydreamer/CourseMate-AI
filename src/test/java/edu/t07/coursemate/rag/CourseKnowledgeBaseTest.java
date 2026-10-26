@@ -10,6 +10,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class CourseKnowledgeBaseTest {
     @TempDir Path temporary;
 
+    @Test
+    void oldFlattenedCacheIsRebuiltAndReloadedChunksAreImmutable() throws Exception {
+        TestPdfs.write(temporary.resolve("Lec-1-Test.pdf"), "Generics improve type safety.");
+        Path cache = temporary.resolve("index.json");
+        CountingReader reader = new CountingReader();
+        new CourseKnowledgeBase(temporary, cache, reader).refresh(false);
+        String version3 = Files.readString(cache);
+        assertTrue(version3.contains("\"version\":3"));
+        Files.writeString(cache, version3.replace("\"version\":3", "\"version\":1"));
+        new CourseKnowledgeBase(temporary, cache, reader).refresh(false);
+        assertEquals(2, reader.calls);
+        var report = new CourseKnowledgeBase(temporary, cache, reader).refresh(false);
+        assertEquals(2, reader.calls);
+        assertThrows(UnsupportedOperationException.class, () -> report.documents().getFirst().chunks().clear());
+    }
+
     private static final class CountingReader extends PdfCourseReader {
         int calls;
         @Override public Document read(Path file) throws IOException { calls++; return super.read(file); }

@@ -1,0 +1,19 @@
+﻿id,question,expected,before,after,pass,offlineMs
+B01,"Can one Java class have two direct superclasses, or does it inherit from only one?",Lec-2-OOP-with-Java.pdf:19,,Lec-2-OOP-with-Java.pdf:19; Lec-2-OOP-with-Java.pdf:20; Lec-2-OOP-with-Java.pdf:23,True,29.0377
+B02,请用例子说明重载方法和重写父类方法有什么区别。,Lec-2-OOP-with-Java.pdf:22; Lec-2-OOP-with-Java.pdf:20,,Lec-2-OOP-with-Java.pdf:20; Lec-2-OOP-with-Java.pdf:19; Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:7,True,4.9427
+B03,What changes when a subclass overrides an instance method rather than hiding a static method?,Lec-2-OOP-with-Java.pdf:22; Lec-2-OOP-with-Java.pdf:20,,Lec-2-OOP-with-Java.pdf:20; Lec-2-OOP-with-Java.pdf:19; Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:7,True,4.3268
+B04,泛型在编译阶段的类型检查，比把所有东西都当成 Object 有哪些好处？,Lec-3.2-Generics-and-Collections.pdf:4; Lec-3.2-Generics-and-Collections.pdf:3,,Lec-3.2-Generics-and-Collections.pdf:4; Lec-3.2-Generics-and-Collections.pdf:8; Lec-3.2-Generics-and-Collections.pdf:3,True,3.0111
+B05,Why can the diamond syntax in new ArrayList<>() omit the repeated type argument?,Lec-3.2-Generics-and-Collections.pdf:5,,Lec-3.2-Generics-and-Collections.pdf:5; Lec-3.2-Generics-and-Collections.pdf:7; Lec-3.2-Generics-and-Collections.pdf:4,True,2.9033
+B06,"What does a finally block contribute after try and catch, including when something fails?",Lec-3.1-Exceptions.pdf:6,,Lec-3.1-Exceptions.pdf:6; Lec-3.1-Exceptions.pdf:4; Lec-3.1-Exceptions.pdf:9,True,2.4055
+B07,受检异常与运行时异常对于调用者的处理要求是否一样？,Lec-3.1-Exceptions.pdf:5,,Lec-3.1-Exceptions.pdf:4; Lec-3.1-Exceptions.pdf:5; Lec-3.1-Exceptions.pdf:6,True,2.7399
+B08,I need a JUnit assertion to check an expected thrown exception; which assertion is appropriate?,Lec-3.4-JUnit.pdf:5,,Lec-3.4-JUnit.pdf:5; Lec-3.1-Exceptions.pdf:4; Lec-3.4-JUnit.pdf:3,True,2.4809
+B09,Would you explain the behaviour of the selected code?,Lec-3.2-Generics-and-Collections.pdf:15,Lec-5-Building-AI-Powered-Java-Applications.pdf:41,Lec-3.2-Generics-and-Collections.pdf:15; Lec-3.2-Generics-and-Collections.pdf:4; Lec-3.2-Generics-and-Collections.pdf:8,True,2.5079
+B10,请分析这段代码。,Lec-3.1-Exceptions.pdf:6,Lec-3.1-Exceptions.pdf:9; Lec-3.1-Exceptions.pdf:6; Lec-3.1-Exceptions.pdf:4,Lec-3.1-Exceptions.pdf:6; Lec-3.1-Exceptions.pdf:4; Lec-3.1-Exceptions.pdf:9,True,1.9879
+B11,What does Set guarantee about duplicate elements compared with a List?,Lec-3.2-Generics-and-Collections.pdf:14,,Lec-3.2-Generics-and-Collections.pdf:14; Lec-1-Java-Fundamentals.pdf:24; Lec-3.2-Generics-and-Collections.pdf:16,True,1.454
+B12,反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？,Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15,,Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10; Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14; Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9,False,0.9805
+B13,"For a course chatbot, how does retrieval augmented generation give an LLM access to lecture evidence?",Lec-5-Building-AI-Powered-Java-Applications.pdf:23; Lec-5-Building-AI-Powered-Java-Applications.pdf:22,,Lec-5-Building-AI-Powered-Java-Applications.pdf:23; Lec-5-Building-AI-Powered-Java-Applications.pdf:26; Lec-5-Building-AI-Powered-Java-Applications.pdf:22,True,1.4544
+B14,Explain encapsulation and separately explain the formation of coral reefs.,Lec-2-OOP-with-Java.pdf:13,,Lec-2-OOP-with-Java.pdf:13; Lec-2-OOP-with-Java.pdf:8; Lec-2-OOP-with-Java.pdf:6,True,1.6694
+B15,Describe techniques for observing distant exoplanet atmospheres.,,,,True,0.9996
+B16,请解释汉代盐铁政策对经济的影响。,,,,True,1.0889
+B17,Explain the selected method call without guessing the implementation.,,,,True,1.0907
+B18,How do I plan a dinner recipe for four people?,,,,True,0.8483

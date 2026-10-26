@@ -1,0 +1,39 @@
+{
+  "version": "0.5.2",
+  "date": "2026-10-27",
+  "upstreamHead": "76962510a9599f40eea92ee63fd7a51d546ec513",
+  "realApiCalls": 0,
+  "liveValidation": "DEFERRED_BY_USER",
+  "testResults": {
+    "integrationTest": {
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "test": {
+      "tests": 137,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "pluginSha256": "f03e3ea36493a45929113ec0e8386c9e422b3a7afbb18fe4e4b3eb0afcb4c3c6",
+  "original28": {
+    "hitAt3": "18/18",
+    "correctlyEmpty": "5/5",
+    "citationContracts": "5/5"
+  },
+  "frozen24": {
+    "hitAt3": "13/14",
+    "correctlyEmpty": "4/4",
+    "stateContracts": "6/6",
+    "remainingCase": "B12"
+  },
+  "reproducedBeforeFix": {
+    "repairFollowUpAndPreview": "4/4 failed",
+    "historyTaskCorrection": "4/7 failed"
+  },
+  "answerCorrectness": "NOT_RUN",
+  "claimEvidenceConsistency": "NOT_RUN"
+}

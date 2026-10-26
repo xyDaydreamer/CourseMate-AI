@@ -1,0 +1,153 @@
+{
+  "mode": "OFFLINE_FROZEN_QUERIES_NOT_INDEPENDENT_HUMAN_BLIND_TEST",
+  "positiveQuestions": 6,
+  "hitAt3Count": 6,
+  "negativeQuestions": 2,
+  "correctlyEmpty": 2,
+  "offlineContracts": 0,
+  "contractsPassed": 0,
+  "meanReciprocalRank": 0.8055555555555557,
+  "meanLabelledPrecisionAt3LowerBound": 0.3333333333333333,
+  "realApiCalls": 0,
+  "results": [
+    {
+      "id": "D01",
+      "question": "How can a subclass customize behaviour inherited from its parent?",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:20"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:20",
+        "Lec-2-OOP-with-Java.pdf:19",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:7"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 27.156,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D02",
+      "question": "How do I check whether an exception must be caught or declared?",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:5"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:5",
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 5.6164,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D03",
+      "question": "为什么用父类引用可以调用子类的方法？",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:22"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:22",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "Lec-2-OOP-with-Java.pdf:23"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 2.8718,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D04",
+      "question": "菱形运算符有什么用？",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:5"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:5"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 1.5025,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D05",
+      "question": "Explain this code.",
+      "code": "Map\u003cString, Integer\u003e counts \u003d new HashMap\u003c\u003e(); counts.merge(\"java\", 1, Integer::sum);",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:15",
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 2.8394,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D06",
+      "question": "Could you explain this code?",
+      "code": "Map\u003cString, Integer\u003e counts \u003d new HashMap\u003c\u003e(); counts.merge(\"java\", 1, Integer::sum);",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:15",
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 3.4402,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D07",
+      "question": "Explain the chosen code.",
+      "code": "public static void main(String[] args) { System.out.println(countWords(\"Java maps Java collections\"));",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 2.5673,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D08",
+      "question": "Explain quantum entanglement and photon polarization measurements.",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 1.0462,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    }
+  ]
+}

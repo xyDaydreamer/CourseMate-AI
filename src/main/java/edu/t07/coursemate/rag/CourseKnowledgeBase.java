@@ -10,7 +10,8 @@ import java.util.*;
 
 /** One local cache per course folder. Only refresh parses changed files; querying uses an in-memory index. */
 public final class CourseKnowledgeBase {
-    private static final int CACHE_VERSION = 1;
+    // v2 retains PDF newlines/code layout. Never reuse the flattened v1 chunks.
+    private static final int CACHE_VERSION = 3;
     private final Path directory;
     private final Path cache;
     private final PdfCourseReader reader;
@@ -21,7 +22,7 @@ public final class CourseKnowledgeBase {
     private Report report = new Report(List.of(), List.of(), 0);
 
     public CourseKnowledgeBase(Path directory) {
-        this(directory, directory.resolveSibling(".coursemate").resolve("index.json"), new PdfCourseReader());
+        this(directory, directory.resolveSibling(".coursemate").resolve("index-" + Integer.toUnsignedString(directory.toAbsolutePath().normalize().toString().hashCode(), 16) + ".json"), new PdfCourseReader());
     }
 
     public CourseKnowledgeBase(Path directory, Path cache, PdfCourseReader reader) {
@@ -95,7 +96,7 @@ public final class CourseKnowledgeBase {
                 }
                 PdfCourseReader.Document parsed = reader.read(file);
                 String hash = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(file)));
-                next.add(new FileIndex(name, size, modified, hash, parsed.pages(), parsed.textPages(), parsed.chunks(), ""));
+                next.add(new FileIndex(name, size, modified, hash, parsed.pages(), parsed.textPages(), CourseChunk.bindDocument(parsed.chunks(), hash), ""));
             } catch (IOException | RuntimeException | NoSuchAlgorithmException ignored) {
                 // A changed/unreadable file must not keep old chunks or silently claim success.
                 next.add(new FileIndex(name, size, modified, "", 0, 0, List.of(),
@@ -133,9 +134,18 @@ public final class CourseKnowledgeBase {
     }
 
     public synchronized List<CourseChunk> search(String question) { return index.search(question); }
+    public synchronized RetrievalResult retrieve(String question) {
+        RetrievalResult value = index.retrieve(question);
+        String version = documents.stream().map(FileIndex::sha256).reduce("v3", (a,b) -> a + ":" + b);
+        boolean unavailable = report.chunkCount() == 0 && !report.warnings().isEmpty();
+        return new RetrievalResult(unavailable ? RetrievalResult.Status.KNOWLEDGE_UNAVAILABLE : value.status(),
+                value.resolvedQuery(), value.candidates(), value.evidence(), value.uncoveredTopics(), version);
+    }
 
     public record FileIndex(String name, long size, long modified, String sha256, int pages,
-                            int textPages, List<CourseChunk> chunks, String problem) { }
+                            int textPages, List<CourseChunk> chunks, String problem) {
+        public FileIndex { chunks = List.copyOf(chunks); }
+    }
     private record Cache(int version, String directory, List<FileIndex> documents) { }
     public record Report(List<FileIndex> documents, List<String> warnings, int chunkCount) {
         public String summary() {

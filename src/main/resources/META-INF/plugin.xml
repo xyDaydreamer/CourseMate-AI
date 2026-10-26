@@ -10,6 +10,7 @@
         selected Java code from the editor context menu without modifying code.
     ]]></description>
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="CourseMate AI"

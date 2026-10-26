@@ -1,0 +1,20 @@
+{
+  "version": "0.5.1",
+  "upstreamHead": "76962510a9599f40eea92ee63fd7a51d546ec513",
+  "remoteChanges": 0,
+  "realApiCalls": 0,
+  "test": {
+    "tests": 125,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "integrationTest": {
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pluginSha256": "c64c7d35f7a07db10ab43080ce4c84e30435e81c2adbe908d28954092cbd7306",
+  "liveFailureDiagnosis": "Original response unavailable; fixed independently reproduced protocol variants, user retest required"
+}

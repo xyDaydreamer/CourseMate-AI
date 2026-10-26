@@ -6,8 +6,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import edu.t07.coursemate.ReplyLanguage;
 import edu.t07.coursemate.ai.DeepSeekException;
+import edu.t07.coursemate.ai.ModelResponse;
+import edu.t07.coursemate.chat.ChatSession;
+import edu.t07.coursemate.chat.AnswerResult;
+import java.util.UUID;
 
 import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -17,13 +22,125 @@ public final class RagAnswerService {
     public static final String GENERAL_NOTICE = "Response is based on general knowledge; no relevant course material was found.";
     public static final String ZH_NOTICE = "回答基于通用知识，未找到相关课程资料。";
     public static final String GENERAL_LABEL = "[通用知识补充；未找到相关课程资料]";
-    private static final Pattern INLINE_SOURCE = Pattern.compile("(?i)\\.pdf|第\\s*\\d+\\s*页|\\bpages?\\s*\\d+|\\[S\\d+]");
+    // A filename is ordinary data. Reject actual source markers/attributions outside code instead.
+    private static final Pattern INLINE_SOURCE = Pattern.compile("(?i)\\[S\\d+]|\\bS\\d+\\b|"
+            + "[\\p{L}\\p{N}_.-]+\\.pdf\\s*(?:[-—,:：/]\\s*)?(?:pages?\\s*\\d+|第\\s*\\d+\\s*页)|"
+            + "(?:来源|source|according to|参见|参考)\\s*[:：]?\\s*[\\p{L}\\p{N}_.-]+\\.pdf");
     private final CourseKnowledgeBase knowledge;
     private final AnswerGenerator generator;
+    private final ModelGenerator modelGenerator;
 
     public RagAnswerService(CourseKnowledgeBase knowledge, AnswerGenerator generator) {
         this.knowledge = knowledge;
         this.generator = generator;
+        this.modelGenerator = (q,s) -> ModelResponse.complete(generator.generate(q,s));
+    }
+
+    private RagAnswerService(CourseKnowledgeBase knowledge, ModelGenerator generator, boolean structured) {
+        this.knowledge = knowledge; this.modelGenerator = generator;
+        this.generator = (q,s) -> generator.generate(q,s).content();
+    }
+    public static RagAnswerService structured(CourseKnowledgeBase knowledge, ModelGenerator generator) {
+        return new RagAnswerService(knowledge, generator, true);
+    }
+    @FunctionalInterface public interface ModelGenerator {
+        ModelResponse generate(String question, List<CourseChunk> sources) throws DeepSeekException;
+    }
+
+    public AnswerResult ask(ChatSession.Request request) throws DeepSeekException {
+        checkCancelled();
+        var report = knowledge.refresh(false);
+        RetrievalResult retrieval = knowledge.retrieve(request.retrievalQuery());
+        JsonObject context = new JsonObject();
+        context.addProperty("question", request.question());
+        context.addProperty("resolved_question", request.resolvedQuestion());
+        context.addProperty("topic", request.context().topic());
+        context.addProperty("task", request.task().name());
+        context.addProperty("context_relation", request.relation().name());
+        context.addProperty("answer_language", request.language().code());
+        if (!request.code().empty()) {
+            context.addProperty("selected_code", request.code().text());
+            context.addProperty("selected_file", request.code().fileName());
+            context.addProperty("first_line", request.code().firstLine());
+            context.addProperty("last_line", request.code().lastLine());
+            context.addProperty("historical_code", request.historicalCode());
+        }
+        JsonArray history = new JsonArray();
+        for (var h : request.history()) {
+            JsonObject item = new JsonObject(); item.addProperty("question", h.question()); item.addProperty("answer", h.answer());
+            history.add(item);
+        }
+        if (!history.isEmpty()) context.add("history_for_reference_only", history);
+        List<String> warnings = new ArrayList<>(report.warnings()); warnings.addAll(request.notices());
+        String input = context.toString();
+        if (input.length() > ChatSession.MAX_TOTAL) throw new DeepSeekException(DeepSeekException.Kind.INPUT_LIMIT,
+                request.language().text("总上下文超过预算，请缩小问题或代码选区。", "The total context exceeds the budget. Shorten the question or code selection."), 0, null);
+        List<CourseChunk> supplied = new ArrayList<>(); int size = input.length();
+        for (var c : retrieval.evidence()) {
+            if (size + c.text().length() + 300 > ChatSession.MAX_TOTAL) { warnings.add("EVIDENCE_BUDGET"); continue; }
+            supplied.add(c); size += c.text().length() + 300;
+        }
+        retrieval = new RetrievalResult(supplied.isEmpty() && !retrieval.evidence().isEmpty() ? RetrievalResult.Status.INSUFFICIENT : retrieval.status(),
+                retrieval.resolvedQuery(), retrieval.candidates(), supplied, retrieval.uncoveredTopics(), retrieval.indexVersion());
+        checkCancelled();
+        ModelResponse model = modelGenerator.generate(input, supplied);
+        checkCancelled();
+        if (model.truncated()) return new AnswerResult(request.id(), List.of(), "", List.of(), retrieval,
+                AnswerResult.Completion.TRUNCATED, model, warnings);
+        if (!"stop".equals(model.finishReason()) && !"unknown".equals(model.finishReason()))
+            throw new DeepSeekException(DeepSeekException.Kind.FORMAT, "The model did not complete the answer.", 0, null);
+        if (supplied.isEmpty()) {
+            if (hasInlineSource(model.content())) throw invalidCitation();
+            return new AnswerResult(request.id(), List.of(), model.content(), List.of(), retrieval, AnswerResult.Completion.COMPLETE, model, warnings);
+        }
+        return parseStructured(request.id(), model, retrieval, warnings);
+    }
+
+    private static AnswerResult parseStructured(UUID turn, ModelResponse model, RetrievalResult retrieval, List<String> warnings) throws DeepSeekException {
+        List<CourseChunk> supplied = retrieval.evidence();
+        // Reuse the existing strict source whitelist/schema checks, independently of how the UI renders the answer.
+        JsonObject root;
+        try { root = parseCourseObject(model.content()); }
+        catch (RuntimeException e) { throw new DeepSeekException(DeepSeekException.Kind.FORMAT, "Invalid answer JSON", 0, e); }
+        if (!root.keySet().equals(Set.of("course_answer", "general_answer", "source_ids")))
+            throw new DeepSeekException(DeepSeekException.Kind.FORMAT, "Invalid answer schema", 0, null);
+        if (!root.get("source_ids").isJsonArray() || !root.get("general_answer").isJsonPrimitive()
+                || !root.get("general_answer").getAsJsonPrimitive().isString()
+                || !(root.get("course_answer").isJsonArray() || root.get("course_answer").isJsonPrimitive() && root.get("course_answer").getAsJsonPrimitive().isString()))
+            throw new DeepSeekException(DeepSeekException.Kind.FORMAT, "Invalid answer field types", 0, null);
+        renderGrounded(root.toString(), supplied);
+        List<AnswerResult.Claim> claims = new ArrayList<>();
+        JsonElement course = root.get("course_answer");
+        if (course.isJsonArray()) {
+            for (var e : course.getAsJsonArray()) {
+                JsonObject c = e.getAsJsonObject();
+                claims.add(new AnswerResult.Claim(c.get("text").getAsString(), stringIds(c.getAsJsonArray("source_ids"))));
+            }
+        } else if (!course.getAsString().isBlank()) claims.add(new AnswerResult.Claim(course.getAsString(), stringIds(root.getAsJsonArray("source_ids"))));
+        List<AnswerResult.Source> used = new ArrayList<>();
+        for (String id : stringIds(root.getAsJsonArray("source_ids"))) used.add(new AnswerResult.Source(id, supplied.get(Integer.parseInt(id.substring(1))-1)));
+        return new AnswerResult(turn, claims, root.get("general_answer").getAsString(), used, retrieval, AnswerResult.Completion.COMPLETE, model, warnings);
+    }
+    private static JsonObject parseCourseObject(String content) {
+        String json=content.strip();
+        if(json.startsWith("\ufeff"))json=json.substring(1).strip();
+        // Accept a single exact Markdown JSON envelope, never prose before/after it or invented citations.
+        var fence=Pattern.compile("(?is)^```(?:json)?\\s*\\R(.*)\\R```$").matcher(json);
+        if(fence.matches())json=fence.group(1).strip();
+        JsonObject root=JsonParser.parseString(json).getAsJsonObject();
+        // JSON null is a harmless representation of an absent optional supplement, not course evidence.
+        if(root.has("general_answer")&&root.get("general_answer").isJsonNull())root.addProperty("general_answer", "");
+        return root;
+    }
+
+    private static List<String> stringIds(JsonArray array) {
+        return array.asList().stream().map(JsonElement::getAsString).distinct().toList();
+    }
+    private static DeepSeekException invalidCitation() {
+        return new DeepSeekException(DeepSeekException.Kind.INVALID_CITATION, "The answer contains an unprovided course citation.", 0, null);
+    }
+    private static void checkCancelled() throws DeepSeekException {
+        if (Thread.currentThread().isInterrupted()) throw new DeepSeekException(DeepSeekException.Kind.CANCELLED, "Cancelled", 0, null);
     }
 
     public String answer(String question) throws DeepSeekException {
@@ -46,12 +163,9 @@ public final class RagAnswerService {
             throw new DeepSeekException(reply.text("请输入问题后再发送。", "Enter a question before sending."));
         }
         CourseKnowledgeBase.Report report = knowledge.refresh(false);
-        // Retrieve by the student's current task, not incidental names in source code or the previous answer.
-        List<CourseChunk> sources = knowledge.search(question);
         String rememberedQuestion = cleanPrior(priorQuestion, 500);
-        if (sources.isEmpty() && !rememberedQuestion.isEmpty()) {
-            sources = knowledge.search(rememberedQuestion + "\n" + question);
-        }
+        boolean follow = !rememberedQuestion.isEmpty() && (selectedCode == null || selectedCode.isBlank()) && ChatSession.isFollowUp(question);
+        List<CourseChunk> sources = knowledge.search(CodeRetrievalQuery.build(follow ? rememberedQuestion : question, selectedCode));
         String modelQuestion = composeQuestion(question, selectedCode, rememberedQuestion,
                 cleanPrior(priorAnswer, 1200), reply);
         String generated = generator.generate(modelQuestion, sources);
@@ -68,7 +182,7 @@ public final class RagAnswerService {
     }
 
     private static String renderGeneral(String generated, ReplyLanguage language) throws DeepSeekException {
-        if (INLINE_SOURCE.matcher(generated).find()) {
+        if (hasInlineSource(generated)) {
             throw new DeepSeekException(language.text(
                     "未检索到课程资料，但 AI 返回了来源标记；未展示该回答，请重试。未生成任何课程引用。",
                     "No course material was retrieved, but the model returned a source marker. The answer was hidden. No course citation was created."));
@@ -86,38 +200,46 @@ public final class RagAnswerService {
             throws DeepSeekException {
         ReplyLanguage reply = language == null ? ReplyLanguage.ZH : language;
         try {
-            JsonObject root = JsonParser.parseString(json).getAsJsonObject();
-            String course = requireText(root, "course_answer");
+            JsonObject root = parseCourseObject(json);
+            if (!root.keySet().equals(Set.of("course_answer", "general_answer", "source_ids"))) throw new IllegalArgumentException();
             String general = requireText(root, "general_answer");
-            JsonArray ids = root.getAsJsonArray("source_ids");
-            if (ids == null || (course.isBlank() && general.isBlank())) throw new IllegalArgumentException();
-            Set<Integer> used = new LinkedHashSet<>();
-            for (JsonElement id : ids) {
-                if (!id.isJsonPrimitive() || !id.getAsJsonPrimitive().isString()
-                        || !id.getAsString().matches("S[1-4]")) throw new IllegalArgumentException();
-                int number = Integer.parseInt(id.getAsString().substring(1));
-                if (number > sources.size()) throw new IllegalArgumentException();
-                used.add(number);
+            Set<Integer> used = requireIds(root.getAsJsonArray("source_ids"), sources.size());
+            List<Claim> claims = new ArrayList<>();
+            JsonElement course = root.get("course_answer");
+            if (course != null && course.isJsonArray()) {
+                Set<Integer> claimSources = new LinkedHashSet<>();
+                for (JsonElement element : course.getAsJsonArray()) {
+                    JsonObject claim = element.getAsJsonObject();
+                    if (!claim.keySet().equals(Set.of("text", "source_ids"))) throw new IllegalArgumentException();
+                    String text = requireText(claim, "text");
+                    Set<Integer> references = requireIds(claim.getAsJsonArray("source_ids"), sources.size());
+                    if (text.isBlank() || references.isEmpty()) throw new IllegalArgumentException();
+                    claims.add(new Claim(text, references)); claimSources.addAll(references);
+                }
+                if (!used.equals(claimSources)) throw new IllegalArgumentException();
+            } else {
+                // Backwards-compatible three-field replies: associate the entire course paragraph with its IDs.
+                String text = requireText(root, "course_answer");
+                if (!text.isBlank()) claims.add(new Claim(text, used));
             }
-            if (course.isBlank() != used.isEmpty()) throw new IllegalArgumentException();
-            // The model is asked for prose only. Reject inline file/page citations rather than displaying invented ones.
-            if (INLINE_SOURCE.matcher(course + "\n" + general).find()) throw new IllegalArgumentException();
+            if (claims.isEmpty() != used.isEmpty() || (claims.isEmpty() && general.isBlank())) throw new IllegalArgumentException();
+            if (hasInlineSource(general) || claims.stream().anyMatch(c -> hasInlineSource(c.text()))) throw new IllegalArgumentException();
             // A successful general answer is not a retrieval/model failure. Never list unused sources for it.
-            if (used.isEmpty()) return renderGeneral(general, reply);
+            if (used.isEmpty()) return reply.text("[通用知识补充；候选课件未被回答采用]", "[General knowledge; retrieved candidates were not used]") + "\n" + general;
             StringBuilder result = new StringBuilder();
-            if (!course.isBlank()) {
-                result.append(reply.text("[课程资料回答]\n", "[From the course materials]\n")).append(course).append("\n\n");
+            result.append(reply.text("[课程资料回答]\n", "[From the course materials]\n"));
+            for (Claim claim : claims) {
+                result.append(claim.text()).append(reply.text("\n[本段来源：", "\n[Sources for this paragraph: "));
+                result.append(String.join(", ", claim.sources().stream().map(n -> "S" + n).toList())).append("]\n\n");
             }
-            if (!general.isBlank()) {
-                result.append(reply.text("[通用知识补充；不由课件证明]\n", "[General knowledge; not established by the lecture]\n"))
-                        .append(general).append("\n\n");
-            }
-            result.append(reply.text("[Java 核对的课程来源：文件名 / PDF 页码（从 1 开始）]\n",
-                    "[Course sources verified in Java: file name / PDF page, starting at 1]\n"));
+            if (!general.isBlank()) result.append(reply.text("[通用知识补充；不由课件证明]\n", "[General knowledge; not established by the lecture]\n")).append(general).append("\n\n");
+            result.append(reply.text("[已校验来源文件与页码；结论未经自动事实验证]\n", "[Source identity and page checked; claims are not automatically fact-checked]\n"));
             for (int number : used) {
                 CourseChunk chunk = sources.get(number - 1);
                 result.append("[S").append(number).append("] ").append(chunk.fileName())
-                        .append(pageLabel(reply, chunk.page())).append('\n');
+                        .append(pageLabel(reply, chunk.page())).append("\n")
+                        .append(reply.text("[课件原文片段；请人工核对本段结论]\n", "[Original lecture excerpt; check the paragraph against this text]\n"))
+                        .append(literalExcerpt(chunk.text())).append("\n\n");
             }
             result.append(reply.text("\n[本次实际检索到的页面；不代表每页都支持回答]\n",
                     "\n[Pages retrieved for this question; not every page supports the answer]\n"));
@@ -128,9 +250,9 @@ public final class RagAnswerService {
             }
             return result.toString();
         } catch (RuntimeException ignored) {
-            throw new DeepSeekException(reply.text(
+            throw new DeepSeekException(DeepSeekException.Kind.INVALID_CITATION, reply.text(
                     "AI 返回的课程回答格式或来源不合法，未展示未经核对的回答；请重试或缩小问题范围。",
-                    "The course answer format or source was invalid, so the unchecked answer was hidden. Retry or narrow the question."));
+                    "The course answer format or source was invalid, so the unchecked answer was hidden. Retry or narrow the question."), 0, ignored);
         }
     }
 
@@ -152,18 +274,44 @@ public final class RagAnswerService {
         return context.toString();
     }
 
-    /** Drop citation lines so the model is not tempted to copy filenames or page numbers. */
+    private static String literalExcerpt(String text) {
+        int length = 3;
+        var backticks = Pattern.compile("`{3,}").matcher(text);
+        while (backticks.find()) length = Math.max(length, backticks.group().length() + 1);
+        String fence = "`".repeat(length);
+        return fence + "text\n" + text + "\n" + fence;
+    }
+
+    /** Conservative full-query cues: a new topic such as dinner must not inherit lecture evidence. */
+    private static boolean isContextualFollowUp(String question) {
+        String q = question.strip().toLowerCase(java.util.Locale.ROOT)
+                .replaceAll("[\\p{P}]+", " ").replaceAll("\\s+", " ").strip();
+        if (q.matches("(?:please )?(?:(?:can|could|would) you )?(?:give|show)(?: me)? "
+                + "(?:(?:one|an?|another|more|some) )*(?:examples?|details?)(?: (?:of|for) (?:that|this|it|the above))?"
+                + "|(?:please )?(?:explain|clarify|elaborate on) (?:that|this|it|the above)(?: (?:again|in more detail|further))?"
+                + "|why(?: is that| does that happen)?|(?:please )?(?:continue|go on)")) return true;
+        q = q.replace(" ", "");
+        return q.matches("(?:请)?(?:(?:再|继续|进一步)?(?:举|给|给我|提供)(?:一个|一些|更多|个)?(?:例子|示例)"
+                + "|(?:再|继续|进一步)?(?:解释|说明|展开|详细说明|详细解释)(?:一下|一点|一些)?(?:吗|呢)?"
+                + "|为什么(?:会)?这样|这是为什么|为什么|继续"
+                + "|(?:这个|那个|它|上面(?:的内容)?)(?:是什么意思|为什么|怎么理解|能举例吗))");
+    }
+
+    /** Keep prior prose/code, but stop before program-rendered sources, excerpts and index details. */
     private static String cleanPrior(String text, int limit) {
         if (text == null || text.isBlank()) return "";
         StringBuilder kept = new StringBuilder();
         for (String line : text.split("\n")) {
             String trimmed = line.strip();
-            if (trimmed.isEmpty() || INLINE_SOURCE.matcher(trimmed).find()
+            if (trimmed.startsWith("[已校验来源") || trimmed.startsWith("[Source identity")
                     || trimmed.startsWith("[Java 核对") || trimmed.startsWith("[本次实际检索")
                     || trimmed.startsWith("[知识库提示]") || trimmed.startsWith("[Course sources")
-                    || trimmed.startsWith("[Pages retrieved") || trimmed.startsWith("[Knowledge base]")) continue;
+                    || trimmed.startsWith("[Pages retrieved") || trimmed.startsWith("[Knowledge base]")
+                    || trimmed.startsWith("[课件原文片段") || trimmed.startsWith("[Original lecture excerpt")) break;
+            if (trimmed.isEmpty() || INLINE_SOURCE.matcher(trimmed).find()
+                    || trimmed.startsWith("[本段来源：") || trimmed.startsWith("[Sources for this paragraph:")) continue;
             if (!kept.isEmpty()) kept.append('\n');
-            kept.append(trimmed);
+            kept.append(line.stripTrailing());
         }
         String value = kept.toString().strip();
         if (value.length() <= limit) return value;
@@ -171,6 +319,26 @@ public final class RagAnswerService {
         if (Character.isLowSurrogate(value.charAt(end))) end--;
         return value.substring(0, end);
     }
+
+    private static Set<Integer> requireIds(JsonArray ids, int count) {
+        if (ids == null) throw new IllegalArgumentException();
+        Set<Integer> result = new LinkedHashSet<>();
+        for (JsonElement id : ids) {
+            if (!id.isJsonPrimitive() || !id.getAsJsonPrimitive().isString()
+                    || !id.getAsString().matches("S[1-4]")) throw new IllegalArgumentException();
+            int number = Integer.parseInt(id.getAsString().substring(1));
+            if (number > count) throw new IllegalArgumentException();
+            result.add(number);
+        }
+        return result;
+    }
+
+    private static boolean hasInlineSource(String text) {
+        String prose = text.replaceAll("(?s)```.*?```|`[^`\\r\\n]*`", " ");
+        return INLINE_SOURCE.matcher(prose).find();
+    }
+
+    private record Claim(String text, Set<Integer> sources) { }
 
     private static String requireText(JsonObject object, String name) {
         JsonElement value = object.get(name);

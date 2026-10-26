@@ -1,0 +1,10 @@
+[
+ {"id":"D01","question":"How can a subclass customize behaviour inherited from its parent?","expected":["Lec-2-OOP-with-Java.pdf:20"]},
+ {"id":"D02","question":"How do I check whether an exception must be caught or declared?","expected":["Lec-3.1-Exceptions.pdf:5"]},
+ {"id":"D03","question":"为什么用父类引用可以调用子类的方法？","expected":["Lec-2-OOP-with-Java.pdf:22"]},
+ {"id":"D04","question":"菱形运算符有什么用？","expected":["Lec-3.2-Generics-and-Collections.pdf:5"]},
+ {"id":"D05","question":"Explain this code.","code":"Map<String, Integer> counts = new HashMap<>(); counts.merge(\"java\", 1, Integer::sum);","expected":["Lec-3.2-Generics-and-Collections.pdf:15"]},
+ {"id":"D06","question":"Could you explain this code?","code":"Map<String, Integer> counts = new HashMap<>(); counts.merge(\"java\", 1, Integer::sum);","expected":["Lec-3.2-Generics-and-Collections.pdf:15"]},
+ {"id":"D07","question":"Explain the chosen code.","code":"public static void main(String[] args) { System.out.println(countWords(\"Java maps Java collections\"));","expected":[]},
+ {"id":"D08","question":"Explain quantum entanglement and photon polarization measurements.","expected":[]}
+]

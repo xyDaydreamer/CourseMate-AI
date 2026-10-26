@@ -11,6 +11,22 @@ class PdfCourseReaderTest {
     @TempDir Path temporary;
 
     @Test
+    void preservesLineCommentsIndentationAndParagraphs() {
+        String code = "Example:\r\n\r\nint x = 1;\r\n// increment next\r\n    x++;\r\n";
+        String text = PdfCourseReader.split("Lec-1-Test.pdf", 2, code).getFirst().text();
+        assertTrue(text.contains("Example:\n\nint x = 1;\n// increment next\n    x++;"));
+        assertFalse(text.contains("// increment next x++"));
+    }
+
+    @Test
+    void usesCompleteBlockBoundaryWhenItFitsRatherThanCuttingTheNextBlock() {
+        String block = "void first() {\n" + "    run();\n".repeat(55) + "}\n";
+        var chunks = PdfCourseReader.split("Lec-1-Test.pdf", 2, block + "void second() {\n" + "    next();\n".repeat(80) + "}\n");
+        assertEquals(block.stripTrailing(), chunks.getFirst().text());
+        assertTrue(chunks.stream().allMatch(c -> c.text().length() <= 1000));
+    }
+
+    @Test
     void parsesPagesWithOriginalNameAndOneBasedPageNumbersWithoutChangingPdf() throws Exception {
         Path file = TestPdfs.write(temporary.resolve("Lec-2-Fixture.pdf"),
                 "Encapsulation hides implementation details.", "Inheritance extends a superclass.");

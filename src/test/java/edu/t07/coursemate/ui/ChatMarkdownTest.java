@@ -1,6 +1,10 @@
 package edu.t07.coursemate.ui;
 
 import org.junit.jupiter.api.Test;
+import edu.t07.coursemate.ReplyLanguage;
+import edu.t07.coursemate.rag.CourseChunk;
+import edu.t07.coursemate.rag.RagAnswerService;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -42,6 +46,17 @@ class ChatMarkdownTest {
         assertTrue(html.contains("<ol><li>先写测试</li><li>再写实现</li></ol>"));
         assertTrue(html.contains("&lt;script&gt;"));
         assertFalse(html.contains("<script>"));
+    }
+
+    @Test
+    void realLectureExcerptsKeepIndentationNewlinesAndLiteralMarkdown() throws Exception {
+        String excerpt = "Map example:\n  if (ok) { // **keep literal**\n    counts.merge(\"java\", 1, Integer::sum);\n  }\n```java\n  nested();\n```";
+        String answer = RagAnswerService.renderGrounded("{\"course_answer\":\"Count values.\",\"general_answer\":\"\",\"source_ids\":[\"S1\"]}",
+                List.of(new CourseChunk("Lec-3.2-Test.pdf", 15, excerpt)), ReplyLanguage.EN);
+        String html = ChatMarkdown.toHtml(answer);
+        assertTrue(html.contains("<pre>" + excerpt + "</pre>"));
+        assertFalse(html.contains("<b>keep literal</b>"));
+        assertTrue(html.contains("Lec-3.2-Test.pdf — PDF page 15"));
     }
 
     @Test

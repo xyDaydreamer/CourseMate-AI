@@ -16,11 +16,18 @@ final class ChatMarkdown {
         if (raw == null || raw.isEmpty()) return "";
         String normalized = raw.replace("\r\n", "\n").replace('\r', '\n');
         StringBuilder html = new StringBuilder();
-        String[] parts = normalized.split("```", -1);
-        for (int i = 0; i < parts.length; i++) {
-            if (i % 2 == 1) html.append(codeBlock(parts[i]));
-            else html.append(prose(parts[i]));
+        // Match line fences, including longer fences used to quote literal lecture excerpts.
+        Matcher opening = Pattern.compile("(?m)^(`{3,})[ \\t]*([A-Za-z0-9_+#.-]{0,32})[ \\t]*\\n").matcher(normalized);
+        int position = 0;
+        while (opening.find(position)) {
+            html.append(prose(normalized.substring(position, opening.start())));
+            Matcher closing = Pattern.compile("(?m)^`{" + opening.group(1).length() + ",}[ \\t]*(?:\\n|$)")
+                    .matcher(normalized);
+            int end = closing.find(opening.end()) ? closing.start() : normalized.length();
+            html.append(codeBlock(opening.group(2) + "\n" + normalized.substring(opening.end(), end)));
+            position = end == normalized.length() ? end : closing.end();
         }
+        html.append(prose(normalized.substring(position)));
         return html.toString();
     }
 
