@@ -156,7 +156,7 @@ class DeepSeekClientTest {
         assertEquals("deepseek-flash", json.get("model").getAsString());
         assertFalse(json.get("stream").getAsBoolean());
         assertEquals("disabled", json.getAsJsonObject("thinking").get("type").getAsString());
-        assertEquals(2048, json.get("max_tokens").getAsInt());
+        assertEquals(4096, json.get("max_tokens").getAsInt());
         var messages = json.getAsJsonArray("messages");
         assertEquals(2, messages.size());
         assertEquals("system", messages.get(0).getAsJsonObject().get("role").getAsString());

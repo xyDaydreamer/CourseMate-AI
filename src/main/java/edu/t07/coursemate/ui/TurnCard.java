@@ -97,12 +97,19 @@ final class TurnCard extends ChatColumn {
         else{
             if(answer.completion()==AnswerResult.Completion.TRUNCATED)body.add(note(language.text("回答达到长度限制，未完整生成；没有自动重试，也未展示未经校验的课程正文。","The answer reached the output limit. It was not retried; unchecked structured content was hidden.")));
             List<String> values=translations.getOrDefault(displayedLanguage,List.of());
-            if(!answer.claims().isEmpty())body.add(note(language.text("课程解答","Course-based answer")));
-            for(int i=0;i<answer.claims().size();i++){
-                body.add(new RichText(values.size()>i?values.get(i):answer.claims().get(i).text(),false));
-                body.add(note(language.text("证据 ","Evidence ")+String.join(" · ",answer.claims().get(i).sourceIds())));
+            if(!answer.claims().isEmpty()){
+                int claimCount=answer.claims().size();
+                String course=values.size()>=claimCount
+                        ? String.join("\n\n", values.subList(0, claimCount))
+                        : answer.claims().stream().map(AnswerResult.Claim::text).reduce((a,b)->a+"\n\n"+b).orElse("");
+                body.add(new RichText(course,false));
             }
             String general=values.isEmpty()?answer.generalAnswer():values.getLast();
+            if(answer.claims().isEmpty()){
+                body.add(new RichText(language.text(
+                        "回答基于通用知识，未引用具体课程资料。",
+                        "Response is based on general knowledge; no specific course material is referenced."), false));
+            }
             if(!general.isBlank()){
                 body.add(note(answer.claims().isEmpty()?language.text("通用回答 · 本轮未引用课程资料","General answer · no course citation"):language.text("补充说明 · 不由课程资料证明","Additional explanation · not established by course evidence")));
                 body.add(new RichText(general,false));

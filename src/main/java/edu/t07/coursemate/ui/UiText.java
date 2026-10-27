@@ -24,9 +24,9 @@ final class UiText {
             case HTTP -> l.text("模型服务返回 HTTP ", "The model service returned HTTP ") + e.status()
                     + l.text("；请检查认证、额度或服务状态。", ". Check authentication, quota or service status.");
             case FORMAT -> switch (e.getMessage()) {
-                case "Invalid answer JSON" -> l.text("模型回复未能解析为回答 JSON；输入已保留，未自动重试。", "The model reply could not be parsed as answer JSON. Your input was kept; no automatic retry was made.");
-                case "Invalid answer schema", "Invalid answer field types" -> l.text("模型回复缺少必需字段或字段类型不符；输入已保留，未自动重试。", "The model reply has missing fields or incorrect field types. Your input was kept; no automatic retry was made.");
-                default -> l.text("模型响应格式无效或未完整生成；输入已保留，没有自动重试。", "The model response was invalid or incomplete. Your input was kept; no automatic retry was made.");
+                case "Invalid answer JSON" -> l.text("模型回复未能解析为回答 JSON；已自动再请求一次。", "The model reply could not be parsed as answer JSON. One automatic retry was made.");
+                case "Invalid answer schema", "Invalid answer field types" -> l.text("模型回复缺少必需字段或字段类型不符；已自动再请求一次。", "The model reply has missing fields or incorrect field types. One automatic retry was made.");
+                default -> l.text("模型响应格式无效或未完整生成；已自动再请求一次。", "The model response was invalid or incomplete. One automatic retry was made.");
             };
             case INVALID_CITATION -> l.text("回答包含格式或来源校验错误，未展示未经校验的正文。", "The answer failed format or citation validation; unchecked content was hidden.");
             case CANCELLED -> l.text("请求已停止。", "The request was stopped.");

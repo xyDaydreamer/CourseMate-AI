@@ -61,13 +61,26 @@ class RagAnswerServiceTest {
     }
 
     @Test
-    void rejectsUnprovidedClaimIdsMismatchedUnionAndExtraFields() {
+    void rejectsUnprovidedClaimIdsAndMismatchedUnion() {
         var sources = List.of(new CourseChunk("Lec-1-Test.pdf", 2, "Actual material."));
         for (String json : List.of(
                 "{\"course_answer\":[{\"text\":\"A\",\"source_ids\":[\"S2\"]}],\"general_answer\":\"\",\"source_ids\":[\"S1\"]}",
-                "{\"course_answer\":[{\"text\":\"A\",\"source_ids\":[\"S1\"]}],\"general_answer\":\"\",\"source_ids\":[]}",
-                "{\"course_answer\":\"A\",\"general_answer\":\"\",\"source_ids\":[\"S1\"],\"extra\":true}")) {
+                "{\"course_answer\":[{\"text\":\"A\",\"source_ids\":[\"S1\"]}],\"general_answer\":\"\",\"source_ids\":[]}")) {
             assertThrows(DeepSeekException.class, () -> RagAnswerService.renderGrounded(json, sources));
+        }
+    }
+
+    @Test
+    void plainStringObjectClaimAndExtraFieldsStillRenderTheCheckedSource() throws Exception {
+        var sources = List.of(new CourseChunk("Lec-3.2-Test.pdf", 15, "Map counts values."));
+        for (String json : List.of(
+                "{\"course_answer\":\"Map counts values.\",\"general_answer\":\"\",\"source_ids\":[\"S1\"],\"code\":\"counts.merge()\"}",
+                "{\"course_answer\":{\"text\":\"Map counts values.\",\"source_ids\":[\"S1\"],\"code\":\"counts.merge()\"},\"general_answer\":\"\",\"source_ids\":[1]}",
+                "{\"course_answer\":[\"Map counts values.\"],\"general_answer\":null,\"source_ids\":[\"s1\"]}")) {
+            String result = RagAnswerService.renderGrounded(json, sources);
+            assertTrue(result.contains("Map counts values."));
+            assertTrue(result.contains("Lec-3.2-Test.pdf"));
+            assertFalse(result.contains("counts.merge()"));
         }
     }
 

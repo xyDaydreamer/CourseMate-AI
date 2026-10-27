@@ -50,7 +50,8 @@ class TurnCardLayoutTest {
                     var result=new AnswerResult(request.id(),List.of(new AnswerResult.Claim(paragraph,List.of("S1")),new AnswerResult.Claim("```java\nAnimal a = new Dog();\na.speak();\n```\n"+paragraph,List.of("S1"))),"static 方法和字段访问需要分别讨论。".repeat(8),List.of(new AnswerResult.Source("S1",chunk)),new RetrievalResult(RetrievalResult.Status.READY,"polymorphism",List.of(),List.of(chunk),List.of(),"v3"),AnswerResult.Completion.COMPLETE,ModelResponse.complete(""),List.of());
                     var card=new TurnCard(request,ReplyLanguage.ZH,(c,l)->{},s->{});card.complete(result);card.setBackground(new Color(29,31,35));card.setOpaque(true);
                     card.setSize(width,card.heightAt(width));layout(card);assertStackLayout(card);
-                    assertEquals(1,countText(card,"课程解答"));
+                    assertEquals(1,countText(card,"变量的声明类型"));
+                    assertEquals(0,countText(card,"证据"));
                     assertFalse(buttonTexts(card).stream().anyMatch(t->t.contains("显示本语言")||t.contains("Show answer")));
                     if(fontSize==13&&width==800||fontSize==22&&width==340){
                         BufferedImage image=new BufferedImage(width,card.getHeight(),BufferedImage.TYPE_INT_RGB);Graphics2D g=image.createGraphics();card.printAll(g);g.dispose();

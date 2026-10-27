@@ -83,13 +83,43 @@ public final class RagAnswerService {
         retrieval = new RetrievalResult(supplied.isEmpty() && !retrieval.evidence().isEmpty() ? RetrievalResult.Status.INSUFFICIENT : retrieval.status(),
                 retrieval.resolvedQuery(), retrieval.candidates(), supplied, retrieval.uncoveredTopics(), retrieval.indexVersion());
         checkCancelled();
-        ModelResponse model = modelGenerator.generate(input, supplied);
-        checkCancelled();
-        if (model.truncated()) return new AnswerResult(request.id(), List.of(), "", List.of(), retrieval,
-                AnswerResult.Completion.TRUNCATED, model, warnings);
+        DeepSeekException rejected = null;
+        for (int attempt = 0; attempt < 2; attempt++) {
+            ModelResponse model;
+            try {
+                model = modelGenerator.generate(input, supplied);
+            } catch (DeepSeekException exception) {
+                if (!retryable(exception) || attempt == 1) throw exception;
+                rejected = exception;
+                continue;
+            }
+            checkCancelled();
+            if (model.truncated()) {
+                try { return parseStructured(request.id(), model, retrieval, warnings); }
+                catch (DeepSeekException ignored) {
+                    return new AnswerResult(request.id(), List.of(), "", List.of(), retrieval,
+                            AnswerResult.Completion.TRUNCATED, model, warnings);
+                }
+            }
+            try { return interpretComplete(request, model, retrieval, warnings); }
+            catch (DeepSeekException exception) {
+                if (!retryable(exception) || attempt == 1) throw exception;
+                rejected = exception;
+            }
+        }
+        throw rejected;
+    }
+
+    private static boolean retryable(DeepSeekException exception) {
+        return exception.kind() == DeepSeekException.Kind.FORMAT
+                || exception.kind() == DeepSeekException.Kind.INVALID_CITATION;
+    }
+
+    private AnswerResult interpretComplete(ChatSession.Request request, ModelResponse model, RetrievalResult retrieval,
+                                           List<String> warnings) throws DeepSeekException {
         if (!"stop".equals(model.finishReason()) && !"unknown".equals(model.finishReason()))
             throw new DeepSeekException(DeepSeekException.Kind.FORMAT, "The model did not complete the answer.", 0, null);
-        if (supplied.isEmpty()) {
+        if (retrieval.evidence().isEmpty()) {
             if (hasInlineSource(model.content())) throw invalidCitation();
             return new AnswerResult(request.id(), List.of(), model.content(), List.of(), retrieval, AnswerResult.Completion.COMPLETE, model, warnings);
         }
@@ -127,10 +157,96 @@ public final class RagAnswerService {
         // Accept a single exact Markdown JSON envelope, never prose before/after it or invented citations.
         var fence=Pattern.compile("(?is)^```(?:json)?\\s*\\R(.*)\\R```$").matcher(json);
         if(fence.matches())json=fence.group(1).strip();
-        JsonObject root=JsonParser.parseString(json).getAsJsonObject();
-        // JSON null is a harmless representation of an absent optional supplement, not course evidence.
-        if(root.has("general_answer")&&root.get("general_answer").isJsonNull())root.addProperty("general_answer", "");
+        JsonObject root;
+        try { root = JsonParser.parseString(json).getAsJsonObject(); }
+        catch (RuntimeException ignored) {
+            int start = json.indexOf('{');
+            int end = json.lastIndexOf('}');
+            if (start < 0 || end <= start) throw ignored;
+            root = JsonParser.parseString(json.substring(start, end + 1)).getAsJsonObject();
+        }
+        normalizeCourseObject(root);
         return root;
+    }
+
+    /** Fold common model shapes into the three-field reply. Source ids are still checked later. */
+    private static void normalizeCourseObject(JsonObject root) {
+        boolean idsMissing = !root.has("source_ids") || root.get("source_ids").isJsonNull();
+        for (String key : List.copyOf(root.keySet())) {
+            if (!key.equals("course_answer") && !key.equals("general_answer") && !key.equals("source_ids")) root.remove(key);
+        }
+        if (!root.has("general_answer") || root.get("general_answer").isJsonNull()) root.addProperty("general_answer", "");
+        JsonArray topIds = idsMissing ? new JsonArray() : normalizeIdArray(root.get("source_ids"));
+        root.add("source_ids", topIds);
+        if (!root.has("course_answer") || root.get("course_answer").isJsonNull()) root.addProperty("course_answer", "");
+        JsonElement course = root.get("course_answer");
+        if (course.isJsonObject()) {
+            JsonArray wrapped = new JsonArray();
+            wrapped.add(normalizeClaim(course.getAsJsonObject(), topIds));
+            root.add("course_answer", wrapped);
+            course = root.get("course_answer");
+        } else if (course.isJsonArray()) {
+            JsonArray claims = new JsonArray();
+            for (JsonElement element : course.getAsJsonArray()) {
+                if (element.isJsonObject()) claims.add(normalizeClaim(element.getAsJsonObject(), topIds));
+                else if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isString() && !element.getAsString().isBlank()) {
+                    JsonObject claim = new JsonObject();
+                    claim.addProperty("text", element.getAsString());
+                    claim.add("source_ids", topIds.deepCopy());
+                    claims.add(claim);
+                }
+            }
+            root.add("course_answer", claims);
+            course = claims;
+        }
+        if (idsMissing && course.isJsonArray()) {
+            JsonArray union = new JsonArray();
+            Set<String> seen = new LinkedHashSet<>();
+            for (JsonElement element : course.getAsJsonArray()) {
+                if (!element.isJsonObject() || !element.getAsJsonObject().has("source_ids")) continue;
+                for (JsonElement id : element.getAsJsonObject().getAsJsonArray("source_ids")) {
+                    if (seen.add(id.getAsString())) union.add(id.getAsString());
+                }
+            }
+            root.add("source_ids", union);
+        }
+    }
+
+    private static JsonObject normalizeClaim(JsonObject claim, JsonArray fallbackIds) {
+        String text = firstString(claim, "text", "content", "answer");
+        JsonArray ids = claim.has("source_ids") && !claim.get("source_ids").isJsonNull()
+                ? normalizeIdArray(claim.get("source_ids")) : fallbackIds.deepCopy();
+        JsonObject normalized = new JsonObject();
+        normalized.addProperty("text", text);
+        normalized.add("source_ids", ids);
+        return normalized;
+    }
+
+    private static String firstString(JsonObject object, String... names) {
+        for (String name : names) {
+            JsonElement value = object.get(name);
+            if (value != null && value.isJsonPrimitive() && value.getAsJsonPrimitive().isString()) return value.getAsString();
+        }
+        return "";
+    }
+
+    private static JsonArray normalizeIdArray(JsonElement element) {
+        JsonArray ids = new JsonArray();
+        if (element == null || element.isJsonNull()) return ids;
+        if (element.isJsonArray()) {
+            for (JsonElement item : element.getAsJsonArray()) addCanonicalId(ids, item);
+        } else addCanonicalId(ids, element);
+        return ids;
+    }
+
+    private static void addCanonicalId(JsonArray ids, JsonElement item) {
+        if (item == null || !item.isJsonPrimitive()) return;
+        String text;
+        if (item.getAsJsonPrimitive().isNumber()) text = "S" + item.getAsInt();
+        else text = item.getAsString().strip();
+        if (text.matches("[1-4]")) text = "S" + text;
+        else if (text.matches("(?i)S[1-4]")) text = text.toUpperCase(java.util.Locale.ROOT);
+        if (!text.isEmpty()) ids.add(text);
     }
 
     private static List<String> stringIds(JsonArray array) {

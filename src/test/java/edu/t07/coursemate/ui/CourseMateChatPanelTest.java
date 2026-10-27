@@ -90,11 +90,10 @@ class CourseMateChatPanelTest {
     @Test void formatFailureKeepsInputAndDoesNotBlockTheFollowingQuestion() throws Exception {
         AtomicInteger calls=new AtomicInteger();var panel=create((q,s)->{if(calls.incrementAndGet()==1)throw new DeepSeekException(DeepSeekException.Kind.FORMAT,"Invalid answer JSON",0,null);return ModelResponse.complete("Recovered answer.");},new AtomicInteger());
         try {
-            submit(panel,"First question");await(()->button(panel,"Send").isEnabled()&&find(panel,TurnCard.class).size()==1);
-            assertNull(find(panel,TurnCard.class).getFirst().answer);
-            assertEquals("First question",find(panel,JTextArea.class).stream().filter(a->"Question".equals(a.getAccessibleContext().getAccessibleName())).findFirst().orElseThrow().getText());
-            submit(panel,"Second question");await(()->find(panel,TurnCard.class).size()==2&&find(panel,TurnCard.class).getLast().answer!=null);
-            assertEquals("Recovered answer.",find(panel,TurnCard.class).getLast().answer.prose());assertEquals(2,calls.get());
+            submit(panel,"First question");await(()->button(panel,"Send").isEnabled()&&find(panel,TurnCard.class).size()==1&&find(panel,TurnCard.class).getFirst().answer!=null);
+            assertEquals("Recovered answer.",find(panel,TurnCard.class).getFirst().answer.prose());
+            assertEquals("",find(panel,JTextArea.class).stream().filter(a->"Question".equals(a.getAccessibleContext().getAccessibleName())).findFirst().orElseThrow().getText());
+            assertEquals(2,calls.get());
         }finally{SwingUtilities.invokeAndWait(panel::dispose);}
     }
     @Test void newConversationKeepsPreviousCardsAndDraftsReachable() throws Exception {
