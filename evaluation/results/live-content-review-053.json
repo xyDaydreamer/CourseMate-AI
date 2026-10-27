@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-27",
+  "mode": "LIVE_API_AGENT_REVIEW_NOT_INDEPENDENT_HUMAN_ACCEPTANCE",
+  "configuredModel": "deepseek-flash",
+  "totalApiCalls": 31,
+  "stageCalls": {"initial": 14, "pairedOldPrompt": 6, "fullCandidate": 6, "candidateConfirmation": 3, "finalBoundaryOnly": 2},
+  "formatRetries": 1,
+  "transportFailures": 0,
+  "fullCandidatePluginSha256": "b82d777b15035e75b4d1c9573baa8fe8ff60edaaa49f876fbcb9ea6427389fc6",
+  "baselinePluginSha256": "8b06977318bc8d2373ccf77aaaa9c9033894d1a9aad1a8588e925cbaa1ff3d7e",
+  "finalPluginSha256": "68339b603e5d3d5dcb0848ee425b47b71084ecf460f6a69eea1147b12b04ea90",
+  "pairedCaseFile": "evaluation/live-content-regression-053.json",
+  "pairedCaseSha256": "b7191a4bad266a5f5e00737acc0b7e3529ff40e72dc39d8f7499def8a9ac9f76",
+  "finalNewCaseFile": "evaluation/live-boundary-final-053.json",
+  "finalNewCaseSha256": "b1f37aea6d6e8718540faa147c3f6db414d1f32190512eea9bfafa8a5a487c39",
+  "productionDecision": {
+    "boundaryPrompt": "KEEP_TWO_GENERAL_INSTRUCTIONS",
+    "concurrencyAndExceptionPrompt": "REVERT_NO_STABLE_BENEFIT_AND_INCORRECT_EXTRA_IMPLEMENTATION_CLAIM",
+    "apiSpecificRules": false,
+    "answerTextReplacement": false,
+    "overallAnswerQuality": "NOT_FULLY_ACCEPTED_CONCURRENCY_AND_EXTRA_FACTS_REMAIN_UNRESOLVED"
+  },
+  "checks": [
+    {"id":"P1","subject":"Original closed println statement","baseline":"FAIL","fullCandidate":"PASS_TWO_OBSERVATIONS","finalBoundaryOnly":"PASS","beforeQuote":"does not close the call's parentheses","finalQuote":"The statement ends with a semicolon ... The call's parentheses are balanced"},
+    {"id":"P2","subject":"Original HashMap code explanation","baseline":"CORE_CORRECT_THIS_RUN_INITIAL_RUN_FAILED","fullCandidate":"CORE_CORRECT_BUT_EXTRA_TYPE_ADVICE_AMBIGUOUS","decision":"NO_STABLE_FACTUAL_FIX_CLAIM"},
+    {"id":"P3","subject":"HashMap concurrency and null assertions","baseline":"CORE_CORRECT_THIS_RUN_INITIAL_RUN_HAD_FALSE_NULL_NOTE","fullCandidate":"CORE_CORRECT_ONE_SCHEMA_RETRY_RECOVERED","decision":"NO_STABLE_FACTUAL_FIX_CLAIM"},
+    {"id":"P4","subject":"New actually truncated invocation","baseline":"PASS","fullCandidate":"PASS"},
+    {"id":"P5","subject":"New delimiters in strings and comments","baseline":"PASS","fullCandidate":"PASS"},
+    {"id":"P6","subject":"New ConcurrentHashMap implementation","baseline":"CORE_CORRECT","fullCandidate":"CORE_CORRECT_BUT_FALSE_CALLBACK_RETRY_NOTE","decision":"CONCURRENCY_PROMPT_REVERTED"},
+    {"id":"B2","subject":"New callback and delimiter literal on final artifact","finalBoundaryOnly":"PASS","finalQuote":"an unfinished method body, not an unfinished invocation"}
+  ],
+  "offline": {"unitTests":163,"integrationTests":14,"failures":0,"sixRetrievalGroups":"PASS","retrievalCases":"12/12","buildPlugin":"SUCCESS"},
+  "rawResultsDirectory": ".coursemate/acceptance",
+  "rawFiles": ["live-053-general.json","live-053-focused.json","live-053-recheck.json","live-content-before-053.json","live-content-after-053.json","live-content-confirm-053.json","live-boundary-final-053.json"],
+  "pushed": false
+}

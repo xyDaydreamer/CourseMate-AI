@@ -1,0 +1,8 @@
+[
+ {"id":"P1-original-closed-statement","question":"Explain the selected fragment. State what cannot be known without the method body.","code":"public static void main(String[] args) { System.out.println(countWords(\"Java maps Java collections\"));"},
+ {"id":"P2-original-map-explanation","question":"Could you explain this code?","code":"Map<String,Integer> counts=new HashMap<>(); counts.merge(\"java\",1,Integer::sum);"},
+ {"id":"P3-original-concurrency-question","question":"Is the update in this code atomic and safe when several threads use the same map? Explain the guarantee of the concrete implementation.","code":"Map<String,Integer> counts=new HashMap<>(); counts.merge(\"java\",1,Integer::sum);"},
+ {"id":"P4-new-cut-call","question":"Explain the selected fragment. State which visible parts are complete and which cannot be judged without the rest of the source.","code":"public static void main(String[] args) { System.out.println(countWords(\"Java maps Java collections\")"},
+ {"id":"P5-new-literals-and-comments","question":"解释这个选区。哪些部分完整，哪些信息无法从选区确定？","code":"void log() { System.out.println(\") ; } are text\"); // ) is only a comment"},
+ {"id":"P6-new-concurrent-implementation","question":"Is this per-key update atomic, and are there restrictions on null keys or the supplied value?","code":"Map<String,Integer> counts=new java.util.concurrent.ConcurrentHashMap<>(); counts.merge(\"java\",1,Integer::sum);"}
+]

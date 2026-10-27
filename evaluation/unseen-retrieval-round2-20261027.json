@@ -1,0 +1,12 @@
+[
+ {"id":"N01","question":"Discuss efficiency and maintainability trade-offs in greenhouse irrigation.","expected":[]},
+ {"id":"N02","question":"What are the performance costs and security restrictions of long-distance bicycle commuting?","expected":[]},
+ {"id":"N03","question":"油画装裱有什么可读性和性能方面的局限？","expected":[]},
+ {"id":"N04","question":"钢琴调音在编译期检查和可维护性方面有什么不足？","expected":[]},
+ {"id":"N05","question":"What benefits of exceptions help group errors into types and propagate them up the call stack?","expected":["Lec-3.1-Exceptions.pdf:11"]},
+ {"id":"N06","question":"Explain the disadvantages of reflection when runtime permissions are restricted.","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"]},
+ {"id":"N07","question":"在创建一个类的实例时，构造方法如何初始化字段？","expected":["Lec-2-OOP-with-Java.pdf:6","Lec-2-OOP-with-Java.pdf:7"]},
+ {"id":"N08","question":"How do assertions compare expected and actual values in a JUnit test?","expected":["Lec-3.4-JUnit.pdf:5"]},
+ {"id":"N09","question":"为什么泛型能在编译时发现错误类型并省去强制转换？","expected":["Lec-3.2-Generics-and-Collections.pdf:4"]},
+ {"id":"N10","question":"How does Method.invoke perform reflective method invocation with an object and arguments? Explain reflection.","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"]}
+]

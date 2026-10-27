@@ -1,0 +1,537 @@
+{
+  "label": "final-053",
+  "timestamp": "2026-10-27T06:15:26.128762800Z",
+  "mode": "OFFLINE_RETRIEVAL_AND_SCRIPTED_CONTRACT_ONLY",
+  "questionsSha256": "76ad2c5ba1d87a362ee66e15063de62caa9b541197164ab5b0b50b1a7ba09dea",
+  "corpus": [
+    {
+      "file": "Lec-0-Introduction.pdf",
+      "sha256": "a4e25aa51a1bbcbbaf0b634b63ce466eba2291fe8d563d7d4c291d77add519ff"
+    },
+    {
+      "file": "Lec-1-Java-Fundamentals.pdf",
+      "sha256": "8a172bb1d600e4ccfc34d6a83c22ce07b5ff3c2c451f9f5cd40d2e871091f7c1"
+    },
+    {
+      "file": "Lec-2-OOP-with-Java.pdf",
+      "sha256": "3fc2c08ec40fd5c5c89becd14c0f3fa30286a53870cf02d3a87fb8114994cd25"
+    },
+    {
+      "file": "Lec-3.1-Exceptions.pdf",
+      "sha256": "caad773a8f9d8ad356bd9b4d33f5a887398536cdf76da06d52bb8c6be6c0c292"
+    },
+    {
+      "file": "Lec-3.2-Generics-and-Collections.pdf",
+      "sha256": "6892ebc40813ed39e75ae1bda0f7b48347363569431a4ed788f2361a538f16b3"
+    },
+    {
+      "file": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf",
+      "sha256": "0b809aa40861e9ffe21e83ad058e9bb8d53c502113e06a6fb452bcbbb9527111"
+    },
+    {
+      "file": "Lec-3.4-JUnit.pdf",
+      "sha256": "e0a8a8720889d9ec8ba8d66b24c274c046f52307d2258b5b6bb705e90f87f6fb"
+    },
+    {
+      "file": "Lec-4-AI-Assisted-Java-Development.pdf",
+      "sha256": "1f96fde6d341f2598c06ce58ff90421eb508b2e37ce357457092aef36da1ea27"
+    },
+    {
+      "file": "Lec-5-Building-AI-Powered-Java-Applications.pdf",
+      "sha256": "56002983faf5b0a75d6bf6d327c860e69374f5b2b114c74d8b7a85ae8ca09ca1"
+    }
+  ],
+  "chunks": 201,
+  "indexDocuments": [
+    {
+      "file": "Lec-0-Introduction.pdf",
+      "pages": 4,
+      "chunks": 5
+    },
+    {
+      "file": "Lec-1-Java-Fundamentals.pdf",
+      "pages": 34,
+      "chunks": 34
+    },
+    {
+      "file": "Lec-2-OOP-with-Java.pdf",
+      "pages": 32,
+      "chunks": 32
+    },
+    {
+      "file": "Lec-3.1-Exceptions.pdf",
+      "pages": 11,
+      "chunks": 11
+    },
+    {
+      "file": "Lec-3.2-Generics-and-Collections.pdf",
+      "pages": 17,
+      "chunks": 17
+    },
+    {
+      "file": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf",
+      "pages": 16,
+      "chunks": 16
+    },
+    {
+      "file": "Lec-3.4-JUnit.pdf",
+      "pages": 7,
+      "chunks": 7
+    },
+    {
+      "file": "Lec-4-AI-Assisted-Java-Development.pdf",
+      "pages": 34,
+      "chunks": 34
+    },
+    {
+      "file": "Lec-5-Building-AI-Powered-Java-Applications.pdf",
+      "pages": 44,
+      "chunks": 45
+    }
+  ],
+  "coldImportMsSingleRun": 1277.6331,
+  "positiveQuestions": 18,
+  "hitAt3Count": 18,
+  "hitAt3": 1.0,
+  "negativeQuestions": 5,
+  "correctlyEmptyCount": 5,
+  "contractCases": 5,
+  "contractPasses": 5,
+  "paidApiCalls": 0,
+  "results": [
+    {
+      "id": "R01",
+      "kind": "retrieval",
+      "question": "Java inheritance",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:19",
+        "Lec-2-OOP-with-Java.pdf:30"
+      ],
+      "actualTop3": [
+        "Lec-2-OOP-with-Java.pdf:19",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-2-OOP-with-Java.pdf:30"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 21.2023,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R02",
+      "kind": "retrieval",
+      "question": "请解释封装。",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:13"
+      ],
+      "actualTop3": [
+        "Lec-2-OOP-with-Java.pdf:13",
+        "Lec-2-OOP-with-Java.pdf:8",
+        "Lec-2-OOP-with-Java.pdf:6"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 4.1151,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R03",
+      "kind": "retrieval",
+      "question": "Java generics",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:3",
+        "Lec-3.2-Generics-and-Collections.pdf:4"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.9073,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R04",
+      "kind": "retrieval",
+      "question": "Explain how generics improve type safety and eliminate casts.",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:4"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:3",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 3.2788,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R05",
+      "kind": "retrieval",
+      "question": "请详细说明泛型为什么能够提高类型安全并减少强制类型转换。",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:4"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:3",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 3.1603,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R06",
+      "kind": "retrieval",
+      "question": "What are parameterized types and type arguments?",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:5",
+        "Lec-3.2-Generics-and-Collections.pdf:6"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:5",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 2.3261,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R07",
+      "kind": "retrieval",
+      "question": "How do I count the frequency of words in a text with a map?",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:15"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:15",
+        "Lec-4-AI-Assisted-Java-Development.pdf:20",
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:24"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.639,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R08",
+      "kind": "retrieval",
+      "question": "怎么遍历 Map 并删除元素？",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:16"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:16",
+        "Lec-3.2-Generics-and-Collections.pdf:15",
+        "Lec-4-AI-Assisted-Java-Development.pdf:20"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 2.0752,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R09",
+      "kind": "retrieval",
+      "question": "Explain this code.",
+      "code": "Map<String, Integer> counts = new HashMap<>(); counts.merge(\"java\", 1, Integer::sum);",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:15"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:15",
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 3.6935,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R10",
+      "kind": "retrieval",
+      "question": "解释这段代码。",
+      "code": "List<String> names = new ArrayList<>(); names.add(\"Alice\");",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:5",
+        "Lec-3.2-Generics-and-Collections.pdf:14"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:5",
+        "Lec-3.2-Generics-and-Collections.pdf:7",
+        "Lec-3.2-Generics-and-Collections.pdf:4"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 2.9005,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R11",
+      "kind": "retrieval",
+      "question": "Explain this code.",
+      "code": "try { readFile(); } catch (IOException e) { recover(e); } finally { close(); }",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "actualTop3": [
+        "Lec-3.1-Exceptions.pdf:6",
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:9"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.5804,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R12",
+      "kind": "retrieval",
+      "question": "When should I use a checked exception instead of a runtime exception?",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:5"
+      ],
+      "actualTop3": [
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:5",
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.3472,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R13",
+      "kind": "retrieval",
+      "question": "What is the difference between method overloading and overriding?",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:22"
+      ],
+      "actualTop3": [
+        "Lec-2-OOP-with-Java.pdf:22",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:7",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:6"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.1946,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R14",
+      "kind": "retrieval",
+      "question": "JUnit assertions assertThrows assertEquals",
+      "expected": [
+        "Lec-3.4-JUnit.pdf:5"
+      ],
+      "actualTop3": [
+        "Lec-3.4-JUnit.pdf:3",
+        "Lec-3.4-JUnit.pdf:5",
+        "Lec-3.4-JUnit.pdf:2"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.5382,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R15",
+      "kind": "retrieval",
+      "question": "JUnit @BeforeEach @AfterEach lifecycle",
+      "expected": [
+        "Lec-3.4-JUnit.pdf:4"
+      ],
+      "actualTop3": [
+        "Lec-3.4-JUnit.pdf:4",
+        "Lec-3.4-JUnit.pdf:3",
+        "Lec-3.4-JUnit.pdf:5"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.2592,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R16",
+      "kind": "retrieval",
+      "question": "Explain this code.",
+      "code": "@Test void increments() { assertEquals(1, counter.increment()); }",
+      "expected": [
+        "Lec-3.4-JUnit.pdf:3",
+        "Lec-3.4-JUnit.pdf:5"
+      ],
+      "actualTop3": [
+        "Lec-3.4-JUnit.pdf:3",
+        "Lec-3.4-JUnit.pdf:5",
+        "Lec-3.4-JUnit.pdf:2"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.4253,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R17",
+      "kind": "retrieval",
+      "question": "RAG retrieval augmented generation",
+      "expected": [
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:23"
+      ],
+      "actualTop3": [
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:23",
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:26",
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:22"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.3913,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R18",
+      "kind": "retrieval",
+      "question": "How do generics interact with inheritance, and why is a Box<String> not a Box<Object>?",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "actualTop3": [
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.2467,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R19",
+      "kind": "retrieval",
+      "question": "Explain Spring @Transactional propagation REQUIRES_NEW and distributed XA transactions.",
+      "expected": [],
+      "actualTop3": [],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 0.8694,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R20",
+      "kind": "retrieval",
+      "question": "请解释量子纠缠实验中的光子偏振测量。",
+      "expected": [],
+      "actualTop3": [],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 0.8473,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R21",
+      "kind": "retrieval",
+      "question": "Explain lunar geology and volcanic craters in simple terms.",
+      "expected": [],
+      "actualTop3": [],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 0.772,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R22",
+      "kind": "retrieval",
+      "question": "Explain quantum entanglement and photon polarization measurements.",
+      "code": "Map<String, Integer> counts = new HashMap<>(); counts.merge(\"java\", 1, Integer::sum);",
+      "expected": [],
+      "actualTop3": [],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 0.9918,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "R23",
+      "kind": "retrieval",
+      "question": "Explain this code.",
+      "code": "// inheritance generics Map\nclass Example { String text = \"HashMap merge\"; }",
+      "expected": [],
+      "actualTop3": [],
+      "retrievalPass": true,
+      "elapsedMsSingleRun": 1.1127,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "V24",
+      "kind": "citation",
+      "question": "Normal PDF filename in grounded Java code",
+      "response": "{\"course_answer\":\"Use new File(\\\"notes.pdf\\\") in the example.\",\"general_answer\":\"\",\"source_ids\":[\"S1\"]}",
+      "accepted": true,
+      "actualAccepted": true,
+      "contractPass": true,
+      "elapsedMsSingleRun": 0.2388,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "V25",
+      "kind": "generalCitation",
+      "question": "Normal PDF filename in general Java code",
+      "response": "Use new File(\"notes.pdf\") to name the local file.",
+      "accepted": true,
+      "actualAccepted": true,
+      "contractPass": true,
+      "elapsedMsSingleRun": 2.8986,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "V26",
+      "kind": "citation",
+      "question": "Invented source ID",
+      "response": "{\"course_answer\":\"A claim.\",\"general_answer\":\"\",\"source_ids\":[\"S9\"]}",
+      "accepted": false,
+      "actualAccepted": false,
+      "contractPass": true,
+      "elapsedMsSingleRun": 0.3505,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "V27",
+      "kind": "citation",
+      "question": "Source ID not supplied this round",
+      "response": "{\"course_answer\":\"A claim.\",\"general_answer\":\"\",\"source_ids\":[\"S2\"]}",
+      "accepted": false,
+      "actualAccepted": false,
+      "contractPass": true,
+      "elapsedMsSingleRun": 0.0505,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    },
+    {
+      "id": "V28",
+      "kind": "citation",
+      "question": "Invented inline filename and page",
+      "response": "{\"course_answer\":\"Invented.pdf page 999\",\"general_answer\":\"\",\"source_ids\":[\"S1\"]}",
+      "accepted": false,
+      "actualAccepted": false,
+      "contractPass": true,
+      "elapsedMsSingleRun": 0.0718,
+      "realApiAnswerCorrectness": "NOT_RUN",
+      "realApiCitationAccuracy": "NOT_RUN"
+    }
+  ],
+  "pluginZipSha256": "8b06977318bc8d2373ccf77aaaa9c9033894d1a9aad1a8588e925cbaa1ff3d7e",
+  "runnerSha256": "a5b4faff5190544a01e3a8ba297780ccaec5f5c0818b613e25917ecfe0c59e52"
+}

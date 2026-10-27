@@ -1,0 +1,173 @@
+{
+  "mode": "OFFLINE_FROZEN_QUERIES_NOT_INDEPENDENT_HUMAN_BLIND_TEST",
+  "positiveQuestions": 6,
+  "hitAt3Count": 5,
+  "negativeQuestions": 4,
+  "correctlyEmpty": 4,
+  "offlineContracts": 0,
+  "contractsPassed": 0,
+  "meanReciprocalRank": 0.6388888888888888,
+  "meanLabelledPrecisionAt3LowerBound": 0.27777777777777773,
+  "realApiCalls": 0,
+  "results": [
+    {
+      "id": "N01",
+      "question": "Discuss efficiency and maintainability trade-offs in greenhouse irrigation.",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 25.1516,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N02",
+      "question": "What are the performance costs and security restrictions of long-distance bicycle commuting?",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "INSUFFICIENT",
+      "pass": true,
+      "elapsedMsOffline": 7.0357,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N03",
+      "question": "油画装裱有什么可读性和性能方面的局限？",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 12.7756,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N04",
+      "question": "钢琴调音在编译期检查和可维护性方面有什么不足？",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 2.9617,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N05",
+      "question": "What benefits of exceptions help group errors into types and propagate them up the call stack?",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:11"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.0,
+      "acceptableLabelCoverage": 0.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:9",
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "retrievalStatus": "READY",
+      "pass": false,
+      "elapsedMsOffline": 18.9009,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N06",
+      "question": "Explain the disadvantages of reflection when runtime permissions are restricted.",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 3.9663,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N07",
+      "question": "在创建一个类的实例时，构造方法如何初始化字段？",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:6",
+        "Lec-2-OOP-with-Java.pdf:7"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 0.5,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:6",
+        "Lec-2-OOP-with-Java.pdf:23",
+        "Lec-2-OOP-with-Java.pdf:12"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 7.132,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N08",
+      "question": "How do assertions compare expected and actual values in a JUnit test?",
+      "expected": [
+        "Lec-3.4-JUnit.pdf:5"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.4-JUnit.pdf:3",
+        "Lec-3.4-JUnit.pdf:5",
+        "Lec-3.4-JUnit.pdf:7"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 13.094,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N09",
+      "question": "为什么泛型能在编译时发现错误类型并省去强制转换？",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:4"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 14.1883,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "N10",
+      "question": "How does Method.invoke perform reflective method invocation with an object and arguments? Explain reflection.",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 4.7948,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    }
+  ]
+}

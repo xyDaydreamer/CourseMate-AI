@@ -1,0 +1,8 @@
+[
+ {"question":"反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？"},
+ {"question":"Why does reflection lose compile-time checks and impose performance and readability costs?"},
+ {"question":"What is reflection and how can a running Java program examine itself?"},
+ {"question":"How does Java reflection invoke a method with Method.invoke(Object obj, Object... args)?"},
+ {"question":"Explain the performance costs and readability drawbacks of sourdough fermentation."},
+ {"question":"When error handling must span several nested calls, what organizational advantages do Java exceptions provide?"}
+]

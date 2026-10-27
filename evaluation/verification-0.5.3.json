@@ -1,0 +1,172 @@
+{
+  "version": "0.5.3-local-review",
+  "date": "2026-10-27",
+  "mergedFrom": "origin/lxh_0.5.3",
+  "mergedHead": "d9bebb4b5de92d9be7e179b25206c70036de4797",
+  "previousHead": "41d20d3",
+  "backupBranch": "backup/pre-053-20261027",
+  "pushed": false,
+  "localRetrievalChangesCommitted": false,
+  "realApiCalls": 31,
+  "liveValidation": "31_CALLS_BOUNDARY_PROMPT_RETAINED_CONCURRENCY_PROMPT_REVERTED",
+  "screenshotSixChecks": "PASS_6_OF_6_OFFLINE",
+  "upstreamReliabilityFixes": "FIXED_WITH_USER_APPROVAL",
+  "reproducedIssues": [
+    "Fractional source id 1.9 is accepted as S1",
+    "finish_reason=length with valid JSON is marked COMPLETE"
+  ],
+  "testResults": {
+    "test": {
+      "tests": 163,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "integrationTest": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "buildPlugin": "SUCCESS",
+  "pluginSha256": "68339b603e5d3d5dcb0848ee425b47b71084ecf460f6a69eea1147b12b04ea90",
+  "original052PluginSha256": "f03e3ea36493a45929113ec0e8386c9e422b3a7afbb18fe4e4b3eb0afcb4c3c6",
+  "retrievalSourceSha256": {
+    "src/main/java/edu/t07/coursemate/rag/QueryPlan.java": "e10fe480b8a2764e106825f0bf7e153357a9d5a068a0d0fb5d01191411276419",
+    "src/main/java/edu/t07/coursemate/rag/KeywordIndex.java": "92b191794f436d66d78d625391cc12a474c91766aa256d4c13d0bea4b9e09f68",
+    "src/main/java/edu/t07/coursemate/rag/RagAnswerService.java": "e56a9a396ec2d9aef8ac59e93125f289b1f36e8032fc43f0331ecc45f60470a4",
+    "src/main/java/edu/t07/coursemate/ai/DeepSeekClient.java": "35b585d46653d612418231063b88d8ed09f23e87b32d7ccc2733ab26a20a8beb"
+  },
+  "b12": {
+    "beforeCandidateRank": 8,
+    "afterEvidenceRank": 1,
+    "cause": "RANKING_NOT_RECALL",
+    "originalFailurePreserved": true
+  },
+  "original28": {
+    "negative": "5/5",
+    "contracts": "5/5",
+    "positive": "18/18"
+  },
+  "formerFrozen24": {
+    "negative": "4/4",
+    "contracts": "6/6",
+    "nowDevelopmentRegression": true,
+    "positive": "14/14"
+  },
+  "development10": {
+    "positiveAfter": "8/8",
+    "positiveBefore": "5/8",
+    "negativeAfter": "2/2",
+    "negativeBefore": "2/2"
+  },
+  "answerCorrectness": "PARTIAL_BOUNDARY_IMPROVED_CONCURRENCY_FACTS_UNRESOLVED",
+  "claimEvidenceConsistency": "AGENT_REVIEW_OF_CORE_CLAIMS_NOT_INDEPENDENT_HUMAN_REVIEW",
+  "interactiveIdeAcceptance": "NOT_RUN",
+  "initialUnseen16Historical": {
+    "positiveAfter": "12/12",
+    "sha256": "65195837e1413806c2a5d09ae7eebc3f174461226d6d9b66b3aca22c44afd7a2",
+    "knownFalsePositive": "U11",
+    "positiveBefore": "9/12",
+    "independentHumanBlindTest": false,
+    "negativeBefore": "3/4",
+    "negativeAfter": "3/4",
+    "retrievalTunedAfterSeeingResults": false,
+    "regressedCaseIds": []
+  },
+  "finalFirstRound16NowDevelopment": {
+    "negative": "4/4",
+    "positive": "12/12",
+    "U11NowPasses": true,
+    "usedForFurtherAnalysis": true
+  },
+  "secondRoundNew10": {
+    "positiveAfter": "6/6",
+    "negativeAfter": "4/4",
+    "independentHumanBlindTest": false,
+    "negativeBefore": "4/4",
+    "positiveBefore": "5/6",
+    "sha256": "0616523f51dc5c53bb4f49ccfa135390b72de5526e2d3ef85da4b2ad87424c7c",
+    "retrievalTunedAfterSeeingResults": false
+  },
+  "reliabilityRegression": {
+    "tests": 20,
+    "upstreamCompatibilityCases": 3,
+    "failuresAfter": 0,
+    "failuresBefore": 7,
+    "validCompatibilityCases": 6,
+    "truncationCases": 2,
+    "invalidSourceCases": 9
+  },
+  "sixChecks": [
+    {
+      "name": "1 中文B12",
+      "pass": true,
+      "caseIds": [
+        "S1-zh-B12"
+      ]
+    },
+    {
+      "name": "2 英文B12",
+      "pass": true,
+      "caseIds": [
+        "S2-en-B12"
+      ]
+    },
+    {
+      "name": "3 反射概念第9页",
+      "pass": true,
+      "caseIds": [
+        "S3-concept"
+      ]
+    },
+    {
+      "name": "4 反射调用第14页",
+      "pass": true,
+      "caseIds": [
+        "S4-invocation"
+      ]
+    },
+    {
+      "name": "5 其他主题不退化",
+      "pass": true,
+      "caseIds": [
+        "S5-generics",
+        "S5-exceptions",
+        "S5-junit",
+        "S5-inheritance"
+      ]
+    },
+    {
+      "name": "6 无关问题不产生课程引用",
+      "pass": true,
+      "caseIds": [
+        "S6-photon",
+        "S6-detector",
+        "S6-bread",
+        "S6-existing-U11"
+      ]
+    }
+  ],
+  "screenshotMode": "BROWSER_RENDERED_OFFLINE_LOG_REPORT_NOT_LIVE_PLUGIN",
+  "offlineRealApiCalls": 0,
+  "liveApiDetails": {
+    "fullCandidateCalls": 6,
+    "concurrencyExceptionFix": "NOT_RETAINED_UNRESOLVED",
+    "originalResultsDirectory": ".coursemate/acceptance",
+    "formatRetries": 1,
+    "pairedOldPromptCalls": 6,
+    "candidateConfirmationCalls": 3,
+    "initialCalls": 14,
+    "httpOrNetworkFailures": 0,
+    "finalBoundaryOnlyCalls": 2,
+    "retainedProductionChange": "Two general boundary instructions in DeepSeekClient",
+    "review": "evaluation/live-review-0.5.3.md",
+    "boundaryFinalChecks": "2/2_ORIGINAL_PLUS_NEW",
+    "totalCalls": 31
+  },
+  "currentSixChecksFile": "evaluation/results/six-checks-boundary-final-053.json",
+  "previous053ReviewPluginSha256": "8b06977318bc8d2373ccf77aaaa9c9033894d1a9aad1a8588e925cbaa1ff3d7e",
+  "recordScope": "Validation snapshot before publication; Git records are authoritative for later commit/push state."
+}

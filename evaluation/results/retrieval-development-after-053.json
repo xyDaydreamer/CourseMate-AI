@@ -1,0 +1,191 @@
+{
+  "mode": "OFFLINE_FROZEN_QUERIES_NOT_INDEPENDENT_HUMAN_BLIND_TEST",
+  "positiveQuestions": 8,
+  "hitAt3Count": 8,
+  "negativeQuestions": 2,
+  "correctlyEmpty": 2,
+  "offlineContracts": 0,
+  "contractsPassed": 0,
+  "meanReciprocalRank": 1.0,
+  "meanLabelledPrecisionAt3LowerBound": 0.4583333333333333,
+  "realApiCalls": 0,
+  "results": [
+    {
+      "id": "B12-dev",
+      "question": "反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 30.3841,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-en-intent",
+      "question": "What are the drawbacks of reflection?",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 3.9621,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-en-attributes",
+      "question": "Why does reflection lose compile-time checks and impose performance and readability costs?",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 6.8164,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-zh-advantage",
+      "question": "异常处理有什么优点？",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:11"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:11",
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:9"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 4.5599,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-en-advantage",
+      "question": "What are the advantages of exceptions?",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:11"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:11",
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:9"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 3.3924,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-generics",
+      "question": "泛型如何提供编译时类型检查？",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:4"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 1.8902,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-general-topic",
+      "question": "What is reflection?",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.6666666666666666,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 1.7933,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-unrelated",
+      "question": "What are the performance drawbacks of gravitational wave detector calibration?",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "INSUFFICIENT",
+      "pass": true,
+      "elapsedMsOffline": 1.8645,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-zh-unrelated",
+      "question": "烘焙面包在性能和可读性上有什么代价？",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 1.0199,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "D-mixed",
+      "question": "Explain generics and also discuss gravitational wave detector calibration performance.",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:3",
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "labelledPrecisionAt3LowerBound": 1.0,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "retrievalStatus": "PARTIAL",
+      "pass": true,
+      "elapsedMsOffline": 2.6879,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    }
+  ]
+}

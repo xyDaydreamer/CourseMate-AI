@@ -4,7 +4,7 @@ param(
     [string]$JavaHome = $env:JAVA_HOME,
     [string]$CourseDir,
     [string]$Output,
-    [string]$Label = 'after-0.5.2'
+    [string]$Label = 'after-0.5.3'
 )
 $ErrorActionPreference = 'Stop'
 # Resolve script-relative defaults in the body for Windows PowerShell 5.1 compatibility.

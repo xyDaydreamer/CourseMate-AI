@@ -1,0 +1,293 @@
+{
+  "mode": "OFFLINE_FROZEN_QUERIES_NOT_INDEPENDENT_HUMAN_BLIND_TEST",
+  "positiveQuestions": 12,
+  "hitAt3Count": 9,
+  "negativeQuestions": 4,
+  "correctlyEmpty": 3,
+  "offlineContracts": 0,
+  "contractsPassed": 0,
+  "meanReciprocalRank": 0.7083333333333334,
+  "meanLabelledPrecisionAt3LowerBound": 0.3055555555555555,
+  "realApiCalls": 0,
+  "results": [
+    {
+      "id": "U01",
+      "question": "在泛型代码中，错误的类型使用能在运行之前被发现吗？为什么还能少写一些转换？",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:4"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 42.9561,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U02",
+      "question": "Which benefits do exceptions offer for separating error-handling code from ordinary program logic?",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:11"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.0,
+      "acceptableLabelCoverage": 0.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:9",
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "retrievalStatus": "READY",
+      "pass": false,
+      "elapsedMsOffline": 7.3323,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U03",
+      "question": "异常处理机制怎样让错误处理逻辑与正常逻辑分离，这样做有哪些好处？",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:11"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.0,
+      "acceptableLabelCoverage": 0.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:9",
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "retrievalStatus": "READY",
+      "pass": false,
+      "elapsedMsOffline": 11.0971,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U04",
+      "question": "Why might reflective access make a Java program slower and harder to read? Explain the disadvantages of reflection.",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 6.9465,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U05",
+      "question": "在反射调用中，应当考虑哪些安全限制和意外副作用？",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.0,
+      "acceptableLabelCoverage": 0.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9"
+      ],
+      "retrievalStatus": "READY",
+      "pass": false,
+      "elapsedMsOffline": 2.8599,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U06",
+      "question": "How does the JUnit fixture lifecycle arrange setup before each test and cleanup afterwards?",
+      "expected": [
+        "Lec-3.4-JUnit.pdf:4"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.4-JUnit.pdf:4",
+        "Lec-3.4-JUnit.pdf:3",
+        "Lec-3.4-JUnit.pdf:5"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 5.2616,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U07",
+      "question": "Map 里键和值分别扮演什么角色，键能不能重复？",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:15",
+        "Lec-4-AI-Assisted-Java-Development.pdf:20",
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:24"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 3.444,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U08",
+      "question": "How is an interface implemented by a class, and how does it relate to inheritance?",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:26",
+        "Lec-2-OOP-with-Java.pdf:28",
+        "Lec-2-OOP-with-Java.pdf:30"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 0.3333333333333333,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:30",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-2-OOP-with-Java.pdf:29"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 4.4873,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U09",
+      "question": "如何在 JUnit 中断言执行某段逻辑时抛出了预期异常？",
+      "expected": [
+        "Lec-3.4-JUnit.pdf:5"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.4-JUnit.pdf:5",
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.4-JUnit.pdf:3"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 7.1078,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U10",
+      "question": "What is the purpose of a constructor when creating a Java object?",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:6",
+        "Lec-2-OOP-with-Java.pdf:7"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 0.5,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:6",
+        "Lec-2-OOP-with-Java.pdf:23",
+        "Lec-2-OOP-with-Java.pdf:12"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 2.9085,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U11",
+      "question": "Explain the performance costs and readability drawbacks of sourdough fermentation.",
+      "expected": [],
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "retrievalStatus": "READY",
+      "pass": false,
+      "elapsedMsOffline": 5.0039,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U12",
+      "question": "编译时检查能预测明天的天气吗？",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 1.5437,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U13",
+      "question": "What security restrictions and limitations apply to deep-sea mineral exploration?",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "INSUFFICIENT",
+      "pass": true,
+      "elapsedMsOffline": 1.9255,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U14",
+      "question": "如何改善乐谱的可读性并减少演奏失误？",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 1.5827,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U15",
+      "question": "Explain JUnit assertions and also discuss the readability of medieval manuscripts.",
+      "expected": [
+        "Lec-3.4-JUnit.pdf:5"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.4-JUnit.pdf:3",
+        "Lec-3.4-JUnit.pdf:5",
+        "Lec-3.4-JUnit.pdf:2"
+      ],
+      "retrievalStatus": "PARTIAL",
+      "pass": true,
+      "elapsedMsOffline": 3.4228,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "U16",
+      "question": "Explain generics and also discuss the performance costs of sourdough fermentation.",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:3",
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "labelledPrecisionAt3LowerBound": 1.0,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "retrievalStatus": "PARTIAL",
+      "pass": true,
+      "elapsedMsOffline": 2.4343,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    }
+  ]
+}

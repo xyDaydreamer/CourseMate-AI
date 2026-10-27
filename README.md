@@ -1,12 +1,34 @@
-# CourseMate AI 0.5.2
+# CourseMate AI 0.5.3
 
-An IntelliJ IDEA Java course assistant with local PDF retrieval, per-turn course citations and explicitly selected source-code context.
+An IntelliJ IDEA Java course assistant using local lecture PDFs, BM25 retrieval and the official DeepSeek API. It explains explicitly selected code, supports contextual follow-ups and displays the course excerpts actually cited.
 
-Snapshot branch: **hzy_0.5.2**, dated 2026-10-27. Final local validation: **137 unit tests and 10 real-PDF integration tests passed**, and plugin packaging succeeded. The original 28-case regression passed; the frozen set scored Hit@3 13/14, with B12 still unresolved. Live-model correctness and claim/evidence consistency remain unverified; no paid calls were made for this validation. See [verification-0.5.2.json](evaluation/verification-0.5.2.json).
+**Current status:** build, automated tests and retrieval regressions pass. Live-answer quality is only partially accepted; concurrency and exception explanations can still contain factual errors.
 
-For cumulative changes from main (`7696251`) to this version, validation evidence, remaining limitations and publication scope, see [README_CHANGES.md](README_CHANGES.md). Chinese usage: [README_CN.md](README_CN.md). Evaluation instructions and archived results: [evaluation/README.md](evaluation/README.md).
+## Changes in 0.5.3
 
-0.5.2 fixes repair/result follow-ups such as “What would the fixed code look like?” and verifies that the exact selected snapshot and recent conversation reach the HTTP request. Follow-up retrieval also includes the current question. The composer previews reused code and explains when a new subject excludes it. Interactive card actions now change color for hover, press, selection and disabled states. Prior layout, citation and bounded-history improvements remain. These changes are covered offline; real-model answer quality still needs human acceptance.
+- Integrates the teammate's `lxh_0.5.3` commit `d9bebb4`: continuous Markdown answers, tolerant response parsing and an explicit notice when no course material is cited.
+- Keeps BM25 and separates core subjects, question intent and attributes for ranking. B12 was a ranking failure: its labelled page moved from candidate rank 8 to evidence rank 1. No B12-, Reflection- or filename-specific rule was added.
+- Rejects fractional, overflowing and malformed source IDs while preserving valid integer/string compatibility. A `length` finish reason remains truncated even when its JSON parses.
+- Distinguishes complete inner statements from omitted enclosing braces in code-explanation prompts. On the final artifact, the original question and a new callback example both passed targeted live checks.
+- Format/citation failures may trigger **one automatic retry**. Network, HTTP and truncated responses are not automatically retried.
+
+## Verification — 2026-10-27
+
+| Check | Result |
+| --- | --- |
+| Unit tests | 163/163 passed |
+| Real-PDF integration tests | 14/14 passed using 9 lecture PDFs |
+| Plugin packaging | Successful; `build/distributions/coursemate-ai-0.5.3.zip` |
+| Six requested retrieval groups | All passed, covering 12 cases; Chinese/English B12 page 15, concept page 9 and invocation page 14 all rank first |
+| Existing 28 / former frozen 24 cases | No regression; positive Hit@3 18/18 and 14/14 respectively |
+| Second pre-fixed retrieval set | Positive Hit@3 6/6; no-source 4/4; developer-authored, not an independent blind test |
+| Live API checks | 31 HTTP requests including one recovered format retry; no HTTP/network failures |
+
+The 31 calls are a request count, not 31 correct answers. The additional concurrency/exception prompt did not show stable benefit and was reverted. Wrong atomicity, null-behavior or implementation-specific assertions remain a known limitation. A valid citation ID does not establish factual correctness.
+
+Evidence: [verification and artifact fingerprint](evaluation/verification-0.5.3.json), [retrieval review](evaluation/review-0.5.3.md), [live-answer review](evaluation/live-review-0.5.3.md), and [final live-check screenshot](evaluation/evidence-053/live-content-final.jpg). Original B12 failure records are preserved. Raw live responses containing course text stay local under the ignored `.coursemate/acceptance/` directory.
+
+Usage in Chinese: [README_CN.md](README_CN.md). Reproduction and historical results: [evaluation/README.md](evaluation/README.md). The cumulative 0.5.2 history is archived in [README_CHANGES.md](README_CHANGES.md).
 
 ## Build and run
 
@@ -18,7 +40,7 @@ Requires JDK 25 and IntelliJ IDEA 2026.2.3 (build range 262.10968.63–262.*). U
 .\gradlew.bat buildPlugin --console=plain --no-daemon
 ```
 
-Unit tests require no teacher PDFs or API key. The separate `integrationTest` task preserves the ten real-course cases and requires the nine matching lecture PDFs. Both tasks remove real keys from their test environments. The plugin archive is `build/distributions/coursemate-ai-0.5.2.zip`.
+Unit tests require no teacher PDFs or API key. The separate `integrationTest` task preserves the ten real-course cases and adds four bilingual intent regressions; it requires the nine matching lecture PDFs. Both tasks remove real keys from their test environments. The plugin archive is `build/distributions/coursemate-ai-0.5.3.zip`.
 
 Use the existing `start-coursemate.cmd` launcher, or set `DEEPSEEK_API_KEY` securely in a terminal and launch `runIde` from that terminal. The plugin does not load `.env`. Never commit or paste credentials into chat. Installing a new ZIP requires restarting the compatible IDE; an already-running IDE does not automatically reload changed source or environment variables.
 
@@ -61,7 +83,7 @@ Changing language updates interface text immediately and controls subsequent ans
 
 BM25 remains the baseline, with concept-oriented requests, topic/title reranking, Java/C++ relevance handling and independent evidence admission. No embedding, vector database, external UI framework, automatic fact-checking model, long-term memory or automatic history translation is included.
 
-Model content, finish reason and usage are separate. Truncated structured answers never enter the JSON/citation validator. Network, HTTP, format, citation and cancellation errors are distinct; no automatic paid retries occur. Raw bounded diagnostics remain process-local and are not logged or shown in the interface.
+Model content, finish reason and usage are separate. Truncated structured answers never enter the JSON/citation validator. Network, HTTP, format, citation and cancellation errors are distinct. Format/citation failures allow one automatic retry; network, HTTP and truncated responses do not. Raw bounded diagnostics remain process-local and are not logged or shown in the interface.
 
 A valid source ID does not prove a claim is correct. Manually compare claims with their excerpts. Retrieval can still fail on unfamiliar vocabulary, multilingual paraphrases or mixed-domain requests.
 
@@ -69,8 +91,8 @@ The panel retains at most three complete historical turns and displays at most 3
 
 ## Evaluation
 
-The original 28-case regression set is preserved. Tests and scripted answers assess retrieval/contracts, not real answer correctness. The first new 24-case set became a development regression after its initial run; it is not an independent holdout any longer. A second 24-case final set is frozen and is evaluated without tuning to its results; it is still not an independently human-authored blind study.
+The original 28-case regression set is preserved. Tests and scripted answers assess retrieval/contracts, not real answer correctness. The first new 24-case set became a development regression after its initial run; it is not an independent holdout any longer. The former final 24-case set was subsequently used for B12 development and is now a regression set. The newer pre-fixed sets are developer-authored; none is an independently human-authored blind study.
 
-Use `evaluation/run-live-acceptance.ps1` for an explicitly bounded live check: hidden local key input, at most six calls and no automatic retries. It records real answers and excerpts for human review. Without a key, live correctness and claim/evidence consistency remain NOT_RUN.
+Use `evaluation/run-live-acceptance.ps1` for an explicitly bounded live check: hidden local key input, at most six HTTP calls per run, including any format/citation retry. It records real answers and excerpts locally for review. The recorded 31-call campaign spans multiple bounded runs; its remaining quality issues are listed above.
 
 Detailed Chinese usage and limitations: [README_CN.md](README_CN.md).

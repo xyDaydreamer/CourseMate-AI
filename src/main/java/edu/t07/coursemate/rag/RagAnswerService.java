@@ -95,11 +95,8 @@ public final class RagAnswerService {
             }
             checkCancelled();
             if (model.truncated()) {
-                try { return parseStructured(request.id(), model, retrieval, warnings); }
-                catch (DeepSeekException ignored) {
-                    return new AnswerResult(request.id(), List.of(), "", List.of(), retrieval,
-                            AnswerResult.Completion.TRUNCATED, model, warnings);
-                }
+                return new AnswerResult(request.id(), List.of(), "", List.of(), retrieval,
+                        AnswerResult.Completion.TRUNCATED, model, warnings);
             }
             try { return interpretComplete(request, model, retrieval, warnings); }
             catch (DeepSeekException exception) {
@@ -240,13 +237,15 @@ public final class RagAnswerService {
     }
 
     private static void addCanonicalId(JsonArray ids, JsonElement item) {
-        if (item == null || !item.isJsonPrimitive()) return;
+        if (item == null || !item.isJsonPrimitive()) throw new IllegalArgumentException("Invalid source id");
         String text;
-        if (item.getAsJsonPrimitive().isNumber()) text = "S" + item.getAsInt();
-        else text = item.getAsString().strip();
+        if (item.getAsJsonPrimitive().isNumber()) text = "S" + item.getAsBigDecimal().intValueExact();
+        else if (item.getAsJsonPrimitive().isString()) text = item.getAsString().strip();
+        else throw new IllegalArgumentException("Invalid source id");
         if (text.matches("[1-4]")) text = "S" + text;
         else if (text.matches("(?i)S[1-4]")) text = text.toUpperCase(java.util.Locale.ROOT);
-        if (!text.isEmpty()) ids.add(text);
+        if (text.isEmpty()) throw new IllegalArgumentException("Invalid source id");
+        ids.add(text);
     }
 
     private static List<String> stringIds(JsonArray array) {

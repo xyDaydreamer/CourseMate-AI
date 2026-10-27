@@ -1,4 +1,6 @@
-# 从 main 到 CourseMate AI 0.5.2 的修改说明
+# 从 main 到 CourseMate AI 0.5.2 的修改说明（历史归档）
+
+当前版本为 0.5.3，更新和测试结论见 [README_CN.md](README_CN.md)、[0.5.3 检索审查](evaluation/review-0.5.3.md) 及 [真实 API 检查](evaluation/live-review-0.5.3.md)。以下内容只描述 0.5.2 及之前的历史状态；其中“不自动重试”、B12 未命中、未进行真实 API 检查等结论不适用于当前版本。
 
 本文记录截至 2026-10-27 的累计代码修改，供组员复核和后续提交使用。比较基线为 main / origin/main 的 `76962510a9599f40eea92ee63fd7a51d546ec513`，该提交的构建版本为 0.4.0，已经包含 Markdown、中英文回答及上一轮问答记忆。本文不把这些已有功能算作新增。
 

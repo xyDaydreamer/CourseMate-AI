@@ -1,0 +1,12 @@
+[
+  {"id":"B12-dev","question":"反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"]},
+  {"id":"D-en-intent","question":"What are the drawbacks of reflection?","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"]},
+  {"id":"D-en-attributes","question":"Why does reflection lose compile-time checks and impose performance and readability costs?","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"]},
+  {"id":"D-zh-advantage","question":"异常处理有什么优点？","expected":["Lec-3.1-Exceptions.pdf:11"]},
+  {"id":"D-en-advantage","question":"What are the advantages of exceptions?","expected":["Lec-3.1-Exceptions.pdf:11"]},
+  {"id":"D-generics","question":"泛型如何提供编译时类型检查？","expected":["Lec-3.2-Generics-and-Collections.pdf:4"]},
+  {"id":"D-general-topic","question":"What is reflection?","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9","Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10"]},
+  {"id":"D-unrelated","question":"What are the performance drawbacks of gravitational wave detector calibration?","expected":[]},
+  {"id":"D-zh-unrelated","question":"烘焙面包在性能和可读性上有什么代价？","expected":[]},
+  {"id":"D-mixed","question":"Explain generics and also discuss gravitational wave detector calibration performance.","expected":["Lec-3.2-Generics-and-Collections.pdf:3","Lec-3.2-Generics-and-Collections.pdf:4","Lec-3.2-Generics-and-Collections.pdf:8"]}
+]

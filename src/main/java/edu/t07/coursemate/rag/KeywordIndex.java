@@ -74,12 +74,22 @@ public final class KeywordIndex {
         query.addAll(plan.terms());
         Map<Integer, Double> scores = recall(plan.topics().isEmpty() ? query : plan.terms());
         if (!plan.topics().isEmpty()) recall(query).forEach((id, score) -> scores.merge(id, score * 0.15, Double::sum));
+        Set<String> facetTerms = new LinkedHashSet<>();
+        plan.intents().values().forEach(facetTerms::addAll);
+        plan.attributes().values().forEach(facetTerms::addAll);
+        Map<Integer, Double> facetScores = recall(facetTerms);
+        // With no known subject, generic facets cannot alone establish lexical relevance.
+        Set<String> subjectQuery = new HashSet<>(query);
+        subjectQuery.removeAll(facetTerms);
         List<RetrievalResult.Hit> ranked = new ArrayList<>();
         for (var entry : scores.entrySet()) {
             CourseChunk c = chunks.get(entry.getKey());
             if (isNonTeachingPage(c)) continue;
             double coverage = topicCoverage(entry.getKey(), plan);
             double score = entry.getValue();
+            // Rerank recalled subject matches with bilingual intent/attribute BM25 evidence.
+            // Facet-only hits cannot add candidates or relax evidence admission.
+            if (coverage > 0) score += 0.5 * facetScores.getOrDefault(entry.getKey(), 0.0);
             // Java tasks prefer Java teaching pages over C++ revision, even when generic vocabulary matches.
             String lower = c.text().toLowerCase(Locale.ROOT);
             if (!question.toLowerCase(Locale.ROOT).contains("c++") && lower.contains("c++")) score *= 0.12;
@@ -87,6 +97,7 @@ public final class KeywordIndex {
             long headingHits = plan.terms().stream().filter(heading::contains).count();
             score *= 1 + Math.min(3, headingHits) * 0.35;
             score *= plan.topics().isEmpty() ? 1 : (0.3 + coverage);
+            if (coverage > 0) score *= 1 + 2 * conceptCoverage(entry.getKey(), plan.intents());
             ranked.add(new RetrievalResult.Hit(c, entry.getValue(), score, coverage));
         }
         ranked.sort(Comparator.comparingDouble(RetrievalResult.Hit::score).reversed().thenComparing(h -> h.chunk().chunkId()));
@@ -97,7 +108,8 @@ public final class KeywordIndex {
         for (var hit : ranked) {
             if (plan.outsideDomain() && !plan.partial()) continue;
             if (!question.toLowerCase(Locale.ROOT).contains("c++") && hit.chunk().text().toLowerCase(Locale.ROOT).contains("c++")) continue;
-            boolean sufficient = !plan.topics().isEmpty() ? hit.coverage() > 0 : lexicalCoverage(hit.chunk(), query) >= 0.5;
+            boolean sufficient = !plan.topics().isEmpty() ? hit.coverage() > 0
+                    : lexicalCoverage(hit.chunk(), query) >= 0.5 && lexicalCoverage(hit.chunk(), subjectQuery) >= 0.5;
             if (!sufficient || hit.bm25() < 0.10) continue;
             // Keep complementary chunks, including different ranges of the same PDF page.
             boolean duplicate = evidence.stream().anyMatch(c -> c.chunkId().equals(hit.chunk().chunkId())
@@ -135,10 +147,13 @@ public final class KeywordIndex {
         return scores;
     }
     private double topicCoverage(int id, QueryPlan plan) {
-        if (plan.topics().isEmpty()) return 0;
-        long count = plan.topics().values().stream().filter(terms -> terms.stream()
+        return conceptCoverage(id, plan.topics());
+    }
+    private double conceptCoverage(int id, Map<String, Set<String>> concepts) {
+        if (concepts.isEmpty()) return 0;
+        long count = concepts.values().stream().filter(terms -> terms.stream()
                 .anyMatch(term -> postings.getOrDefault(term, Map.of()).containsKey(id))).count();
-        return (double) count / plan.topics().size();
+        return (double) count / concepts.size();
     }
     private static double lexicalCoverage(CourseChunk c, Set<String> query) {
         if (query.isEmpty()) return 0;

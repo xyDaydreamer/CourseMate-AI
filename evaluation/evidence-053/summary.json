@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-27",
+  "mode": "OFFLINE_REAL_PDF_AND_SCRIPTED_ANSWER_NOT_LIVE_PLUGIN",
+  "realApiCalls": 0,
+  "pluginSha256": "8b06977318bc8d2373ccf77aaaa9c9033894d1a9aad1a8588e925cbaa1ff3d7e",
+  "testResults": {
+    "test": {
+      "tests": 163,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "integrationTest": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "groups": [
+    {
+      "name": "1 中文B12",
+      "pass": true,
+      "caseIds": [
+        "S1-zh-B12"
+      ]
+    },
+    {
+      "name": "2 英文B12",
+      "pass": true,
+      "caseIds": [
+        "S2-en-B12"
+      ]
+    },
+    {
+      "name": "3 反射概念第9页",
+      "pass": true,
+      "caseIds": [
+        "S3-concept"
+      ]
+    },
+    {
+      "name": "4 反射调用第14页",
+      "pass": true,
+      "caseIds": [
+        "S4-invocation"
+      ]
+    },
+    {
+      "name": "5 其他主题不退化",
+      "pass": true,
+      "caseIds": [
+        "S5-generics",
+        "S5-exceptions",
+        "S5-junit",
+        "S5-inheritance"
+      ]
+    },
+    {
+      "name": "6 无关问题不产生课程引用",
+      "pass": true,
+      "caseIds": [
+        "S6-photon",
+        "S6-detector",
+        "S6-bread",
+        "S6-existing-U11"
+      ]
+    }
+  ]
+}

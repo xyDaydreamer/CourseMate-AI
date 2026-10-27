@@ -1,0 +1,4 @@
+[
+ {"id":"B1-original-closed-statement","question":"Explain the selected fragment. State what cannot be known without the method body.","code":"public static void main(String[] args) { System.out.println(countWords(\"Java maps Java collections\"));"},
+ {"id":"B2-new-callback-and-literal","question":"Does the selection show an unfinished method body, an unfinished invocation, or both? Only describe visible syntax; do not infer what the callback does.","code":"void send() { sink.accept(\")]};\");"}
+]

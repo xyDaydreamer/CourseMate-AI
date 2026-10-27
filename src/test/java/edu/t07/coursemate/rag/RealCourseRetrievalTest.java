@@ -60,6 +60,18 @@ class RealCourseRetrievalTest {
         }
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？,Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf,15",
+            "What are the drawbacks of reflection?,Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf,15",
+            "异常处理有什么优点？,Lec-3.1-Exceptions.pdf,11",
+            "What are the advantages of exceptions?,Lec-3.1-Exceptions.pdf,11"})
+    void developmentIntentRegressionsRankTheRelevantPageFirst(String question, String file, int page) {
+        var first = knowledge.search(question).getFirst();
+        assertEquals(file, first.fileName());
+        assertEquals(page, first.page());
+    }
+
     @Test
     void unrelatedQuestionHasNoSourcesAndAllOriginalPdfsRemainUnchanged() throws Exception {
         assertTrue(knowledge.search("quasarzz astronomyzz").isEmpty());

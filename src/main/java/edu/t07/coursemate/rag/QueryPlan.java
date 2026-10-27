@@ -4,7 +4,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /** Local course concept linking, separate from lexical recall and evidence admission. No model call. */
-public record QueryPlan(String original, Map<String, Set<String>> topics, boolean outsideDomain, boolean partial) {
+public record QueryPlan(String original, Map<String, Set<String>> topics, boolean outsideDomain, boolean partial,
+                        Map<String, Set<String>> intents, Map<String, Set<String>> attributes) {
     private record Topic(String name, Pattern mentions, Set<String> terms) { }
     private static Topic topic(String name, String aliases, String terms) {
         return new Topic(name, Pattern.compile(aliases, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE), Set.of(terms.split(" ")));
@@ -41,7 +42,29 @@ public record QueryPlan(String original, Map<String, Set<String>> topics, boolea
     );
     private static final Pattern OUTSIDE = Pattern.compile("quantum|photon|orbital|geology|geological|lunar|volcanic|astronom|quasar|ocean|dinner|recipe|spring|transactional|量子|光子|偏振|月球|地质|晚餐|吃什么|海洋", Pattern.CASE_INSENSITIVE);
 
-    public QueryPlan { topics = Collections.unmodifiableMap(new LinkedHashMap<>(topics)); }
+    // General question facets refine a matched subject; they never establish a course topic.
+    private static final List<Topic> INTENTS = List.of(
+        topic("drawbacks", "\\b(drawbacks?|disadvantages?|downsides?|limitations?|trade[ -]?offs?|costs?|risks?)\\b|缺点|弊端|局限|不足|代价|风险", "drawback drawbacks disadvantage disadvantages downside limitations limitation costs risks"),
+        topic("benefits", "\\b(advantages?|benefits?)\\b|优点|优势|好处|益处", "advantage advantages benefit benefits")
+    );
+    private static final List<Topic> ATTRIBUTES = List.of(
+        topic("performance", "\\b(performance|efficiency|overheads?|slow(?:er)?|speed)\\b|性能|效率|开销|速度", "performance efficiency overhead slow slower speed"),
+        topic("readability", "\\b(readability|readable|maintainability|verbose|verbosity)\\b|可读性|易读|可维护性|冗长", "readability readable maintainability verbose verbosity clumsy"),
+        topic("compile-time", "\\b(compile[ -]?time|compilation)\\b|编译时|编译期", "compile time compilation checking checks"),
+        topic("security", "\\b(security|permissions?|restrictions?)\\b|安全限制|权限|安全性", "security permission permissions restriction restrictions"),
+        topic("side-effects", "\\bside[ -]effects?\\b|副作用", "side effects")
+    );
+
+    public QueryPlan {
+        topics = Collections.unmodifiableMap(new LinkedHashMap<>(topics));
+        intents = Collections.unmodifiableMap(new LinkedHashMap<>(intents));
+        attributes = Collections.unmodifiableMap(new LinkedHashMap<>(attributes));
+    }
+    private static Map<String, Set<String>> facets(List<Topic> vocabulary, String question) {
+        Map<String, Set<String>> found = new LinkedHashMap<>();
+        for (Topic cue : vocabulary) if (cue.mentions.matcher(question).find()) found.put(cue.name, cue.terms);
+        return found;
+    }
     public static QueryPlan understand(String question) {
         String q = question == null ? "" : question;
         Map<String, Set<String>> found = new LinkedHashMap<>();
@@ -55,15 +78,17 @@ public record QueryPlan(String original, Map<String, Set<String>> topics, boolea
         boolean outside = OUTSIDE.matcher(q).find();
         String[] clauses = q.split("(?i)and also|and separately|also discuss|另外|同时介绍|并讨论|并解释");
         boolean hasCourseClause = false, hasUnknownClause = false;
+        List<String> courseClauses = new ArrayList<>();
         if (clauses.length > 1) {
             for (String clause : clauses) {
                 boolean known = CATALOG.stream().anyMatch(t -> t.mentions.matcher(clause).find());
-                if (known) hasCourseClause = true;
+                if (known) { hasCourseClause = true; courseClauses.add(clause); }
                 else if (clause.strip().length() > 3) hasUnknownClause = true;
             }
         }
         boolean split = hasCourseClause && hasUnknownClause;
-        return new QueryPlan(q, found, outside, split);
+        String facetQuestion = split ? String.join(" ", courseClauses) : q;
+        return new QueryPlan(q, found, outside, split, facets(INTENTS, facetQuestion), facets(ATTRIBUTES, facetQuestion));
     }
     public Set<String> terms() {
         Set<String> terms = new LinkedHashSet<>(); topics.values().forEach(terms::addAll); return Set.copyOf(terms);

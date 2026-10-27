@@ -1,0 +1,1311 @@
+[
+  {
+    "id": "B12-dev",
+    "question": "反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？",
+    "expected": [
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+    ],
+    "queryPlan": {
+      "original": "反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？",
+      "topics": {
+        "reflection": [
+          "reflection"
+        ]
+      },
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {
+        "drawbacks": [
+          "limitation",
+          "drawbacks",
+          "limitations",
+          "drawback",
+          "disadvantages",
+          "disadvantage",
+          "risks",
+          "downside",
+          "costs"
+        ]
+      },
+      "attributes": {
+        "performance": [
+          "slower",
+          "slow",
+          "overhead",
+          "efficiency",
+          "performance",
+          "speed"
+        ],
+        "readability": [
+          "readable",
+          "clumsy",
+          "verbose",
+          "verbosity",
+          "readability",
+          "maintainability"
+        ],
+        "compile-time": [
+          "compilation",
+          "checking",
+          "time",
+          "checks",
+          "compile"
+        ]
+      }
+    },
+    "candidates": [
+      {
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "score": 90.97395767818735,
+        "bm25": 4.643277408447495,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-3d16e7b690b0ca4ea6389401",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "score": 8.113059241711278,
+        "bm25": 4.622825778752865,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-053464e6d22858f687e6afa5",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "score": 7.521180381055309,
+        "bm25": 4.285572866698182,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-5994312c22d6afd01ce798bc",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9",
+        "score": 6.9312427739561455,
+        "bm25": 3.949426082026293,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-078d9e698532b0e48bfa8099",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:12",
+        "score": 6.633904219358946,
+        "bm25": 3.780002404193131,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-4cf3c327fab1e4015b323bc4",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:13",
+        "score": 6.563513323086382,
+        "bm25": 3.7398936313882514,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-8255f1506f362a1a5b90a370",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:1",
+        "score": 6.523000678320273,
+        "bm25": 5.0176928294771335,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-7068d18dc24349dd90c56b95",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:11",
+        "score": 6.109711689396823,
+        "bm25": 3.4813172019355116,
+        "coverage": 1.0
+      }
+    ],
+    "evidence": [
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+    ],
+    "expectedDiagnostics": [
+      {
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "topicTermsPresent": 1,
+        "targetAloneAdmitted": true
+      }
+    ]
+  },
+  {
+    "id": "D-en-intent",
+    "question": "What are the drawbacks of reflection?",
+    "expected": [
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+    ],
+    "queryPlan": {
+      "original": "What are the drawbacks of reflection?",
+      "topics": {
+        "reflection": [
+          "reflection"
+        ]
+      },
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {
+        "drawbacks": [
+          "limitation",
+          "drawbacks",
+          "limitations",
+          "drawback",
+          "disadvantages",
+          "disadvantage",
+          "risks",
+          "downside",
+          "costs"
+        ]
+      },
+      "attributes": {}
+    },
+    "candidates": [
+      {
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "score": 29.837240763039517,
+        "bm25": 5.3372690575655,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-3d16e7b690b0ca4ea6389401",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "score": 8.113059241711278,
+        "bm25": 4.622825778752865,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-053464e6d22858f687e6afa5",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "score": 7.521180381055309,
+        "bm25": 4.285572866698182,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-5994312c22d6afd01ce798bc",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9",
+        "score": 6.9312427739561455,
+        "bm25": 3.949426082026293,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-078d9e698532b0e48bfa8099",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:12",
+        "score": 6.633904219358946,
+        "bm25": 3.780002404193131,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-4cf3c327fab1e4015b323bc4",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:13",
+        "score": 6.563513323086382,
+        "bm25": 3.7398936313882514,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-8255f1506f362a1a5b90a370",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:1",
+        "score": 6.523000678320273,
+        "bm25": 5.0176928294771335,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-7068d18dc24349dd90c56b95",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:11",
+        "score": 6.109711689396823,
+        "bm25": 3.4813172019355116,
+        "coverage": 1.0
+      }
+    ],
+    "evidence": [
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+    ],
+    "expectedDiagnostics": [
+      {
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "topicTermsPresent": 1,
+        "targetAloneAdmitted": true
+      }
+    ]
+  },
+  {
+    "id": "D-en-attributes",
+    "question": "Why does reflection lose compile-time checks and impose performance and readability costs?",
+    "expected": [
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+    ],
+    "queryPlan": {
+      "original": "Why does reflection lose compile-time checks and impose performance and readability costs?",
+      "topics": {
+        "reflection": [
+          "reflection"
+        ]
+      },
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {
+        "drawbacks": [
+          "limitation",
+          "drawbacks",
+          "limitations",
+          "drawback",
+          "disadvantages",
+          "disadvantage",
+          "risks",
+          "downside",
+          "costs"
+        ]
+      },
+      "attributes": {
+        "performance": [
+          "slower",
+          "slow",
+          "overhead",
+          "efficiency",
+          "performance",
+          "speed"
+        ],
+        "readability": [
+          "readable",
+          "clumsy",
+          "verbose",
+          "verbosity",
+          "readability",
+          "maintainability"
+        ],
+        "compile-time": [
+          "compilation",
+          "checking",
+          "time",
+          "checks",
+          "compile"
+        ]
+      }
+    },
+    "candidates": [
+      {
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "score": 102.47498719617168,
+        "bm25": 7.592259336135785,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-3d16e7b690b0ca4ea6389401",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "score": 8.113059241711278,
+        "bm25": 4.622825778752865,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-053464e6d22858f687e6afa5",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "score": 7.521180381055309,
+        "bm25": 4.285572866698182,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-5994312c22d6afd01ce798bc",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9",
+        "score": 6.9312427739561455,
+        "bm25": 3.949426082026293,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-078d9e698532b0e48bfa8099",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:12",
+        "score": 6.633904219358946,
+        "bm25": 3.780002404193131,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-4cf3c327fab1e4015b323bc4",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:13",
+        "score": 6.563513323086382,
+        "bm25": 3.7398936313882514,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-8255f1506f362a1a5b90a370",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:1",
+        "score": 6.523000678320273,
+        "bm25": 5.0176928294771335,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-7068d18dc24349dd90c56b95",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:11",
+        "score": 6.109711689396823,
+        "bm25": 3.4813172019355116,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-c6bcbc3c6fb36810e1cd6666",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:4",
+        "score": 0.5653109085717128,
+        "bm25": 1.884369695239043,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-2994d6299a8f1de28cc41766",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:5",
+        "score": 0.39000621556945525,
+        "bm25": 1.300020718564851,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-2ece0efa8083d3b098608e95",
+        "page": "Lec-1-Java-Fundamentals.pdf:5",
+        "score": 0.2498093946719854,
+        "bm25": 0.8326979822399514,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-ea6249eec4c3c12e7615e0c9",
+        "page": "Lec-1-Java-Fundamentals.pdf:22",
+        "score": 0.22521089457201282,
+        "bm25": 0.7507029819067095,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-a7b99c9ed845a20748f6666f",
+        "page": "Lec-4-AI-Assisted-Java-Development.pdf:2",
+        "score": 0.2013418893555919,
+        "bm25": 0.6711396311853064,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-8337379d5a0a9504e2b96879",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:7",
+        "score": 0.1858102931539866,
+        "bm25": 0.619367643846622,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-f58260f0fd689d2b6fe9978a",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:5",
+        "score": 0.16590943821960033,
+        "bm25": 0.5530314607320012,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-ed3df699c8dc79f84854e65b",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:13",
+        "score": 0.15262270706956457,
+        "bm25": 0.5087423568985486,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-8b3c5efa7bc00b8d0cf0f5eb",
+        "page": "Lec-2-OOP-with-Java.pdf:5",
+        "score": 0.14549308143041223,
+        "bm25": 0.4849769381013741,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-4c04aa2f0ba50fce4134b128",
+        "page": "Lec-2-OOP-with-Java.pdf:31",
+        "score": 0.13844698723045248,
+        "bm25": 0.46148995743484167,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-100d62547db59c4a7dc63b03",
+        "page": "Lec-3.4-JUnit.pdf:2",
+        "score": 0.13718552852272486,
+        "bm25": 0.45728509507574955,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-3507cd4b84ce8595f6a8cac6",
+        "page": "Lec-3.4-JUnit.pdf:3",
+        "score": 0.13718552852272486,
+        "bm25": 0.45728509507574955,
+        "coverage": 0.0
+      }
+    ],
+    "evidence": [
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+    ],
+    "expectedDiagnostics": [
+      {
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "topicTermsPresent": 1,
+        "targetAloneAdmitted": true
+      }
+    ]
+  },
+  {
+    "id": "D-zh-advantage",
+    "question": "异常处理有什么优点？",
+    "expected": [
+      "Lec-3.1-Exceptions.pdf:11"
+    ],
+    "queryPlan": {
+      "original": "异常处理有什么优点？",
+      "topics": {
+        "exception": [
+          "catch",
+          "exception",
+          "throw",
+          "exceptions"
+        ]
+      },
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {
+        "benefits": [
+          "advantage",
+          "advantages",
+          "benefit",
+          "benefits"
+        ]
+      },
+      "attributes": {}
+    },
+    "candidates": [
+      {
+        "chunkId": "c-da462fb6f2be482e3f52d72c",
+        "page": "Lec-3.1-Exceptions.pdf:11",
+        "score": 34.67782789682201,
+        "bm25": 3.2761128773785377,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-6ae1f2150a4617ad52dc35b9",
+        "page": "Lec-3.1-Exceptions.pdf:4",
+        "score": 32.65899447227144,
+        "bm25": 18.609113659413925,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-c9fefaf979c4e10b2914cb33",
+        "page": "Lec-3.1-Exceptions.pdf:9",
+        "score": 26.7869403529887,
+        "bm25": 15.263213876346835,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-7e357515ab3ae45302e36759",
+        "page": "Lec-3.1-Exceptions.pdf:6",
+        "score": 21.41305287948105,
+        "bm25": 12.201169731898032,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-82f243a623d8974ce84c6649",
+        "page": "Lec-3.1-Exceptions.pdf:10",
+        "score": 20.978132361706813,
+        "bm25": 11.953351773052312,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-0afcb40bb6884d1ae95469cf",
+        "page": "Lec-3.1-Exceptions.pdf:5",
+        "score": 19.40298513256812,
+        "bm25": 11.055831984369298,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-2ad7a98325182e03b652f705",
+        "page": "Lec-3.1-Exceptions.pdf:8",
+        "score": 13.123474597934905,
+        "bm25": 7.477763303666612,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-820de168ec13d488e35a8b5c",
+        "page": "Lec-3.4-JUnit.pdf:5",
+        "score": 12.908954417961068,
+        "bm25": 7.355529582883799,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-40c0c697351c2fb0ec9ace42",
+        "page": "Lec-3.1-Exceptions.pdf:7",
+        "score": 12.881627545003802,
+        "bm25": 7.33995871510188,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-70f508c2e374afa7ec35d7c5",
+        "page": "Lec-3.1-Exceptions.pdf:3",
+        "score": 12.091809589582077,
+        "bm25": 9.301391991986213,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-26d5274c35c1d1633a181d90",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:26",
+        "score": 9.2331976541082,
+        "bm25": 7.1024597339293845,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-99077a4c2a9dbb8b0cbcdc18",
+        "page": "Lec-2-OOP-with-Java.pdf:4",
+        "score": 7.891080989206801,
+        "bm25": 6.070062299389846,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-9b72945a5c2b07c0aa1beaa0",
+        "page": "Lec-3.1-Exceptions.pdf:2",
+        "score": 7.350465539525553,
+        "bm25": 5.654204261173502,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-8aaacf0b664ffd00f274f86d",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:24",
+        "score": 7.015639583172476,
+        "bm25": 5.396645833209597,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-2784dcba3e389748f69e7e52",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:25",
+        "score": 5.96806656283561,
+        "bm25": 4.590820432950469,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-0b50de2b770e54774f8f83a1",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:30",
+        "score": 5.856122247489178,
+        "bm25": 4.504709421145521,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-668717fea0b031e337ef3e8c",
+        "page": "Lec-3.1-Exceptions.pdf:1",
+        "score": 4.702298180664093,
+        "bm25": 3.6171524466646874,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-c231486a45b23c088fbb5518",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:34",
+        "score": 4.54407392713491,
+        "bm25": 3.4954414824114695,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-5749687ab565275ecb60945b",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:31",
+        "score": 3.9819724459530037,
+        "bm25": 3.0630557276561565,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-09c52ef5f6c172e7a2187fbc",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:28",
+        "score": 3.7813879247052338,
+        "bm25": 2.908759942080949,
+        "coverage": 1.0
+      }
+    ],
+    "evidence": [
+      "Lec-3.1-Exceptions.pdf:11",
+      "Lec-3.1-Exceptions.pdf:4",
+      "Lec-3.1-Exceptions.pdf:9"
+    ],
+    "expectedDiagnostics": [
+      {
+        "page": "Lec-3.1-Exceptions.pdf:11",
+        "chunkId": "c-da462fb6f2be482e3f52d72c",
+        "topicTermsPresent": 1,
+        "targetAloneAdmitted": true
+      }
+    ]
+  },
+  {
+    "id": "D-en-advantage",
+    "question": "What are the advantages of exceptions?",
+    "expected": [
+      "Lec-3.1-Exceptions.pdf:11"
+    ],
+    "queryPlan": {
+      "original": "What are the advantages of exceptions?",
+      "topics": {
+        "exception": [
+          "catch",
+          "exception",
+          "throw",
+          "exceptions"
+        ]
+      },
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {
+        "benefits": [
+          "advantage",
+          "advantages",
+          "benefit",
+          "benefits"
+        ]
+      },
+      "attributes": {}
+    },
+    "candidates": [
+      {
+        "chunkId": "c-da462fb6f2be482e3f52d72c",
+        "page": "Lec-3.1-Exceptions.pdf:11",
+        "score": 39.906555976049205,
+        "bm25": 4.269223623670504,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-6ae1f2150a4617ad52dc35b9",
+        "page": "Lec-3.1-Exceptions.pdf:4",
+        "score": 32.65899447227144,
+        "bm25": 18.609113659413925,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-c9fefaf979c4e10b2914cb33",
+        "page": "Lec-3.1-Exceptions.pdf:9",
+        "score": 26.7869403529887,
+        "bm25": 15.263213876346835,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-7e357515ab3ae45302e36759",
+        "page": "Lec-3.1-Exceptions.pdf:6",
+        "score": 21.41305287948105,
+        "bm25": 12.201169731898032,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-82f243a623d8974ce84c6649",
+        "page": "Lec-3.1-Exceptions.pdf:10",
+        "score": 20.978132361706813,
+        "bm25": 11.953351773052312,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-0afcb40bb6884d1ae95469cf",
+        "page": "Lec-3.1-Exceptions.pdf:5",
+        "score": 19.40298513256812,
+        "bm25": 11.055831984369298,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-2ad7a98325182e03b652f705",
+        "page": "Lec-3.1-Exceptions.pdf:8",
+        "score": 13.123474597934905,
+        "bm25": 7.477763303666612,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-820de168ec13d488e35a8b5c",
+        "page": "Lec-3.4-JUnit.pdf:5",
+        "score": 12.908954417961068,
+        "bm25": 7.355529582883799,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-40c0c697351c2fb0ec9ace42",
+        "page": "Lec-3.1-Exceptions.pdf:7",
+        "score": 12.881627545003802,
+        "bm25": 7.33995871510188,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-70f508c2e374afa7ec35d7c5",
+        "page": "Lec-3.1-Exceptions.pdf:3",
+        "score": 12.091809589582077,
+        "bm25": 9.301391991986213,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-26d5274c35c1d1633a181d90",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:26",
+        "score": 9.2331976541082,
+        "bm25": 7.1024597339293845,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-99077a4c2a9dbb8b0cbcdc18",
+        "page": "Lec-2-OOP-with-Java.pdf:4",
+        "score": 7.891080989206801,
+        "bm25": 6.070062299389846,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-9b72945a5c2b07c0aa1beaa0",
+        "page": "Lec-3.1-Exceptions.pdf:2",
+        "score": 7.350465539525553,
+        "bm25": 5.654204261173502,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-8aaacf0b664ffd00f274f86d",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:24",
+        "score": 7.015639583172476,
+        "bm25": 5.396645833209597,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-2784dcba3e389748f69e7e52",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:25",
+        "score": 5.96806656283561,
+        "bm25": 4.590820432950469,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-0b50de2b770e54774f8f83a1",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:30",
+        "score": 5.856122247489178,
+        "bm25": 4.504709421145521,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-668717fea0b031e337ef3e8c",
+        "page": "Lec-3.1-Exceptions.pdf:1",
+        "score": 4.702298180664093,
+        "bm25": 3.6171524466646874,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-c231486a45b23c088fbb5518",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:34",
+        "score": 4.54407392713491,
+        "bm25": 3.4954414824114695,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-5749687ab565275ecb60945b",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:31",
+        "score": 3.9819724459530037,
+        "bm25": 3.0630557276561565,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-09c52ef5f6c172e7a2187fbc",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:28",
+        "score": 3.7813879247052338,
+        "bm25": 2.908759942080949,
+        "coverage": 1.0
+      }
+    ],
+    "evidence": [
+      "Lec-3.1-Exceptions.pdf:11",
+      "Lec-3.1-Exceptions.pdf:4",
+      "Lec-3.1-Exceptions.pdf:9"
+    ],
+    "expectedDiagnostics": [
+      {
+        "page": "Lec-3.1-Exceptions.pdf:11",
+        "chunkId": "c-da462fb6f2be482e3f52d72c",
+        "topicTermsPresent": 1,
+        "targetAloneAdmitted": true
+      }
+    ]
+  },
+  {
+    "id": "D-generics",
+    "question": "泛型如何提供编译时类型检查？",
+    "expected": [
+      "Lec-3.2-Generics-and-Collections.pdf:4"
+    ],
+    "queryPlan": {
+      "original": "泛型如何提供编译时类型检查？",
+      "topics": {
+        "generics": [
+          "generic",
+          "generics"
+        ]
+      },
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {},
+      "attributes": {
+        "compile-time": [
+          "compilation",
+          "checking",
+          "time",
+          "checks",
+          "compile"
+        ]
+      }
+    },
+    "candidates": [
+      {
+        "chunkId": "c-c6bcbc3c6fb36810e1cd6666",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:4",
+        "score": 29.97163044213781,
+        "bm25": 10.796619786318747,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-e8a51141a58c5e26a6cf4cc8",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:8",
+        "score": 18.226993884569836,
+        "bm25": 10.385751501179392,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-2ad94d3b06342de3d5227b81",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:3",
+        "score": 11.60712112349397,
+        "bm25": 6.613744229911094,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-fb655b224509dbe8d8901476",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:7",
+        "score": 8.785516738215469,
+        "bm25": 5.005992443427617,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-b36feb1f915eb78fc32665fd",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:5",
+        "score": 8.426474610587958,
+        "bm25": 4.801410034523053,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-12f72dc2985dae03a8d6bffc",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:6",
+        "score": 8.220882893363221,
+        "bm25": 4.68426375690212,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-daa01777889b9b780576eafd",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:1",
+        "score": 7.547657759555062,
+        "bm25": 5.805890584273124,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-d2962533e5f23a1ccd32e5fd",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:11",
+        "score": 4.481448424758111,
+        "bm25": 3.4472680190447007,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-a9ab3841d074d179fd6c04ac",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:10",
+        "score": 3.9759215410638897,
+        "bm25": 3.058401185433761,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-c1b7058ef708393cbc64b04b",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:2",
+        "score": 0.6605181442304849,
+        "bm25": 4.234090668144134,
+        "coverage": 1.0
+      }
+    ],
+    "evidence": [
+      "Lec-3.2-Generics-and-Collections.pdf:4",
+      "Lec-3.2-Generics-and-Collections.pdf:8",
+      "Lec-3.2-Generics-and-Collections.pdf:3"
+    ],
+    "expectedDiagnostics": [
+      {
+        "page": "Lec-3.2-Generics-and-Collections.pdf:4",
+        "chunkId": "c-c6bcbc3c6fb36810e1cd6666",
+        "topicTermsPresent": 2,
+        "targetAloneAdmitted": true
+      }
+    ]
+  },
+  {
+    "id": "D-general-topic",
+    "question": "What is reflection?",
+    "expected": [
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10"
+    ],
+    "queryPlan": {
+      "original": "What is reflection?",
+      "topics": {
+        "reflection": [
+          "reflection"
+        ]
+      },
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {},
+      "attributes": {}
+    },
+    "candidates": [
+      {
+        "chunkId": "c-3d16e7b690b0ca4ea6389401",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "score": 8.113059241711278,
+        "bm25": 4.622825778752865,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-053464e6d22858f687e6afa5",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+        "score": 7.521180381055309,
+        "bm25": 4.285572866698182,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-5994312c22d6afd01ce798bc",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9",
+        "score": 6.9312427739561455,
+        "bm25": 3.949426082026293,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-078d9e698532b0e48bfa8099",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:12",
+        "score": 6.633904219358946,
+        "bm25": 3.780002404193131,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-4cf3c327fab1e4015b323bc4",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:13",
+        "score": 6.563513323086382,
+        "bm25": 3.7398936313882514,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-8255f1506f362a1a5b90a370",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:1",
+        "score": 6.523000678320273,
+        "bm25": 5.0176928294771335,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-7068d18dc24349dd90c56b95",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:11",
+        "score": 6.109711689396823,
+        "bm25": 3.4813172019355116,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "score": 6.036260630981744,
+        "bm25": 4.643277408447495,
+        "coverage": 1.0
+      }
+    ],
+    "evidence": [
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+      "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9"
+    ],
+    "expectedDiagnostics": [
+      {
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9",
+        "chunkId": "c-5994312c22d6afd01ce798bc",
+        "topicTermsPresent": 1,
+        "targetAloneAdmitted": true
+      },
+      {
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "chunkId": "c-3d16e7b690b0ca4ea6389401",
+        "topicTermsPresent": 1,
+        "targetAloneAdmitted": true
+      }
+    ]
+  },
+  {
+    "id": "D-unrelated",
+    "question": "What are the performance drawbacks of gravitational wave detector calibration?",
+    "expected": [],
+    "queryPlan": {
+      "original": "What are the performance drawbacks of gravitational wave detector calibration?",
+      "topics": {},
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {
+        "drawbacks": [
+          "limitation",
+          "drawbacks",
+          "limitations",
+          "drawback",
+          "disadvantages",
+          "disadvantage",
+          "risks",
+          "downside",
+          "costs"
+        ]
+      },
+      "attributes": {
+        "performance": [
+          "slower",
+          "slow",
+          "overhead",
+          "efficiency",
+          "performance",
+          "speed"
+        ]
+      }
+    },
+    "candidates": [
+      {
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "score": 8.453655306782663,
+        "bm25": 8.453655306782663,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-2ece0efa8083d3b098608e95",
+        "page": "Lec-1-Java-Fundamentals.pdf:5",
+        "score": 5.551319881599676,
+        "bm25": 5.551319881599676,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-ea6249eec4c3c12e7615e0c9",
+        "page": "Lec-1-Java-Fundamentals.pdf:22",
+        "score": 5.00468654604473,
+        "bm25": 5.00468654604473,
+        "coverage": 0.0
+      }
+    ],
+    "evidence": [],
+    "expectedDiagnostics": []
+  },
+  {
+    "id": "D-zh-unrelated",
+    "question": "烘焙面包在性能和可读性上有什么代价？",
+    "expected": [],
+    "queryPlan": {
+      "original": "烘焙面包在性能和可读性上有什么代价？",
+      "topics": {},
+      "outsideDomain": false,
+      "partial": false,
+      "intents": {
+        "drawbacks": [
+          "limitation",
+          "drawbacks",
+          "limitations",
+          "drawback",
+          "disadvantages",
+          "disadvantage",
+          "risks",
+          "downside",
+          "costs"
+        ]
+      },
+      "attributes": {
+        "performance": [
+          "slower",
+          "slow",
+          "overhead",
+          "efficiency",
+          "performance",
+          "speed"
+        ],
+        "readability": [
+          "readable",
+          "clumsy",
+          "verbose",
+          "verbosity",
+          "readability",
+          "maintainability"
+        ]
+      }
+    },
+    "candidates": [],
+    "evidence": [],
+    "expectedDiagnostics": []
+  },
+  {
+    "id": "D-mixed",
+    "question": "Explain generics and also discuss gravitational wave detector calibration performance.",
+    "expected": [
+      "Lec-3.2-Generics-and-Collections.pdf:3",
+      "Lec-3.2-Generics-and-Collections.pdf:4",
+      "Lec-3.2-Generics-and-Collections.pdf:8"
+    ],
+    "queryPlan": {
+      "original": "Explain generics and also discuss gravitational wave detector calibration performance.",
+      "topics": {
+        "generics": [
+          "generic",
+          "generics"
+        ]
+      },
+      "outsideDomain": false,
+      "partial": true,
+      "intents": {},
+      "attributes": {}
+    },
+    "candidates": [
+      {
+        "chunkId": "c-c6bcbc3c6fb36810e1cd6666",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:4",
+        "score": 18.9480677249894,
+        "bm25": 10.796619786318747,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-e8a51141a58c5e26a6cf4cc8",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:8",
+        "score": 18.226993884569836,
+        "bm25": 10.385751501179392,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-2ad94d3b06342de3d5227b81",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:3",
+        "score": 11.60712112349397,
+        "bm25": 6.613744229911094,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-fb655b224509dbe8d8901476",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:7",
+        "score": 8.785516738215469,
+        "bm25": 5.005992443427617,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-b36feb1f915eb78fc32665fd",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:5",
+        "score": 8.426474610587958,
+        "bm25": 4.801410034523053,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-12f72dc2985dae03a8d6bffc",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:6",
+        "score": 8.220882893363221,
+        "bm25": 4.68426375690212,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-daa01777889b9b780576eafd",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:1",
+        "score": 7.547657759555062,
+        "bm25": 5.805890584273124,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-d2962533e5f23a1ccd32e5fd",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:11",
+        "score": 4.481448424758111,
+        "bm25": 3.4472680190447007,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-a9ab3841d074d179fd6c04ac",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:10",
+        "score": 3.9759215410638897,
+        "bm25": 3.058401185433761,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-c1b7058ef708393cbc64b04b",
+        "page": "Lec-3.2-Generics-and-Collections.pdf:2",
+        "score": 0.6605181442304849,
+        "bm25": 4.234090668144134,
+        "coverage": 1.0
+      },
+      {
+        "chunkId": "c-2ece0efa8083d3b098608e95",
+        "page": "Lec-1-Java-Fundamentals.pdf:5",
+        "score": 0.2498093946719854,
+        "bm25": 0.8326979822399514,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-ea6249eec4c3c12e7615e0c9",
+        "page": "Lec-1-Java-Fundamentals.pdf:22",
+        "score": 0.22521089457201282,
+        "bm25": 0.7507029819067095,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-c1c8ce7f579be5d730460c4d",
+        "page": "Lec-2-OOP-with-Java.pdf:10",
+        "score": 0.19319822903663106,
+        "bm25": 0.6439940967887702,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-df3590360295de361416c162",
+        "page": "Lec-1-Java-Fundamentals.pdf:14",
+        "score": 0.17849359452323457,
+        "bm25": 0.594978648410782,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-cc7a68ee05d432f7086c247c",
+        "page": "Lec-1-Java-Fundamentals.pdf:32",
+        "score": 0.17228467398689132,
+        "bm25": 0.5742822466229711,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-76a6330feb957ea85b3b825b",
+        "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "score": 0.17221699406981827,
+        "bm25": 0.5740566468993943,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-02686e9806c07c3875820037",
+        "page": "Lec-1-Java-Fundamentals.pdf:12",
+        "score": 0.14675945078932487,
+        "bm25": 0.4891981692977496,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-a1905d21f117969bd377506d",
+        "page": "Lec-2-OOP-with-Java.pdf:22",
+        "score": 0.13985271943632688,
+        "bm25": 0.466175731454423,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-78ca9ddfc280bab637f496e6",
+        "page": "Lec-5-Building-AI-Powered-Java-Applications.pdf:35",
+        "score": 0.12255046465173412,
+        "bm25": 0.40850154883911377,
+        "coverage": 0.0
+      },
+      {
+        "chunkId": "c-4bef922e971cdac6f49a2753",
+        "page": "Lec-4-AI-Assisted-Java-Development.pdf:16",
+        "score": 0.1044578651870435,
+        "bm25": 0.3481928839568117,
+        "coverage": 0.0
+      }
+    ],
+    "evidence": [
+      "Lec-3.2-Generics-and-Collections.pdf:4",
+      "Lec-3.2-Generics-and-Collections.pdf:8",
+      "Lec-3.2-Generics-and-Collections.pdf:3"
+    ],
+    "expectedDiagnostics": [
+      {
+        "page": "Lec-3.2-Generics-and-Collections.pdf:3",
+        "chunkId": "c-2ad94d3b06342de3d5227b81",
+        "topicTermsPresent": 1,
+        "targetAloneAdmitted": true
+      },
+      {
+        "page": "Lec-3.2-Generics-and-Collections.pdf:4",
+        "chunkId": "c-c6bcbc3c6fb36810e1cd6666",
+        "topicTermsPresent": 2,
+        "targetAloneAdmitted": true
+      },
+      {
+        "page": "Lec-3.2-Generics-and-Collections.pdf:8",
+        "chunkId": "c-e8a51141a58c5e26a6cf4cc8",
+        "topicTermsPresent": 2,
+        "targetAloneAdmitted": true
+      }
+    ]
+  }
+]

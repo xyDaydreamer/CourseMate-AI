@@ -1,0 +1,399 @@
+{
+  "mode": "OFFLINE_FROZEN_QUERIES_NOT_INDEPENDENT_HUMAN_BLIND_TEST",
+  "positiveQuestions": 14,
+  "hitAt3Count": 14,
+  "negativeQuestions": 4,
+  "correctlyEmpty": 4,
+  "offlineContracts": 6,
+  "contractsPassed": 6,
+  "meanReciprocalRank": 0.9642857142857143,
+  "meanLabelledPrecisionAt3LowerBound": 0.38095238095238093,
+  "realApiCalls": 0,
+  "results": [
+    {
+      "id": "B01",
+      "question": "Can one Java class have two direct superclasses, or does it inherit from only one?",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:19"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:19",
+        "Lec-2-OOP-with-Java.pdf:20",
+        "Lec-2-OOP-with-Java.pdf:23"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 62.7209,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B02",
+      "question": "请用例子说明重载方法和重写父类方法有什么区别。",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:22",
+        "Lec-2-OOP-with-Java.pdf:20"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 0.5,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:20",
+        "Lec-2-OOP-with-Java.pdf:19",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:7"
+      ],
+      "retrievalStatus": "PARTIAL",
+      "pass": true,
+      "elapsedMsOffline": 5.2507,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B03",
+      "question": "What changes when a subclass overrides an instance method rather than hiding a static method?",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:22",
+        "Lec-2-OOP-with-Java.pdf:20"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 0.5,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:20",
+        "Lec-2-OOP-with-Java.pdf:19",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:7"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 7.0656,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B04",
+      "question": "泛型在编译阶段的类型检查，比把所有东西都当成 Object 有哪些好处？",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.6666666666666666,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8",
+        "Lec-3.2-Generics-and-Collections.pdf:3"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 4.9171,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B05",
+      "question": "Why can the diamond syntax in new ArrayList\u003c\u003e() omit the repeated type argument?",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:5"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:5",
+        "Lec-3.2-Generics-and-Collections.pdf:7",
+        "Lec-3.2-Generics-and-Collections.pdf:4"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 5.4445,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B06",
+      "question": "What does a finally block contribute after try and catch, including when something fails?",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:6",
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:9"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 4.0023,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B07",
+      "question": "受检异常与运行时异常对于调用者的处理要求是否一样？",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:5"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:5",
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 3.9906,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B08",
+      "question": "I need a JUnit assertion to check an expected thrown exception; which assertion is appropriate?",
+      "expected": [
+        "Lec-3.4-JUnit.pdf:5"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.4-JUnit.pdf:5",
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.4-JUnit.pdf:3"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 4.5419,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B09",
+      "question": "Would you explain the behaviour of the selected code?",
+      "code": "Map\u003cString,Integer\u003e frequencies\u003dnew HashMap\u003c\u003e(); frequencies.merge(\"test\",1,Integer::sum);",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:15",
+        "Lec-3.2-Generics-and-Collections.pdf:4",
+        "Lec-3.2-Generics-and-Collections.pdf:8"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 3.5533,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B10",
+      "question": "请分析这段代码。",
+      "code": "try { load(); } catch (IOException failure) { recover(); } finally { close(); }",
+      "expected": [
+        "Lec-3.1-Exceptions.pdf:6"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.1-Exceptions.pdf:6",
+        "Lec-3.1-Exceptions.pdf:4",
+        "Lec-3.1-Exceptions.pdf:9"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 3.2713,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B11",
+      "question": "What does Set guarantee about duplicate elements compared with a List?",
+      "expected": [
+        "Lec-3.2-Generics-and-Collections.pdf:14"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.2-Generics-and-Collections.pdf:14",
+        "Lec-1-Java-Fundamentals.pdf:24",
+        "Lec-3.2-Generics-and-Collections.pdf:16"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 2.6136,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B12",
+      "question": "反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？",
+      "expected": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+        "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 1.7651,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B13",
+      "question": "For a course chatbot, how does retrieval augmented generation give an LLM access to lecture evidence?",
+      "expected": [
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:23",
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:22"
+      ],
+      "labelledPrecisionAt3LowerBound": 0.6666666666666666,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:23",
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:26",
+        "Lec-5-Building-AI-Powered-Java-Applications.pdf:22"
+      ],
+      "retrievalStatus": "READY",
+      "pass": true,
+      "elapsedMsOffline": 2.135,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B14",
+      "question": "Explain encapsulation and separately explain the formation of coral reefs.",
+      "expected": [
+        "Lec-2-OOP-with-Java.pdf:13"
+      ],
+      "partial": true,
+      "labelledPrecisionAt3LowerBound": 0.3333333333333333,
+      "acceptableLabelCoverage": 1.0,
+      "actualPages": [
+        "Lec-2-OOP-with-Java.pdf:13",
+        "Lec-2-OOP-with-Java.pdf:8",
+        "Lec-2-OOP-with-Java.pdf:6"
+      ],
+      "retrievalStatus": "PARTIAL",
+      "pass": true,
+      "elapsedMsOffline": 2.1454,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B15",
+      "question": "Describe techniques for observing distant exoplanet atmospheres.",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "INSUFFICIENT",
+      "pass": true,
+      "elapsedMsOffline": 1.3125,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B16",
+      "question": "请解释汉代盐铁政策对经济的影响。",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 1.1248,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B17",
+      "question": "Explain the selected method call without guessing the implementation.",
+      "code": "System.out.println(calculateResult(\"HashMap inheritance\"));",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "NO_HITS",
+      "pass": true,
+      "elapsedMsOffline": 1.3189,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B18",
+      "question": "How do I plan a dinner recipe for four people?",
+      "expected": [],
+      "actualPages": [],
+      "retrievalStatus": "INSUFFICIENT",
+      "pass": true,
+      "elapsedMsOffline": 1.4837,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B19",
+      "kind": "session",
+      "topic": "Explain checked exceptions.",
+      "followups": [
+        "Give me an example.",
+        "再举一个例子。",
+        "Please explain that again."
+      ],
+      "expectedTopic": "Explain checked exceptions.",
+      "resolvedTopic": "Explain checked exceptions.",
+      "pass": true,
+      "elapsedMsOffline": 8.5521,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B20",
+      "kind": "session",
+      "topic": "Explain generics.",
+      "followups": [
+        "Show another example.",
+        "Tell me about ocean currents."
+      ],
+      "expectedTopic": "Tell me about ocean currents.",
+      "resolvedTopic": "Tell me about ocean currents.",
+      "pass": true,
+      "elapsedMsOffline": 2.1005,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B21",
+      "kind": "protocol",
+      "scenario": "truncated_json",
+      "pass": true,
+      "elapsedMsOffline": 1.7391,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B22",
+      "kind": "protocol",
+      "scenario": "invalid_source_id",
+      "pass": true,
+      "elapsedMsOffline": 0.1223,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B23",
+      "kind": "protocol",
+      "scenario": "cancel_then_new_session",
+      "pass": true,
+      "elapsedMsOffline": 0.263,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    },
+    {
+      "id": "B24",
+      "kind": "protocol",
+      "scenario": "ordinary_pdf_filename",
+      "pass": true,
+      "elapsedMsOffline": 0.1469,
+      "realAnswerCorrectness": "NOT_RUN",
+      "claimEvidenceConsistency": "NOT_RUN"
+    }
+  ]
+}

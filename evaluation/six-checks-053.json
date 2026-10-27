@@ -1,0 +1,14 @@
+[
+ {"id":"S1-zh-B12","group":"1 中文B12","question":"反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"]},
+ {"id":"S2-en-B12","group":"2 英文B12","question":"Why does reflection lose compile-time checks and impose performance and readability costs?","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"]},
+ {"id":"S3-concept","group":"3 反射概念第9页","question":"What is reflection and how can a running Java program examine itself?","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9"]},
+ {"id":"S4-invocation","group":"4 反射调用第14页","question":"How does Java reflection invoke a method with Method.invoke(Object obj, Object... args)?","expected":["Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"]},
+ {"id":"S5-generics","group":"5 其他主题不退化","question":"泛型如何提供编译时类型检查？","expected":["Lec-3.2-Generics-and-Collections.pdf:4"]},
+ {"id":"S5-exceptions","group":"5 其他主题不退化","question":"What are the advantages of exceptions?","expected":["Lec-3.1-Exceptions.pdf:11"]},
+ {"id":"S5-junit","group":"5 其他主题不退化","question":"如何在 JUnit 中断言执行某段逻辑时抛出了预期异常？","expected":["Lec-3.4-JUnit.pdf:5"]},
+ {"id":"S5-inheritance","group":"5 其他主题不退化","question":"Java inheritance","expected":["Lec-2-OOP-with-Java.pdf:19"]},
+ {"id":"S6-photon","group":"6 无关问题不产生课程引用","question":"请解释量子纠缠实验中的光子偏振测量。","expected":[]},
+ {"id":"S6-detector","group":"6 无关问题不产生课程引用","question":"What are the performance drawbacks of gravitational wave detector calibration?","expected":[]},
+ {"id":"S6-bread","group":"6 无关问题不产生课程引用","question":"烘焙面包在性能和可读性上有什么代价？","expected":[]},
+ {"id":"S6-existing-U11","group":"6 无关问题不产生课程引用","question":"Explain the performance costs and readability drawbacks of sourdough fermentation.","expected":[]}
+]

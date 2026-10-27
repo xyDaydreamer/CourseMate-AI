@@ -1,0 +1,88 @@
+{
+  "id": "B12",
+  "question": "反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？",
+  "expected": [
+    "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+  ],
+  "queryPlan": {
+    "original": "反射为什么会失去部分编译时检查，并带来性能与可读性上的代价？",
+    "topics": {
+      "reflection": [
+        "reflection"
+      ]
+    },
+    "outsideDomain": false,
+    "partial": false
+  },
+  "candidates": [
+    {
+      "score": 8.113059241711278,
+      "bm25": 4.622825778752865,
+      "coverage": 1.0,
+      "chunkId": "c-3d16e7b690b0ca4ea6389401",
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10"
+    },
+    {
+      "score": 7.521180381055309,
+      "bm25": 4.285572866698182,
+      "coverage": 1.0,
+      "chunkId": "c-053464e6d22858f687e6afa5",
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14"
+    },
+    {
+      "score": 6.9312427739561455,
+      "bm25": 3.949426082026293,
+      "coverage": 1.0,
+      "chunkId": "c-5994312c22d6afd01ce798bc",
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9"
+    },
+    {
+      "score": 6.633904219358946,
+      "bm25": 3.780002404193131,
+      "coverage": 1.0,
+      "chunkId": "c-078d9e698532b0e48bfa8099",
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:12"
+    },
+    {
+      "score": 6.563513323086382,
+      "bm25": 3.7398936313882514,
+      "coverage": 1.0,
+      "chunkId": "c-4cf3c327fab1e4015b323bc4",
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:13"
+    },
+    {
+      "score": 6.523000678320273,
+      "bm25": 5.0176928294771335,
+      "coverage": 1.0,
+      "chunkId": "c-8255f1506f362a1a5b90a370",
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:1"
+    },
+    {
+      "score": 6.109711689396823,
+      "bm25": 3.4813172019355116,
+      "coverage": 1.0,
+      "chunkId": "c-7068d18dc24349dd90c56b95",
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:11"
+    },
+    {
+      "score": 6.036260630981744,
+      "bm25": 4.643277408447495,
+      "coverage": 1.0,
+      "chunkId": "c-76a6330feb957ea85b3b825b",
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15"
+    }
+  ],
+  "evidence": [
+    "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:10",
+    "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:14",
+    "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:9"
+  ],
+  "expectedDiagnostics": [
+    {
+      "page": "Lec-3.3-ModernSyntax-Annotations-and-Reflection.pdf:15",
+      "chunkId": "c-76a6330feb957ea85b3b825b",
+      "topicTermsPresent": 1,
+      "targetAloneAdmitted": true
+    }
+  ]
+}

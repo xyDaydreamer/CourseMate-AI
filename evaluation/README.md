@@ -1,12 +1,26 @@
-# CourseMate AI 0.5.2 评测说明
+# CourseMate AI 评测说明
+
+当前本地 0.5.3 合并审查、B12 原因、通用检索调整与新题验证见 [review-0.5.3.md](review-0.5.3.md)；累计 31 次真实 API 检查、保留的边界提示及未解决的并发事实问题见 [live-review-0.5.3.md](live-review-0.5.3.md)。下表保留此前 0.5.2 等版本的历史结果；原冻结集本轮已作为开发回归使用，不再称未参与调优。当前构建包和真实测试脚本默认路径为 `build/distributions/coursemate-ai-0.5.3.zip`。
 
 这里保存题集、评测执行器和离线结果，供开发验证与人工复核使用。项目累计变更见 [README_CHANGES.md](../README_CHANGES.md)。这不是课程最终英文报告或 PPT。
 
 ## 当前结果及对应版本
 
+| 0.5.3 检查 | 结果 | 证据 |
+| --- | --- | --- |
+| 基础 / 真实 PDF 测试与打包 | 163/163 + 14/14；成功 | [验证及安装包指纹](verification-0.5.3.json) |
+| 指定六项检索回归 | 6/6 组、12/12 案例；四个指定页均排第一 | [最终逐题结果](results/six-checks-boundary-final-053.json) |
+| 原 28 题 / 原冻结 24 题 | 有来源 18/18、14/14；无来源和协议检查均无退化 | [原 28 题](results/original-28-final-053.json)、[原冻结 24 题](results/final-24-final-053.json) |
+| 第二轮预先固定的新检索题 | 有来源 6/6，无来源 4/4；非独立人员盲测 | [逐题结果](results/unseen-round2-after-053.json) |
+| 真实 API | 31 次 HTTP 请求，含一次格式失败后恢复；内容质量未全部验收 | [逐阶段复核](live-review-0.5.3.md)、[结构化汇总](results/live-content-review-053.json) |
+
+最终只保留通用代码边界提示；并发 / 异常提示未显示稳定收益，已撤回，相关事实错误仍未解决。原始 B12 和真实回答失败均保留。含课程原文的真实 API 完整回复只在本地 `.coursemate/acceptance/` 保存，不随仓库发布。
+
+## 历史结果
+
 | 项目 | 结果 | 记录 |
 | --- | --- | --- |
-| 0.5.2 当前基础 / 集成测试 | 137/137 + 10/10；打包成功 | [verification-0.5.2.json](verification-0.5.2.json) |
+| 0.5.2 基础 / 集成测试 | 137/137 + 10/10；打包成功 | [verification-0.5.2.json](verification-0.5.2.json) |
 | 原有 28 案例，0.5.2 重跑 | Hit@3 18/18；无来源 5/5；引用契约 5/5 | [逐题结果](results/original-28-0.5.2.json) |
 | 冻结 24 案例，0.5.2 重跑 | Hit@3 13/14；无来源 4/4；状态 / 协议 6/6 | [逐题结果](results/final-24-after-0.5.2.json)；未按该组调参，B12 仍未命中 |
 | 0.5.1 基础单元测试 | 125/125 | [verification-0.5.1.json](verification-0.5.1.json) |
@@ -14,7 +28,7 @@
 | 原有 28 案例，0.5.1 重跑 | Hit@3 18/18；无来源 5/5；引用契约 5/5 | [逐题结果](results/original-28-0.5.1.json) |
 | 最终冻结 24 案例，0.5.0 阶段 | Hit@3 13/14；无来源 4/4；状态 / 协议 6/6 | [修改前](results/final-24-before-0.5.0.json)、[修改后](results/final-24-after-0.5.0.json)、[比较表](results/final-24-comparison-0.5.0.csv) |
 | 典型缺陷 8 案例，0.5.0 阶段 | 有来源 6/6；无来源 2/2 | [修改前](results/defects-before-0.5.0.json)、[修改后](results/defects-after-0.5.0.json) |
-| 真实 API 人工质量验收 | NOT_RUN | 用户另行执行；离线模拟不代替真实回答 |
+| 0.5.2 阶段真实 API 人工质量验收 | 当时 NOT_RUN | 当前 0.5.3 已进行 31 次请求，见上表；离线模拟不代替真实回答 |
 
 `verification-0.5.0.json` 还记录冻结集前后 MRR、标注精度下界及安装包 / 题集指纹。0.5.1 没有重新测量冻结集；0.5.2 的实际重跑结果单独归档，不改名或覆盖旧版成绩。
 
@@ -24,7 +38,11 @@
 
 - `questions.json`：原有 28 案例，18 道有来源题、5 道无来源题、5 个引用契约案例；已用于调优，属于固定回归。
 - `holdout-20261027.json`：首次运行后参与过问题分析和修改，已成为开发回归，不再称独立盲测。
-- `holdout-final-20261027.json`：冻结 24 案例，14 道有来源题、4 道无来源题、6 个状态 / 协议案例；未根据该次结果调参，但也不是独立人员标注的外部盲测。
+- `holdout-final-20261027.json`：原冻结 24 案例，14 道有来源题、4 道无来源题、6 个状态 / 协议案例；0.5.3 已用于 B12 分析，现作为开发回归，不再称未参与调优。
+- `retrieval-development-20261027.json`、`six-checks-053.json`：本轮开发和指定六项验收案例。
+- `unseen-retrieval-20261027.json`：第一轮预固定 16 题，后用于 U11 分析，现属于开发回归；原始失败结果未覆盖。
+- `unseen-retrieval-round2-20261027.json`：第二轮在最终检索修改前固定的 10 题，结果未用于继续调参；开发者编写，非独立人员盲测。
+- `live-focused-053-cases.json`、`live-content-regression-053.json`、`live-boundary-final-053.json`：真实 API 专项、前后对照及最终边界复测题目；结果范围和退回的尝试见真实检查记录。
 - `regression-defects-20261027.json`：自然问法、代码措辞和无来源等 8 个典型缺陷复现。
 - `baseline-13efb15.json`、`after-0.4.1.json`、`comparison.csv` 和 `verification-0.4.1.json`：历史阶段记录；其中部分状态和限制已经被后续版本替代，不能当作当前功能说明。
 
@@ -32,7 +50,7 @@
 
 预期来源使用从 1 开始的物理 PDF 页码，并非穷举所有相关页面。因此统计 Hit@3，不称 Recall@3。排序、标注页覆盖和精度下界辅助检查，但仍不能证明每个知识点都有证据。主要结论必须人工对照原文，来源 ID 合法不等于结论正确。
 
-这些离线执行器使用真实 PDF 和检索代码、固定 fake 回答；真实回答正确性、结论 / 引用一致性保留 NOT_RUN。记录中的单次离线耗时不包含网络，不能当作稳定的端到端响应时间。已知 B12（反射缺点）仍未命中标注页。
+这些离线执行器使用真实 PDF 和检索代码、固定 fake 回答；其中的真实回答正确性、结论 / 引用一致性保留 NOT_RUN，真实 API 结果单独记录。单次离线耗时不包含网络，不能当作稳定的端到端响应时间。B12 在 0.5.2 未命中，0.5.3 标注页已排第一，历史失败仍保留。
 
 ## 重跑基础测试与离线回归
 
@@ -46,7 +64,7 @@
 $env:COURSEMATE_COURSE_FILES = '自己的课件目录完整路径'
 .\gradlew.bat integrationTest --console=plain --no-daemon
 .\gradlew.bat buildPlugin --console=plain --no-daemon
-.\evaluation\run-evaluation.ps1 -PluginZip '.\build\distributions\coursemate-ai-0.5.2.zip' -CourseDir $env:COURSEMATE_COURSE_FILES
+.\evaluation\run-evaluation.ps1 -PluginZip '.\build\distributions\coursemate-ai-0.5.3.zip' -CourseDir $env:COURSEMATE_COURSE_FILES
 ```
 
 也可以使用 `start-coursemate.cmd -Mode Build`，会执行基础测试和打包；它不会代替单独的 `integrationTest`。`scripts/test-launcher.ps1` 为启动器参数回归，使用临时 fake Gradle，不调用模型、不打开 IDEA。
@@ -63,7 +81,7 @@ $env:COURSEMATE_COURSE_FILES = '自己的课件目录完整路径'
 .\evaluation\run-live-acceptance.ps1 -JavaHome $env:JAVA_HOME -CourseDir $env:COURSEMATE_COURSE_FILES
 ```
 
-脚本默认使用 0.5.2 安装包；没有进程 Key 时在本机隐藏提示中输入。最多 6 次调用，不自动重试；遇到网络或配置失败会提前结束。这里没有自动执行该命令。
+脚本默认使用 0.5.3 安装包；没有进程 Key 时在本机隐藏提示中输入。每次运行最多 6 次实际 HTTP 请求，格式 / 引用校验失败的一次自动重试也计入预算；网络、HTTP 和截断不自动重试。31 次检查来自多次有界运行，不能当成 31 道题全部答对。
 
 结果默认保存到被忽略的 `.coursemate/acceptance/live-acceptance.json`，可能包含选区代码与课程原文，不应直接提交。只保存回答、证据和安全错误分类，不保存 Key 或原始诊断响应。不要将 Key 发到聊天、源码或日志中。
 
